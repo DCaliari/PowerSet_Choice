@@ -10,6 +10,9 @@ from Choice.custom_moduli import util
 import random
 
 
+# These are the ENDPOINT, because you can call them from outside
+
+
 def index(request, template_name='index.html'):  # create the function custom
     model_map={
         'page_title':'Start'
