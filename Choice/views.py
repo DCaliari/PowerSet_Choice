@@ -26,8 +26,7 @@ def choice_image(request, template_name='choice_image.html'):
     images = random.sample(util.IMAGES, 2)
     model_map={
         'page_title':'Round '+num_page,
-        'image_1':images[0],
-        'image_2':images[1]
+        'images':images
     }
 
     return TemplateResponse(request, template_name, model_map)
