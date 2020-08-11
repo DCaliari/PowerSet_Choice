@@ -7,7 +7,9 @@
     </div>
     {% for image in images %}
         <div>
-            <img src="{% static "" %}images/{{ image }}" class="choice_image align_left"/>
+            <a href="choice_image?page={{ next_page }}">
+                <img src="{% static "" %}images/{{ image }}" class="choice_image align_left"/>
+            </a>
         </div>
     {% endfor %}
 

@@ -22,11 +22,25 @@ def index(request, template_name='index.html'):  # create the function custom
 
 
 def choice_image(request, template_name='choice_image.html'):
-    num_page = request.GET.get('page', '')
+    num_page = int(request.GET.get('page', ''))
+
+    if (num_page>=10):
+        pass
+        # add final page
+
+    next_page = num_page + 1
     images = random.sample(util.IMAGES, 2)
     model_map={
-        'page_title':'Round '+num_page,
+        'page_title':'Round '+str(num_page),
+        'next_page':next_page,
         'images':images
     }
+    return TemplateResponse(request, template_name, model_map)
 
+
+def final_page(request, template_name='final_page.html'):
+    final_images = util.IMAGES
+    model_map={
+        'images':final_images
+    }
     return TemplateResponse(request, template_name, model_map)
