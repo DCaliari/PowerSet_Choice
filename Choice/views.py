@@ -3,14 +3,18 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.http import HttpResponse  # import functions
+import random
 
 from django.template.response import TemplateResponse
 
 from Choice.custom_moduli import util
-import random
+from Choice.custom_moduli import functions
 
 
 # These are the ENDPOINT, because you can call them from outside
+IMAGES_POWERSET = functions.powerset(util.IMAGES)[len(util.IMAGES)+1:]
+random.shuffle(IMAGES_POWERSET)
+# This is a global variable, it is created once at the start and never later.
 
 
 def index(request, template_name='index.html'):  # create the function custom
@@ -27,9 +31,9 @@ def choice_image(request, template_name='choice_image.html'):
     if (num_page>=10):
         pass
         # add final page
-
     next_page = num_page + 1
-    images = random.sample(util.IMAGES, 2)
+    images = list(IMAGES_POWERSET[num_page-1])  # fix the list
+    random.shuffle(images)
     model_map={
         'page_title':'Round '+str(num_page),
         'next_page':next_page,
