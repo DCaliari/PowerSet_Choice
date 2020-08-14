@@ -1,10 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-from django.http import HttpResponse  # import functions
 import random
 
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
 from Choice.custom_moduli import util
@@ -28,9 +24,16 @@ def index(request, template_name='index.html'):  # create the function custom
 def choice_image(request, template_name='choice_image.html'):
     num_page = int(request.GET.get('page', ''))
 
-    if (num_page>=10):
-        pass
-        # add final page
+    '''  to insert pages in between choice pages
+    if num_page == 5:
+        response = redirect('test')
+        return response
+    '''
+
+    if num_page > len(IMAGES_POWERSET):
+        response = redirect('final_page')
+        return response
+
     next_page = num_page + 1
     images = list(IMAGES_POWERSET[num_page-1])  # fix the list
     random.shuffle(images)
