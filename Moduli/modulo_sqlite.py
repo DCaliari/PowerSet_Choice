@@ -28,7 +28,7 @@ class Sqlite(ABC):
 		"""
 		Inserire le istruzioni sql contenenti la dichiarazione delle tabelle (DDL)
 		"""
-		self.cursor_db.executescript(sql_str)  # execute more commands in one in the file database.py. I can create more tables without repeating execute
+		self.cursor_db.executescript(sql_str)  # execute more commands in one in the file modulo_database.py. I can create more tables without repeating execute
 		self.conn_db.commit()  # it does not save when I modify things, if there is an error it is very useful.
 	
 	def close_conn(self):

@@ -17,11 +17,19 @@ class Database(modulo_sqlite.Sqlite):
 	def schema(self):
 		sql="""
 create table utenti(
-	id		 integer primary key autoincrement not null,
-	insert_date		timestamp not null,
-	choice		text not null,
-	response_times		real not null
+	id				integer primary key autoincrement not null,
+	insert_date		timestamp not null
 );
+create table choices(
+	id 				integer primary key autoincrement not null,
+	id_utente  		integer not null,
+	choice			text not null,
+	insert_date		timestamp not null,
+	foreign key(id_utente) references utenti(id)
+		ON UPDATE NO ACTION
+		ON DELETE RESTRICT
+);
+
 """
 		# id is the name of the column. 'primary key' = always different. 'not null' = not empty
 		# 'timestamp' = memorize day, month, year and hours.
