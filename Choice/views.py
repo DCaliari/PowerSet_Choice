@@ -22,7 +22,7 @@ random.shuffle(IMAGES_POWERSET)
 
 
 def apri_connessione_db():
-    path_db = os.path.abspath("../RecordChoice.db")
+    path_db = os.path.abspath("RecordChoice.db")
     is_db_new = modulo_system.dimensione_file(path_db) <= 0
     database = modulo_database.Database(path_db)
     if is_db_new:
@@ -31,6 +31,7 @@ def apri_connessione_db():
 
 
 #################################################################################################
+connection_database = apri_connessione_db()
 
 
 def index(request, template_name='index.html'):  # create the function custom

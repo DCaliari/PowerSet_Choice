@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from Moduli.rete import modulo_networking
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +26,8 @@ SECRET_KEY = '913m_bo%rsj2tp$$zg(#06!s#=v8blqzb#^-j1pvl9x@qn-v$^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.4"]
+ALLOWED_HOSTS = ["192.168.1.9"]
+# TODO: fix this
 
 # Application definition
 
