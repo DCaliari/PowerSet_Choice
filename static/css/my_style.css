@@ -7,13 +7,36 @@
     float:left;
 }
 
-input[type=button] {
-  background-color: #4CAF50; /* Green */
+.center {
+  position: absolute;
+  right: 10%;
+  left: 10%;
+  top: 20%;
+  width: 100%;
+  height: 100%;
+}
+
+.bottomright {
+  position: absolute;
+  right: 8%;
+  bottom: 12%;
+}
+
+.button {
+  background-color: #4CAF50;
   border: none;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
 }
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+

@@ -8,13 +8,16 @@
 	<div>
         <h1>{{ page_title }}</h1>
     </div>
+    <div  class="center">
     {% for image in images %}
         <div>
             <img src="{% static "" %}images/{{ image }}" class="choice_image align_left"/>
         </div>
     {% endfor %}
-
-    <div>
-        <input type="button" value="Click me" onclick="location.href='choice_image?page={{ next_page }}'" />
     </div>
+
+    <div class="bottomright">
+        <button class="button" onclick="location.href='choice_image?page={{ next_page }}'">Click me</button>
+    </div>
+
 {% endblock %}
