@@ -21,8 +21,11 @@
         <button id="button_submit" class="button" onclick="return on_click_submit()">Click me</button>
     </div>
 
+    <!-- javascript code: function _ connect to the element using the id of the element-->
+    <!-- function on_click_image transform the variable selected_image into the id: index-->
+    <!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
     <script>
-        var selected_image = null;
+     var selected_image = null;
 
         function _(id){
             return document.getElementById(id);

@@ -36,7 +36,7 @@ create table choices(
 		super().schema(sql)
 	
 	
-	#############################################################################################################################
+	####################################################################################################
 	def select_scelte(self, id_utente):
 
 		sql = """
@@ -64,7 +64,8 @@ INSERT INTO choices(
 	:id_utente, :choice, """+modulo_sqlite.DATE_TIME_NOW+"""
 );
 """
-		# Through insert_scelte I receive id_utente and choice, with self.cursor_db.execute I pass id_utente to dictionary
+		# Through insert_scelte I receive id_utente and choice,
+		# with self.cursor_db.execute I pass id_utente to dictionary
 		# with VALUES I insert id_utente into the database
 		self.cursor_db.execute(sql, {
 			'id_utente':id_utente,

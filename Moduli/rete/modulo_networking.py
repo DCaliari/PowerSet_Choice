@@ -1,5 +1,7 @@
 import socket
 
+# this function get the ip from the compute hardware and therefore avoid to modify settings.py everytime the ip changes
+# nonetheless, the server from command prompt has to run with the correct ip
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -4,7 +4,7 @@ import sqlite3
 
 TIMEOUT_CONNECTION = 20
 
-DATE_TIME_NOW = "datetime('now','localtime')"
+DATE_TIME_NOW = "datetime('now','localtime')"  # this variable store the command to get data and time
 
 
 class Sqlite(ABC):
