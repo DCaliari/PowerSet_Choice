@@ -9,15 +9,32 @@
         <h1>{{ page_title }}</h1>
     </div>
     <div  class="center">
-    {% for image in images %}
+    {% for index, image in enumerate(images) %}
         <div>
-            <img src="{% static "" %}images/{{ image }}" class="choice_image align_left"/>
+            <img id="{{ index }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
+                    onclick="return on_click_image(this.id)"/>
         </div>
     {% endfor %}
     </div>
 
     <div class="bottomright">
-        <button class="button" onclick="location.href='choice_image?page={{ next_page }}'">Click me</button>
+        <button id="button_submit" class="button" onclick="return on_click_submit()">Click me</button>
     </div>
 
+    <script>
+        var selected_image = null;
+
+        function _(id){
+            return document.getElementById(id);
+        }
+
+        function on_click_image(id){
+            selected_image = id;
+        }
+
+        function on_click_submit(){
+            _('button_submit').disabled = (selected_image == null);
+            location.href="choice_image?page={{ next_page }}" + "&choice=" + selected_image;
+        }
+    </script>
 {% endblock %}

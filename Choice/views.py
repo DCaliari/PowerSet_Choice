@@ -24,7 +24,7 @@ random.shuffle(IMAGES_POWERSET)
 def apri_connessione_db():
     path_db = os.path.abspath("RecordChoice.db")
     is_db_new = modulo_system.dimensione_file(path_db) <= 0
-    database = modulo_database.Database(path_db)
+    database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
     if is_db_new:
         database.schema()
     return database
@@ -44,6 +44,9 @@ def index(request, template_name='index.html'):  # create the function custom
 
 def choice_image(request, template_name='choice_image.html'):
     num_page = int(request.GET.get('page', ''))
+
+    connection_database.insert_scelte(1, '')
+    #TODO
 
     '''  to insert pages in between choice pages
     if num_page == 5:

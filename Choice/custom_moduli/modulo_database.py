@@ -1,5 +1,5 @@
 from Moduli import modulo_sqlite
-
+from Moduli import modulo_strings
 
 class Database(modulo_sqlite.Sqlite):
 	'''
@@ -23,7 +23,7 @@ create table utenti(
 create table choices(
 	id 				integer primary key autoincrement not null,
 	id_utente  		integer not null,
-	choice			text not null,
+	choice			integer not null,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utenti(id)
 		ON UPDATE NO ACTION
@@ -52,3 +52,21 @@ WHERE id_utente=:id_utente
 		})
 		# collegamento variable SQL con python
 		return self.cursor_db.fetchone()
+
+
+	def insert_scelte(self, id_utente, choice): # parameters id_utente, choice are compulsory cuz defined "not null"
+		# in the database
+
+		sql = """
+INSERT INTO choices(
+	id_utente, choice, insert_date
+) VALUES(
+	:id_utente, :choice, """+modulo_sqlite.DATE_TIME_NOW+"""
+);
+"""
+		# Through insert_scelte I receive id_utente and choice, with self.cursor_db.execute I pass id_utente to dictionary
+		# with VALUES I insert id_utente into the database
+		self.cursor_db.execute(sql, {
+			'id_utente':id_utente,
+			'choice':choice
+		})
