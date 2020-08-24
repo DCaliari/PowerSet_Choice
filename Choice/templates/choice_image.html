@@ -2,29 +2,31 @@
 {% load static %}
 
 {% block content %}
+<div>
+    <a href="{% url 'index' %}">Return to Index</a>
+</div>
+<div>
+    <h1>{{ page_title }}</h1>
+</div>
+<div class="center">
+    {% for image in images %}
     <div>
-        <a href="{% url 'index' %}">Return to Index</a>
+        <img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
+        onclick="return on_click_image(this.id)"/>
     </div>
-	<div>
-        <h1>{{ page_title }}</h1>
-    </div>
-    <div  class="center">
-    {% for index, image in enumerate(images) %}
-        <div>
-            <img id="{{ index }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
-                    onclick="return on_click_image(this.id)"/>
-        </div>
     {% endfor %}
-    </div>
+</div>
 
-    <div class="bottomright">
-        <button id="button_submit" class="button" onclick="return on_click_submit()">Click me</button>
-    </div>
+<div class="bottomright">
+    <button id="button_submit" class="button" onclick="return on_click_submit()">Click me</button>
+</div>
 
-    <!-- javascript code: function _ connect to the element using the id of the element-->
-    <!-- function on_click_image transform the variable selected_image into the id: index-->
-    <!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
-    <script>
+<!-- javascript code: function _ connect to the element using the id of the element-->
+<!-- function on_click_image transform the variable selected_image into the id: index-->
+<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
+<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
+    which is the id of the image taken from the parameter "index" in the for loop -->
+<script>
      var selected_image = null;
 
         function _(id){
@@ -39,5 +41,6 @@
             _('button_submit').disabled = (selected_image == null);
             location.href="choice_image?page={{ next_page }}" + "&choice=" + selected_image;
         }
-    </script>
+
+</script>
 {% endblock %}

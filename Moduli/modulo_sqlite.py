@@ -1,24 +1,24 @@
 from abc import ABC, abstractmethod
 import sqlite3
 
-
 TIMEOUT_CONNECTION = 20
 
 DATE_TIME_NOW = "datetime('now','localtime')"  # this variable store the command to get data and time
 
 
 class Sqlite(ABC):
-	#costruttore
+	# costruttore
 	def __init__(self, nomefile_db, show_sql=False):
-		self.conn_db=sqlite3.connect(nomefile_db, detect_types=sqlite3.PARSE_DECLTYPES, timeout=TIMEOUT_CONNECTION)
+		self.conn_db = sqlite3.connect(nomefile_db, detect_types=sqlite3.PARSE_DECLTYPES, timeout=TIMEOUT_CONNECTION)
 		# Give back the name of the column and not numerical index
-		self.conn_db.row_factory=sqlite3.Row
-		#creo il cursore
-		self.cursor_db=self.conn_db.cursor()
-		#setup iniziale
-		self.cursor_db.executescript('''PRAGMA foreign_keys=ON;''')#non puoi cancellare un record se e' referenziato da un'altra tabella
+		self.conn_db.row_factory = sqlite3.Row
+		# creo il cursore
+		self.cursor_db = self.conn_db.cursor()
+		# setup iniziale
+		self.cursor_db.executescript(
+			'''PRAGMA foreign_keys=ON;''')  # non puoi cancellare un record se e' referenziato da un'altra tabella
 		self.conn_db.commit()
-		#mostra i comandi sql eseguiti
+		# mostra i comandi sql eseguiti
 		if show_sql is True:
 			self.conn_db.set_trace_callback(print)
 		super().__init__()
@@ -28,18 +28,19 @@ class Sqlite(ABC):
 		"""
 		Inserire le istruzioni sql contenenti la dichiarazione delle tabelle (DDL)
 		"""
-		self.cursor_db.executescript(sql_str)  # execute more commands in one in the file modulo_database.py. I can create more tables without repeating execute
+		self.cursor_db.executescript(
+			sql_str)  # execute more commands in one in the file modulo_database.py. I can create more tables without repeating execute
 		self.conn_db.commit()  # it does not save when I modify things, if there is an error it is very useful.
 	
 	def close_conn(self):
 		self.cursor_db.close()
 		self.conn_db.close()
-	
+
 # def paginazione(first_result,num_results):
 # 	sql=("LIMIT "+str(num_results) if num_results!=None else "")
 # 	sql+=(" OFFSET "+str(first_result) if first_result!=None else "")
 # 	return sql
-		### ogni pagina ha un numero di pagine definito come in google.
+### ogni pagina ha un numero di pagine definito come in google.
 
 # def add_param_list(lista,prefix):
 # 	params={}

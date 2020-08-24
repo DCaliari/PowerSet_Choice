@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import include, path  # import more than one -- use comma
 
 urlpatterns = [
-    path('Choice/', include('Choice.urls')),  # localhost: 8000/Choice
-    path('admin/', admin.site.urls),
+	path('Choice/', include('Choice.urls')),  # localhost: 8000/Choice
+	path('admin/', admin.site.urls),
 ]

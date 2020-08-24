@@ -1,6 +1,6 @@
-IMAGES=[
-    'apple.jpg',
-    'ice cream.jpg',
-    'pear.jpg',
-    'pizza.jpeg'
+IMAGES = [
+	'apple.jpg',
+	'ice cream.jpg',
+	'pear.jpg',
+	'pizza.jpeg'
 ]
