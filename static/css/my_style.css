@@ -3,6 +3,10 @@
     height:auto;
 }
 
+.selected_image {
+    border: 1px solid black;
+}
+
 .align_left {
     float:left;
 }
@@ -40,3 +44,7 @@
   transform: translateY(4px);
 }
 
+.button_disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

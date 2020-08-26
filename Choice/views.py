@@ -3,6 +3,7 @@ import random
 
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
 
 from Choice.custom_moduli import modulo_database
 from Choice.custom_moduli import util
@@ -12,8 +13,6 @@ from Moduli import modulo_functions
 
 # These are the ENDPOINT, because you can call them from outside
 IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
-random.shuffle(IMAGES_POWERSET)
-
 
 # This is a global variable, it is created once at the start and never later.
 
@@ -33,6 +32,7 @@ def apri_connessione_db():
 #################################################################################################
 
 id_utente = None
+last_page = 0
 
 
 def index(request, template_name='index.html'):  # create the function custom
@@ -44,6 +44,8 @@ def index(request, template_name='index.html'):  # create the function custom
 	id_utente = connection_database.cursor_db.lastrowid  # get the last id created in the database
 	connection_database.close_conn()
 	
+	random.shuffle(IMAGES_POWERSET)
+	
 	model_map = {
 		'page_title': 'Start'
 		
@@ -52,14 +54,15 @@ def index(request, template_name='index.html'):  # create the function custom
 
 
 def choice_image(request, template_name='choice_image.html'):
-	num_page = int(request.GET.get('page', ''))
-
+	global last_page
+	
+	num_page = int(request.GET.get('num_page', ''))
 	# the second parameter is needed because if "choice" is empty then '' is passed
 	
-	connection_database = apri_connessione_db()
-	if 'choice' in request.GET:  # if the parameter 'choice' exists then insert in the database, otherwise nothing
-		choice = int(request.GET.get('choice', ''))
-		connection_database.insert_scelte(id_utente, choice)
+	if num_page < last_page:
+		num_page = last_page
+	last_page = num_page
+	
 	
 	'''  to insert pages in between choice pages
 	if num_page == 5:
@@ -67,23 +70,38 @@ def choice_image(request, template_name='choice_image.html'):
 		return response
 	'''
 	
-	if num_page > len(IMAGES_POWERSET):  # when the pages are finished go to final page
-		response = redirect('final_page')
-		return response
-	
-	next_page = num_page + 1
 	images = list(IMAGES_POWERSET[num_page - 1])  # fix the list
 	random.shuffle(images)
 	
-	connection_database.conn_db.commit()
-	connection_database.close_conn()
-	
 	model_map = {
 		'page_title': 'Round ' + str(num_page),
-		'next_page': next_page,
+		'num_page': num_page,
 		'images': images
 	}
 	return TemplateResponse(request, template_name, model_map)
+
+
+def save_choice(request, template_name='choice_image.html'):
+	num_page = int(request.GET.get('num_page', ''))
+	
+	if num_page >= len(IMAGES_POWERSET):  # when the pages are finished go to final page
+		response = redirect('final_page')
+		return response
+	
+	connection_database = apri_connessione_db()
+	if 'choice' in request.GET:  # if the parameter 'choice' exists then insert in the database, otherwise nothing
+		choice = int(request.GET.get('choice', ''))
+		connection_database.insert_scelte(id_utente, choice)
+
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	next_page = num_page + 1
+	
+	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
+	# we concatenate the parameter num_page with the value next_page
+	response = redirect('{}?num_page={}'.format(reverse('choice_image'), next_page))
+	return response
 
 
 def final_page(request, template_name='final_page.html'):

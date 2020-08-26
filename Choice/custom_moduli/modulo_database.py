@@ -26,6 +26,7 @@ create table choices(
 	id 				integer primary key autoincrement not null,
 	id_utente  		integer not null,
 	choice			integer not null,
+	set				text not null,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utenti(id)
 		ON UPDATE NO ACTION
