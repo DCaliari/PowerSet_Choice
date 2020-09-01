@@ -3,46 +3,52 @@
 
 {% block content %}
 <div>
-    <a href="{% url 'index' %}">Return to Index</a>
+	<a href="{% url 'index' %}">Return to Index</a>
 </div>
 <div>
-    <h1>{{ page_title }}</h1>
+	<h1>{{ page_title }}</h1>
 </div>
 <div class="center">
-    {% for image in images %}
-    <div>
-        <img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
-        onclick="return on_click_image(this.id)"/>
-    </div>
-    {% endfor %}
+	{% for image in images %}
+	<div>
+		<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
+		onclick="return on_click_image(this.id)"/>
+	</div>
+	{% endfor %}
 </div>
 
 <div class="bottomright">
-    <button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Click me</button>
+	<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Click me</button>
 </div>
 
 <!-- javascript code: function _ connect to the element using the id of the element-->
 <!-- function on_click_image transform the variable selected_image into the id: index-->
 <!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
 <!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
-    which is the id of the image taken from the parameter "index" in the for loop -->
+	which is the id of the image taken from the parameter "index" in the for loop -->
 <script>
-    var selected_image = null;
+	var selected_image = null;
 
-    function on_click_image(id){
-        selected_image = id;
-        var button = _('button_submit');
-        button.disabled = false;
-        button.classList.remove('button_disabled');
-        var image = _(id);
-        image.classList.add('selected_image');
-    }
-    // The last three lines remove the disabled class from the button when the button is clicked.
+	function on_click_image(id){
+		// if there was already a selected image then get the image from function _ and remove border
+		if(selected_image!==null){
+			var image_prec = _(selected_image);
+			image_prec.classList.remove('selected_image');
+		}
+		//new image
+		selected_image = id;
+		var button = _('button_submit');
+		button.disabled = false;
+		button.classList.remove('button_disabled');
+		var image = _(id);
+		image.classList.add('selected_image');
+	}
+	// The last three lines remove the disabled class from the button when the button is clicked.
 
-    function on_click_submit(){
-        _('button_submit').disabled = (selected_image == null);
-        location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image;
-    }
+	function on_click_submit(){
+		_('button_submit').disabled = (selected_image == null);
+		location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image;
+	}
 
 </script>
 {% endblock %}

@@ -1,4 +1,5 @@
 import os
+import json
 import random
 
 from django.shortcuts import redirect
@@ -36,7 +37,9 @@ last_page = 0
 
 
 def index(request, template_name='index.html'):  # create the function custom
-	global id_utente  # if the variable has been create outside the function (global) then it must be recalled inside
+	global id_utente, last_page,IMAGES_POWERSET  # if the variable has been create outside the function (global) then it must be recalled inside
+	
+	last_page = 0
 	
 	connection_database = apri_connessione_db()
 	connection_database.insert_utente()  # run the function insert_utente from modulo_database
@@ -44,7 +47,7 @@ def index(request, template_name='index.html'):  # create the function custom
 	id_utente = connection_database.cursor_db.lastrowid  # get the last id created in the database
 	connection_database.close_conn()
 	
-	random.shuffle(IMAGES_POWERSET)
+	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
 	
 	model_map = {
 		'page_title': 'Start'
@@ -61,8 +64,9 @@ def choice_image(request, template_name='choice_image.html'):
 	
 	if num_page < last_page:
 		num_page = last_page
+		response = redirect('{}?num_page={}'.format(reverse('choice_image'), num_page))
+		return response
 	last_page = num_page
-	
 	
 	'''  to insert pages in between choice pages
 	if num_page == 5:
@@ -70,8 +74,7 @@ def choice_image(request, template_name='choice_image.html'):
 		return response
 	'''
 	
-	images = list(IMAGES_POWERSET[num_page - 1])  # fix the list
-	random.shuffle(images)
+	images = IMAGES_POWERSET[num_page-1]
 	
 	model_map = {
 		'page_title': 'Round ' + str(num_page),
@@ -91,7 +94,11 @@ def save_choice(request, template_name='choice_image.html'):
 	connection_database = apri_connessione_db()
 	if 'choice' in request.GET:  # if the parameter 'choice' exists then insert in the database, otherwise nothing
 		choice = int(request.GET.get('choice', ''))
-		connection_database.insert_scelte(id_utente, choice)
+		menu = json.dumps(IMAGES_POWERSET[num_page-1])
+		# json handle objects (like lists) when they are in the dataset
+		# using json.loads I can transform data from the table into list or other objects again
+		
+		connection_database.insert_scelte(id_utente, choice, menu)
 
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
