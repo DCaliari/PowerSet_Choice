@@ -84,11 +84,15 @@ def choice_image(request, template_name='choice_image.html'):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def save_choice(request, template_name='choice_image.html'):
+def save_choice(request):
 	num_page = int(request.GET.get('num_page', ''))
 	
 	if num_page >= len(IMAGES_POWERSET):  # when the pages are finished go to final page
-		response = redirect('final_page')
+		response = redirect('drag_drop')
+		return response
+	
+	if id_utente is None:
+		response = redirect('index')
 		return response
 	
 	connection_database = apri_connessione_db()
@@ -98,7 +102,7 @@ def save_choice(request, template_name='choice_image.html'):
 		# json handle objects (like lists) when they are in the dataset
 		# using json.loads I can transform data from the table into list or other objects again
 		
-		connection_database.insert_scelte(id_utente, choice, menu)
+		connection_database.insert_scelte(id_utente, choice, menu, None)
 
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -111,9 +115,51 @@ def save_choice(request, template_name='choice_image.html'):
 	return response
 
 
+def drag_drop(request, template_name='drag_drop.html'):
+	dd_images = util.IMAGES
+	positions = range(100)
+	
+	model_map = {
+		'page_title': 'Rank',
+		'images': dd_images,
+		'positions': positions
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def slider(request, template_name='slider.html'):
+	slider_images = util.IMAGES
+	
+	model_map = {
+		'page_title': 'Slider',
+		'images': slider_images
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def slider_save(request):
+	slider_images = util.IMAGES
+	
+	connection_database = apri_connessione_db()
+	
+	if 'store_slider' in request.POST:  # in the if loop enter the name from html file
+		for image in slider_images:
+			slider_value = request.POST.get(image, '')
+			slider_list = [image, slider_value]
+			slider_json = json.dumps(slider_list)
+			connection_database.insert_scelte(id_utente, None, None, slider_json)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	response = redirect('final_page')
+	return response
+	
+	
 def final_page(request, template_name='final_page.html'):
 	final_images = util.IMAGES
 	model_map = {
+		'page_title': 'Final Page',
 		'images': final_images
 	}
 	return TemplateResponse(request, template_name, model_map)

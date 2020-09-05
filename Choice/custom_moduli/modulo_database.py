@@ -25,8 +25,9 @@ create table utenti(
 create table choices(
 	id 				integer primary key autoincrement not null,
 	id_utente  		integer not null,
-	choice			integer not null,
-	menu			text not null,
+	choice			integer,
+	menu			text,
+	slider			text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utenti(id)
 		ON UPDATE NO ACTION
@@ -54,14 +55,14 @@ WHERE id_utente=:id_utente
 		# collegamento variable SQL con python
 		return self.cursor_db.fetchone()
 	
-	def insert_scelte(self, id_utente, choice, menu):  # parameters id_utente, choice are compulsory cuz defined "not null"
+	def insert_scelte(self, id_utente, choice, menu, slider):  # parameters id_utente, choice are compulsory cuz defined "not null"
 		# in the database
 		
 		sql = """
 INSERT INTO choices(
-	id_utente, choice, menu, insert_date
+	id_utente, choice, menu, slider, insert_date
 ) VALUES(
-	:id_utente, :choice, :menu, """ + modulo_sqlite.DATE_TIME_NOW + """
+	:id_utente, :choice, :menu, :slider, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		# Through insert_scelte I receive id_utente and choice,
@@ -70,7 +71,8 @@ INSERT INTO choices(
 		self.cursor_db.execute(sql, {
 			'id_utente': id_utente,
 			'choice': choice,
-			'menu': menu
+			'menu': menu,
+			'slider': slider
 		})
 	
 	####################################################################################################
