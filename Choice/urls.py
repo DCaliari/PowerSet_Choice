@@ -8,5 +8,6 @@ urlpatterns = [
 	path('save_choice', views.save_choice, name='save_choice'),
 	path('drag_drop', views.drag_drop, name='drag_drop'),
 	path('slider', views.slider, name='slider'),
+	path('slider_save', views.slider_save, name='slider_save'),
 	path('final_page', views.final_page, name='final_page')
 ]
