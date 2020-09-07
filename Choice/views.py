@@ -1,6 +1,5 @@
 import os
 import json
-import random
 
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -24,7 +23,7 @@ IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 def apri_connessione_db():
 	path_db = os.path.abspath("RecordChoice.db")
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
-	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
+	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:
 		database.schema()
 	return database
@@ -36,15 +35,18 @@ id_utente = None
 last_page = 0
 
 
-def index(request, template_name='index.html'):  # create the function custom
-	global id_utente, last_page,IMAGES_POWERSET  # if the variable has been create outside the function (global) then it must be recalled inside
+def index(request, template_name='index.html'):		# create the function custom
+	global id_utente, last_page, IMAGES_POWERSET
+	# if the variable has been create outside the function (global) then it must be recalled inside
 	
 	last_page = 0
 	
 	connection_database = apri_connessione_db()
-	connection_database.insert_utente()  # run the function insert_utente from modulo_database
+	# run the function insert_utente from modulo_database
+	connection_database.insert_utente()
 	connection_database.conn_db.commit()
-	id_utente = connection_database.cursor_db.lastrowid  # get the last id created in the database
+	# get the last id created in the database
+	id_utente = connection_database.cursor_db.lastrowid
 	connection_database.close_conn()
 	
 	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
@@ -68,7 +70,7 @@ def choice_image(request, template_name='choice_image.html'):
 		return response
 	last_page = num_page
 	
-	'''  to insert pages in between choice pages
+	'''to insert pages in between choice pages
 	if num_page == 5:
 		response = redirect('test')
 		return response
@@ -87,7 +89,8 @@ def choice_image(request, template_name='choice_image.html'):
 def save_choice(request):
 	num_page = int(request.GET.get('num_page', ''))
 	
-	if num_page >= len(IMAGES_POWERSET):  # when the pages are finished go to final page
+	# when the pages are finished go to final page
+	if num_page >= len(IMAGES_POWERSET):
 		response = redirect('drag_drop')
 		return response
 	
@@ -96,14 +99,15 @@ def save_choice(request):
 		return response
 	
 	connection_database = apri_connessione_db()
-	if 'choice' in request.GET:  # if the parameter 'choice' exists then insert in the database, otherwise nothing
+	# if the parameter 'choice' exists then insert in the database, otherwise nothing
+	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = json.dumps(IMAGES_POWERSET[num_page-1])
 		# json handle objects (like lists) when they are in the dataset
 		# using json.loads I can transform data from the table into list or other objects again
 		
 		connection_database.insert_scelte(id_utente, choice, menu, None)
-
+	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
@@ -142,7 +146,8 @@ def slider_save(request):
 	
 	connection_database = apri_connessione_db()
 	
-	if 'store_slider' in request.POST:  # in the if loop enter the name from html file
+	# in the if loop enter the name from html file
+	if 'store_slider' in request.POST:
 		for image in slider_images:
 			slider_value = request.POST.get(image, '')
 			slider_list = [image, slider_value]

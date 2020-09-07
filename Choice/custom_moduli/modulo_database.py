@@ -4,7 +4,7 @@ from Moduli import modulo_strings
 
 class Database(modulo_sqlite.Sqlite):
 	'''
-	select  # operations that I can do
+	select	# operations that I can do
 	count
 	insert
 	update
@@ -55,7 +55,8 @@ WHERE id_utente=:id_utente
 		# collegamento variable SQL con python
 		return self.cursor_db.fetchone()
 	
-	def insert_scelte(self, id_utente, choice, menu, slider):  # parameters id_utente, choice are compulsory cuz defined "not null"
+	def insert_scelte(self, id_utente, choice, menu, slider):
+		# parameters id_utente, choice are compulsory cuz defined "not null"
 		# in the database
 		
 		sql = """
