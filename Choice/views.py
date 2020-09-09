@@ -1,5 +1,6 @@
 import os
 import json
+import random
 
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -31,12 +32,11 @@ def apri_connessione_db():
 
 #################################################################################################
 
-id_utente = None
 last_page = 0
 
 
 def index(request, template_name='index.html'):		# create the function custom
-	global id_utente, last_page, IMAGES_POWERSET
+	global last_page, IMAGES_POWERSET
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	
 	last_page = 0
@@ -47,6 +47,8 @@ def index(request, template_name='index.html'):		# create the function custom
 	connection_database.conn_db.commit()
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
+	# set the value in the session. Session in handled in settings.py.
+	request.session[util.SESSION_KEY__ID_UTENTE] = id_utente
 	connection_database.close_conn()
 	
 	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
@@ -87,6 +89,7 @@ def choice_image(request, template_name='choice_image.html'):
 
 
 def save_choice(request):
+	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	num_page = int(request.GET.get('num_page', ''))
 	
 	# when the pages are finished go to final page
@@ -142,6 +145,7 @@ def slider(request, template_name='slider.html'):
 
 
 def slider_save(request):
+	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	slider_images = util.IMAGES
 	
 	connection_database = apri_connessione_db()
@@ -159,12 +163,27 @@ def slider_save(request):
 	
 	response = redirect('final_page')
 	return response
-	
-	
+
+
 def final_page(request, template_name='final_page.html'):
-	final_images = util.IMAGES
+	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+	# leggo dal db
+	connection_database = apri_connessione_db()
+	choices = connection_database.select_choices(id_utente)
+	connection_database.close_conn()
+	# elaboro le scelte
+	images_payoff = []
+	for choice in choices:
+		# choice e' la riga della tabella, per selezionare una colonna usare le parentesi quadre come un array
+		num_choice = choice['choice']
+		menu = json.loads(choice['menu'])
+		image_chosen = menu[num_choice]
+		images_payoff.append(image_chosen)
+	# scelgo un'immagine a caso
+	image_payoff = random.choice(images_payoff)
+	
 	model_map = {
 		'page_title': 'Final Page',
-		'images': final_images
+		'image_payoff': image_payoff
 	}
 	return TemplateResponse(request, template_name, model_map)

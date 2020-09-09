@@ -40,10 +40,10 @@ create table choices(
 		super().schema(sql)
 	
 	####################################################################################################
-	def select_scelte(self, id_utente):
+	def select_choices(self, id_utente):
 		sql = """
 SELECT *
-FROM scelte
+FROM choices
 WHERE id_utente=:id_utente
 ;
 """
@@ -53,7 +53,7 @@ WHERE id_utente=:id_utente
 			'id_utente': id_utente
 		})
 		# collegamento variable SQL con python
-		return self.cursor_db.fetchone()
+		return self.cursor_db.fetchall()
 	
 	def insert_scelte(self, id_utente, choice, menu, slider):
 		# parameters id_utente, choice are compulsory cuz defined "not null"
