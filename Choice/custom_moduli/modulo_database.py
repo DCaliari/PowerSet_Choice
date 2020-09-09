@@ -22,11 +22,19 @@ create table utenti(
 	id				integer primary key autoincrement not null,
 	insert_date		timestamp not null
 );
-create table choices(
+create table choices_menu(
 	id 				integer primary key autoincrement not null,
 	id_utente  		integer not null,
 	choice			integer,
 	menu			text,
+	insert_date		timestamp not null,
+	foreign key(id_utente) references utenti(id)
+		ON UPDATE NO ACTION
+		ON DELETE RESTRICT
+);
+create table choices_slider(
+	id 				integer primary key autoincrement not null,
+	id_utente  		integer not null,
 	slider			text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utenti(id)
@@ -37,13 +45,14 @@ create table choices(
 """
 		# id is the name of the column. 'primary key' = always different. 'not null' = not empty
 		# 'timestamp' = memorize day, month, year and hours.
+		# foreign key connect the two tables via id_utente.
 		super().schema(sql)
 	
 	####################################################################################################
-	def select_choices(self, id_utente):
+	def select_choices_menu(self, id_utente):
 		sql = """
 SELECT *
-FROM choices
+FROM choices_menu
 WHERE id_utente=:id_utente
 ;
 """
@@ -55,15 +64,15 @@ WHERE id_utente=:id_utente
 		# collegamento variable SQL con python
 		return self.cursor_db.fetchall()
 	
-	def insert_scelte(self, id_utente, choice, menu, slider):
+	def insert_choices_menu(self, id_utente, choice, menu):
 		# parameters id_utente, choice are compulsory cuz defined "not null"
 		# in the database
 		
 		sql = """
-INSERT INTO choices(
-	id_utente, choice, menu, slider, insert_date
+INSERT INTO choices_menu(
+	id_utente, choice, menu, insert_date
 ) VALUES(
-	:id_utente, :choice, :menu, :slider, """ + modulo_sqlite.DATE_TIME_NOW + """
+	:id_utente, :choice, :menu, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		# Through insert_scelte I receive id_utente and choice,
@@ -72,7 +81,20 @@ INSERT INTO choices(
 		self.cursor_db.execute(sql, {
 			'id_utente': id_utente,
 			'choice': choice,
-			'menu': menu,
+			'menu': menu
+		})
+	
+	####################################################################################################
+	def insert_choices_slider(self, id_utente, slider):
+		sql = """
+INSERT INTO choices_slider(
+	id_utente, slider, insert_date
+) VALUES(
+	:id_utente, :slider, """ + modulo_sqlite.DATE_TIME_NOW + """
+);
+"""
+		self.cursor_db.execute(sql, {
+			'id_utente': id_utente,
 			'slider': slider
 		})
 	

@@ -92,15 +92,6 @@ def save_choice(request):
 	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	num_page = int(request.GET.get('num_page', ''))
 	
-	# when the pages are finished go to final page
-	if num_page >= len(IMAGES_POWERSET):
-		response = redirect('drag_drop')
-		return response
-	
-	if id_utente is None:
-		response = redirect('index')
-		return response
-	
 	connection_database = apri_connessione_db()
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	if 'choice' in request.GET:
@@ -109,10 +100,15 @@ def save_choice(request):
 		# json handle objects (like lists) when they are in the dataset
 		# using json.loads I can transform data from the table into list or other objects again
 		
-		connection_database.insert_scelte(id_utente, choice, menu, None)
-	
+		connection_database.insert_choices_menu(id_utente, choice, menu)
+
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
+	
+	# when the pages are finished go to next problem
+	if num_page >= len(IMAGES_POWERSET):
+		response = redirect('slider')
+		return response
 	
 	next_page = num_page + 1
 	
@@ -120,18 +116,6 @@ def save_choice(request):
 	# we concatenate the parameter num_page with the value next_page
 	response = redirect('{}?num_page={}'.format(reverse('choice_image'), next_page))
 	return response
-
-
-def drag_drop(request, template_name='drag_drop.html'):
-	dd_images = util.IMAGES
-	positions = range(100)
-	
-	model_map = {
-		'page_title': 'Rank',
-		'images': dd_images,
-		'positions': positions
-	}
-	return TemplateResponse(request, template_name, model_map)
 
 
 def slider(request, template_name='slider.html'):
@@ -156,7 +140,7 @@ def slider_save(request):
 			slider_value = request.POST.get(image, '')
 			slider_list = [image, slider_value]
 			slider_json = json.dumps(slider_list)
-			connection_database.insert_scelte(id_utente, None, None, slider_json)
+			connection_database.insert_choices_slider(id_utente, slider_json)
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -169,7 +153,7 @@ def final_page(request, template_name='final_page.html'):
 	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()
-	choices = connection_database.select_choices(id_utente)
+	choices = connection_database.select_choices_menu(id_utente)
 	connection_database.close_conn()
 	# elaboro le scelte
 	images_payoff = []
