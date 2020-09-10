@@ -47,6 +47,8 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	# added by me
+	'Choice.custom_moduli.MyMiddleware.MyMiddleware'
 ]
 
 ROOT_URLCONF = 'PowerSet.urls'

@@ -2,8 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div>Instructions:</div>
-<h1><a href="choice_image?num_page=1" class="start">Start</a></h1>
-<button id="start" onclick="openFullscreen()">Start</button>
 
+<div>Instructions:</div>
+<h1><button id="start_button" class="start" onclick="return fullscreen_and_iframe()">Start</button></h1>
+
+<iframe id="iframe_fullpage" src="choice_image?num_page=1" title="Start" class="iframe_fullpage"></iframe>
+<script>
+	function fullscreen_and_iframe() {
+		openFullscreen();
+		_('iframe_fullpage').style.display = 'block';
+		_('start_button').style.display = 'none';
+	}
+	
+</script>
 {% endblock %}
