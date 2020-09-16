@@ -48,6 +48,7 @@ MIDDLEWARE = [
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	# added by me
+	# abilito l'utilizzo del sito tramite iFrame
 	'Choice.custom_moduli.MyMiddleware.MyMiddleware'
 ]
 

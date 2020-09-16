@@ -8,3 +8,4 @@ class MyMiddleware:
 		# allow iframe to be inserted in webpages
 		response['X-Frame-Options'] = 'SAMEORIGIN'
 		return response
+
