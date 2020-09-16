@@ -3,15 +3,20 @@
 
 {% block content %}
 
-<div>Instructions:</div>
-<h1><button id="start_button" class="start" onclick="return fullscreen_and_iframe()">Start</button></h1>
+<div id="first_page" class="row h-100">
+	<!-- col-md-12: bootstrap divide la pagina in 12 colonne. Io dico che questo div deve occupare 12 colonne -->
+	<div class="col-md-12">Instructions:</div>
+	<div class="col-md-12 my-auto text-center">
+		<a id="start_button" class="h2 btn btn-primary" onclick="return fullscreen_and_iframe()">Start</a>
+	</div>
+</div>
 
 <iframe id="iframe_fullpage" src="choice_image?num_page=1" title="Start" class="iframe_fullpage"></iframe>
 <script>
 	function fullscreen_and_iframe() {
 		openFullscreen();
 		_('iframe_fullpage').style.display = 'block';
-		_('start_button').style.display = 'none';
+		_('first_page').style.display = 'none';
 	}
 </script>
 {% endblock %}

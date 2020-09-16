@@ -2,30 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div>
-	<a href="{% url 'index' %}">Return to Index</a>
-</div>
-<div class="round">
-	<h1>{{ page_title }}</h1>
-</div>
-<div class="center">
-	{% for image in images %}
-	<div>
-		<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
-		onclick="return on_click_image(this.id)"/>
+<div class="row">
+	<div class="col-md-12">
+		<a href="{% url 'index' %}">Return to Index</a>
 	</div>
-	{% endfor %}
+	<div class="col-md-12 text-center">
+		<span><h2>{{ page_title }}</h2></span>
+	</div>
+	<div class="col-md-12">
+		<div class="text-center">
+			{% for image in images %}
+			<div>
+				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image align_left"
+				onclick="return on_click_image(this.id)"/>
+			</div>
+			{% endfor %}
+		</div>
+		
+
+		<!-- javascript code: function _ connect to the element using the id of the element-->
+		<!-- function on_click_image transform the variable selected_image into the id: index-->
+		<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
+		<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
+			which is the id of the image taken from the parameter "index" in the for loop -->
+	</div>
+	<div class="col-md-12">
+		<div class="text-right">
+			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Click me</button>
+		</div>
+	</div>
 </div>
 
-<div class="bottomright">
-	<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Click me</button>
-</div>
-
-<!-- javascript code: function _ connect to the element using the id of the element-->
-<!-- function on_click_image transform the variable selected_image into the id: index-->
-<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
-<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
-	which is the id of the image taken from the parameter "index" in the for loop -->
 <script>
 	var selected_image = null;
 

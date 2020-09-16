@@ -10,11 +10,20 @@
 	<link rel="shortcut icon" href="{% static "" %}images/apple.jpg" type="image/x-icon" />
 	<link rel="stylesheet" href="{% static "" %}css/my_style.css"/>
 	
+	<!-- funzioni gia' fatte per gestioni varie -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!-- stili e funzioni precreate per la gestione grafica -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
 	<script src="{% static "" %}js/scripts.js"></script>
 	
 </head>
 <body>
-{% block content %}
-{% endblock %}
+	<div class="container-fluid">
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>

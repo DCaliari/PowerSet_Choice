@@ -2,10 +2,14 @@
 {% load static %}
 
 {% block content %}
-<div><h1>Your Result is:</h1></div>
-<div>
-	<!-- insert the image that has been selected using a wheel that represents -->
-	<!-- a random draw for kids. If too difficult, think of an alternative -->
-	<img src="{% static "" %}images/{{ image_payoff }}" class="choice_image align_left"/>
+<div class="row">
+	<div class="col-md-12">
+		<div><h1>Your Result is:</h1></div>
+		<div>
+			<!-- insert the image that has been selected using a wheel that represents -->
+			<!-- a random draw for kids. If too difficult, think of an alternative -->
+			<img src="{% static "" %}images/{{ image_payoff }}" class="choice_image align_left"/>
+		</div>
+	</div>
 </div>
 {% endblock %}
