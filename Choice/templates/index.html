@@ -14,7 +14,9 @@
 <iframe id="iframe_fullpage" src="choice_image?num_page=1" title="Start" class="iframe_fullpage"></iframe>
 <script>
 	function fullscreen_and_iframe() {
-		openFullscreen();
+		if (!is_localhost()) {
+			openFullscreen();
+		}
 		_('iframe_fullpage').style.display = 'block';
 		_('first_page').style.display = 'none';
 	}
