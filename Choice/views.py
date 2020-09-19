@@ -171,3 +171,11 @@ def final_page(request, template_name='final_page.html'):
 		'image_payoff': image_payoff
 	}
 	return TemplateResponse(request, template_name, model_map)
+
+
+def wheel(request, template_name='wheel.html'):
+	
+	model_map ={
+		'page_title': 'Wheel of Fortune'
+	}
+	return TemplateResponse(request, template_name, model_map)

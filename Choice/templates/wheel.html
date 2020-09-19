@@ -1,0 +1,20 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div id="wheel">
+			<canvas id="canvas" width="300" height="300"></canvas>
+		</div>
+		<br/>
+		<button id="spin" class="btn btn-primary">Stop!</button>
+	</div>
+</div>
+
+<!-- TODO: Missing triangle -->
+
+<script src="{% static "" %}js/pages/wheel.js"></script>
+
+{% endblock %}
