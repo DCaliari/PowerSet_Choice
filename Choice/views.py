@@ -168,7 +168,8 @@ def final_page(request, template_name='final_page.html'):
 	
 	model_map = {
 		'page_title': 'Final Page',
-		'image_payoff': image_payoff
+		'image_payoff': image_payoff,
+		'choices': images_payoff
 	}
 	return TemplateResponse(request, template_name, model_map)
 

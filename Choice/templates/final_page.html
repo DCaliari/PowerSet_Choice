@@ -4,6 +4,13 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12">
+		{% for image in choices %}
+			<img src="{% static "" %}images/{{ image }}" class="choice_image"/>
+		{% endfor %}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
 		<div><h1>Your Result is:</h1></div>
 		<div>
 			<!-- insert the image that has been selected using a wheel that represents -->
