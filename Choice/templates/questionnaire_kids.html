@@ -1,0 +1,23 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<form action="questionnaire_kids_save" method="post">
+			<div class="form-group">
+				<label for="nome">Name:</label>
+				<input type="text" id="nome" name="nome" class="form-control"/>
+			</div>
+			<button class="btn btn-primary" type="submit">Salva</button>
+			
+			<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
+			It is a security number.-->
+			{% csrf_token %}
+		</form>
+	</div>
+</div>
+
+
+
+{% endblock %}

@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', modulo_networking.get_ip()]
 
+
 # Application definition
 
 INSTALLED_APPS = [

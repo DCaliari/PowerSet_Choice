@@ -20,9 +20,11 @@
 			{% endfor %}
 			<!-- add one parameter html that is hidden and pass the data store_slider = true to python -->
 			<input type="hidden" name="store_slider" value="true"/>
+			
 			<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
 			It is a security number.-->
 			{% csrf_token %}
+			
 			<!-- this button sends the data to views.py -->
 			<input type="submit" value="invia"/>
 		</form>

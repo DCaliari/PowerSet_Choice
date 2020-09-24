@@ -42,8 +42,8 @@ def index(request, template_name='index.html'):		# create the function custom
 	last_page = 0
 	
 	connection_database = apri_connessione_db()
-	# run the function insert_utente from modulo_database
-	connection_database.insert_utente()
+	# run the function insert_utente_bambino from modulo_database
+	connection_database.insert_utente_bambino()
 	connection_database.conn_db.commit()
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
@@ -60,10 +60,33 @@ def index(request, template_name='index.html'):		# create the function custom
 	return TemplateResponse(request, template_name, model_map)
 
 
+def questionnaire_kids(request, template_name='questionnaire_kids.html'):
+	model_map = {
+		'page_title': 'Questionnaire'
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def questionnaire_kids_save(request):
+	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+	
+	connection_database = apri_connessione_db()
+	
+	# in the if loop enter the name from html file
+	if 'nome' in request.POST:
+		pass
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	response = redirect('choice_image')
+	return response
+
+
 def choice_image(request, template_name='choice_image.html'):
 	global last_page
 	
-	num_page = int(request.GET.get('num_page', ''))
+	num_page = int(request.GET.get('num_page', '1'))
 	# the second parameter is needed because if "choice" is empty then '' is passed
 	
 	if num_page < last_page:

@@ -18,8 +18,14 @@ class Database(modulo_sqlite.Sqlite):
 	# metodi
 	def schema(self):
 		sql = """
-create table utenti(
+create table utente_bambini(
 	id				integer primary key autoincrement not null,
+	nome			text not null,
+	cognome			text not null,
+	classe			text not null,
+	peso			integer not null,
+	altezza			integer not null,
+	sesso			text not null,
 	insert_date		timestamp not null
 );
 create table choices_menu(
@@ -28,7 +34,7 @@ create table choices_menu(
 	choice			integer,
 	menu			text,
 	insert_date		timestamp not null,
-	foreign key(id_utente) references utenti(id)
+	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
@@ -37,7 +43,7 @@ create table choices_slider(
 	id_utente  		integer not null,
 	slider			text,
 	insert_date		timestamp not null,
-	foreign key(id_utente) references utenti(id)
+	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
@@ -99,9 +105,9 @@ INSERT INTO choices_slider(
 		})
 	
 	####################################################################################################
-	def insert_utente(self):
+	def insert_utente_bambino(self):
 		sql = """
-INSERT INTO utenti(
+INSERT INTO utente_bambini(
 	insert_date
 ) VALUES(
 	""" + modulo_sqlite.DATE_TIME_NOW + """
