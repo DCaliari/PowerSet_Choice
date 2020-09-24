@@ -43,7 +43,7 @@ def index(request, template_name='index.html'):		# create the function custom
 	
 	connection_database = apri_connessione_db()
 	# run the function insert_utente_bambino from modulo_database
-	connection_database.insert_utente_bambino()
+	connection_database.insert_utenti()
 	connection_database.conn_db.commit()
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
@@ -54,7 +54,7 @@ def index(request, template_name='index.html'):		# create the function custom
 	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
 	
 	model_map = {
-		'page_title': 'Start'
+		'page_title': 'Inizio'
 		
 	}
 	return TemplateResponse(request, template_name, model_map)
@@ -62,7 +62,7 @@ def index(request, template_name='index.html'):		# create the function custom
 
 def questionnaire_kids(request, template_name='questionnaire_kids.html'):
 	model_map = {
-		'page_title': 'Questionnaire'
+		'page_title': 'Questionario'
 	}
 	return TemplateResponse(request, template_name, model_map)
 
@@ -74,7 +74,14 @@ def questionnaire_kids_save(request):
 	
 	# in the if loop enter the name from html file
 	if 'nome' in request.POST:
-		pass
+		nome = request.POST.get('nome', '')
+		cognome = request.POST.get('cognome', '')
+		classe = request.POST.get('classe', '')
+		peso = int(request.POST.get('peso', ''))
+		altezza = int(request.POST.get('altezza', ''))
+		sesso = request.POST.get('sesso', '')
+		
+		connection_database.insert_dati_bambino(id_utente, nome, cognome, classe, peso, altezza, sesso)
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -104,7 +111,7 @@ def choice_image(request, template_name='choice_image.html'):
 	images = IMAGES_POWERSET[num_page-1]
 	
 	model_map = {
-		'page_title': 'Round ' + str(num_page),
+		'page_title': 'Scelta n ' + str(num_page),
 		'num_page': num_page,
 		'images': images
 	}

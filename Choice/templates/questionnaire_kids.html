@@ -6,8 +6,23 @@
 	<div class="col-md-12">
 		<form action="questionnaire_kids_save" method="post">
 			<div class="form-group">
-				<label for="nome">Name:</label>
+				<label for="nome">Nome:</label>
 				<input type="text" id="nome" name="nome" class="form-control"/>
+<!------------------------------------------------------------------>
+				<label for="cognome">Cognome:</label>
+				<input type="text" id="cognome" name="cognome" class="form-control"/>
+				<label for="classe">Classe:</label>
+				<input type="text" id="classe" name="classe" class="form-control"/>
+				<label for="peso">Peso (in kg):</label>
+				<input type="number" id="peso" name="peso" class="form-control"/>
+				<label for="altezza">Altezza (in cm):</label>
+				<input type="number" id="altezza" name="altezza" class="form-control"/>
+				Sesso:<br>
+				<label for="maschio">Maschio:</label><br>
+				<input type="radio" id="maschio" name="sesso" class="form-control"/>
+				<label for="femmina">Femmina:</label><br>
+				<input type="radio" id="femmina" name="sesso" class="form-control"/>
+<!------------------------------------------------------------------>
 			</div>
 			<button class="btn btn-primary" type="submit">Salva</button>
 			
