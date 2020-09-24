@@ -4,14 +4,14 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12">
-		<h1>Range Slider Picture</h1>
+		<h1>Quanto ti piace lo snack?</h1>
 		
 		<!-- all data sent to views.py slider and use method post to not save in url -->
 		<form action="slider_save" method="post">
 			{% for image in images %}
 			<div class="slidecontainer">
-				<input type="range" name="{{ image }}" class="slider slider_{{ image }}" id="{{ image }}" min="1" max="100" value="50"/>
-				<p><h2>Value: <span id="{{ image }}_value"></span></h2></p>
+				<input type="range" name="{{ image }}" class="slider slider_{{ image }}" id="{{ image }}" min="1" max="10" value="5"/>
+				<p><h2><span id="{{ image }}_value"></span></h2></p>
 			</div>
 			<script>
 				slider_update_value("{{ image }}", "{{ image }}_value");
@@ -26,7 +26,7 @@
 			{% csrf_token %}
 			
 			<!-- this button sends the data to views.py -->
-			<input type="submit" value="invia"/>
+			<input class="btn btn-primary" type="submit" value="invia"/>
 		</form>
 	</div>
 </div>

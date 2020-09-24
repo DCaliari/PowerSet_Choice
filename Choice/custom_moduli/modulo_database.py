@@ -24,8 +24,8 @@ create table utenti(
 );
 create table dati_bambino(
 	id_utente		integer not null,
-	nome			text,
-	cognome			text,
+	nome			text not null,
+	cognome			text not null,
 	classe			text,
 	peso			integer,
 	altezza			integer,

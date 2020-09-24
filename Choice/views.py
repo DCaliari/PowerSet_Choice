@@ -77,8 +77,8 @@ def questionnaire_kids_save(request):
 		nome = request.POST.get('nome', '')
 		cognome = request.POST.get('cognome', '')
 		classe = request.POST.get('classe', '')
-		peso = int(request.POST.get('peso', ''))
-		altezza = int(request.POST.get('altezza', ''))
+		peso = request.POST.get('peso', '')
+		altezza = request.POST.get('altezza', '')
 		sesso = request.POST.get('sesso', '')
 		
 		connection_database.insert_dati_bambino(id_utente, nome, cognome, classe, peso, altezza, sesso)
@@ -200,13 +200,5 @@ def final_page(request, template_name='final_page.html'):
 		'page_title': 'Final Page',
 		'image_payoff': image_payoff,
 		'choices': images_payoff
-	}
-	return TemplateResponse(request, template_name, model_map)
-
-
-def wheel(request, template_name='wheel.html'):
-	
-	model_map ={
-		'page_title': 'Wheel of Fortune'
 	}
 	return TemplateResponse(request, template_name, model_map)
