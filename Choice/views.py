@@ -41,47 +41,38 @@ def index(request, template_name='index.html'):		# create the function custom
 	
 	last_page = 0
 	
-	connection_database = apri_connessione_db()
-	# run the function insert_utente_bambino from modulo_database
-	connection_database.insert_utenti()
-	connection_database.conn_db.commit()
-	# get the last id created in the database
-	id_utente = connection_database.cursor_db.lastrowid
-	# set the value in the session. Session in handled in settings.py.
-	request.session[util.SESSION_KEY__ID_UTENTE] = id_utente
-	connection_database.close_conn()
-	
 	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
 	
-	model_map = {
-		'page_title': 'Inizio'
-		
-	}
+	model_map = util.init_modelmap(request)
 	return TemplateResponse(request, template_name, model_map)
 
 
 def questionnaire_kids(request, template_name='questionnaire_kids.html'):
-	model_map = {
-		'page_title': 'Questionario'
-	}
+	model_map = util.init_modelmap(request)
 	return TemplateResponse(request, template_name, model_map)
 
 
 def questionnaire_kids_save(request):
-	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	
 	connection_database = apri_connessione_db()
 	
 	# in the if loop enter the name from html file
-	if 'nome' in request.POST:
-		nome = request.POST.get('nome', '')
+	nome = request.POST.get('nome', None)
+	if 'cognome' in request.POST:
 		cognome = request.POST.get('cognome', '')
+	if 'classe' in request.POST:
 		classe = request.POST.get('classe', '')
 		peso = request.POST.get('peso', '')
 		altezza = request.POST.get('altezza', '')
 		sesso = request.POST.get('sesso', '')
-		
-		connection_database.insert_dati_bambino(id_utente, nome, cognome, classe, peso, altezza, sesso)
+	# TODO: complete the if loops
+
+	connection_database.insert_utente_bambino(nome, cognome, classe, peso, altezza, sesso)
+	
+	# get the last id created in the database
+	id_utente = connection_database.cursor_db.lastrowid
+	# set the value in the session. Session in handled in settings.py.
+	request.session[util.SESSION_KEY__ID_UTENTE] = id_utente
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -110,11 +101,10 @@ def choice_image(request, template_name='choice_image.html'):
 	
 	images = IMAGES_POWERSET[num_page-1]
 	
-	model_map = {
-		'page_title': 'Scelta n ' + str(num_page),
-		'num_page': num_page,
-		'images': images
-	}
+	model_map = util.init_modelmap(request)
+	model_map['page_title'] = 'Scelta n ' + str(num_page)
+	model_map['num_page'] = num_page
+	model_map['images'] = images
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -151,10 +141,9 @@ def save_choice(request):
 def slider(request, template_name='slider.html'):
 	slider_images = util.IMAGES
 	
-	model_map = {
-		'page_title': 'Slider',
-		'images': slider_images
-	}
+	model_map = util.init_modelmap(request)
+	model_map['images'] = slider_images
+
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -195,10 +184,8 @@ def final_page(request, template_name='final_page.html'):
 		images_payoff.append(image_chosen)
 	# scelgo un'immagine a caso
 	image_payoff = random.choice(images_payoff)
-	
-	model_map = {
-		'page_title': 'Final Page',
-		'image_payoff': image_payoff,
-		'choices': images_payoff
-	}
+
+	model_map = util.init_modelmap(request)
+	model_map['iamge_payoff'] = image_payoff
+	model_map['choices'] = images_payoff
 	return TemplateResponse(request, template_name, model_map)

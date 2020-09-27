@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>{{ page_title }}</title>
+	<title>Esperimento</title>
 	
 	<!-- layout responsive: viene visualizzato correttamente da telefono o tablet -->
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,6 +23,13 @@
 </head>
 <body>
 	<div class="container-fluid">
+		{% if is_localhost %}
+		<div class="row">
+			<div class="col-md-12">
+				<button class="btn btn-primary" onclick="return location.reload();">Ricarica Pagina</button>
+			</div>
+		</div>
+		{% endif %}
 		{% block content %}
 		{% endblock %}
 	</div>

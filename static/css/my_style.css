@@ -11,7 +11,7 @@
 
 .choice_image {
 		width:230px;
-		height:250px;
+		height:auto;
 }
 
 .selected_image {

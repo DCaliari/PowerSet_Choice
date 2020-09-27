@@ -18,22 +18,15 @@ class Database(modulo_sqlite.Sqlite):
 	# metodi
 	def schema(self):
 		sql = """
-create table utenti(
+create table utente_bambini(
 	id				integer primary key autoincrement not null,
-	insert_date		timestamp not null
-);
-create table dati_bambino(
-	id_utente		integer not null,
 	nome			text not null,
 	cognome			text not null,
 	classe			text,
 	peso			integer,
 	altezza			integer,
 	sesso			text,
-	insert_date		timestamp not null,
-	foreign key(id_utente) references utenti(id)
-		ON UPDATE NO ACTION
-		ON DELETE RESTRICT
+	insert_date		timestamp not null
 );
 create table choices_menu(
 	id 				integer primary key autoincrement not null,
@@ -41,7 +34,7 @@ create table choices_menu(
 	choice			integer,
 	menu			text,
 	insert_date		timestamp not null,
-	foreign key(id_utente) references utenti(id)
+	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
@@ -50,7 +43,7 @@ create table choices_slider(
 	id_utente  		integer not null,
 	slider			text,
 	insert_date		timestamp not null,
-	foreign key(id_utente) references utenti(id)
+	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
@@ -112,28 +105,15 @@ INSERT INTO choices_slider(
 		})
 	
 	####################################################################################################
-	def insert_utenti(self):
+	def insert_utente_bambino(self, nome, cognome, classe, peso, altezza, sesso):
 		sql = """
-INSERT INTO utenti(
-	insert_date
+INSERT INTO utente_bambini(
+	nome, cognome, classe, peso, altezza, sesso, insert_date
 ) VALUES(
-	""" + modulo_sqlite.DATE_TIME_NOW + """
+	:nome, :cognome, :classe, :peso, :altezza, :sesso, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		self.cursor_db.execute(sql, {
-		})
-	
-	####################################################################################################
-	def insert_dati_bambino(self, id_utente, nome, cognome, classe, peso, altezza, sesso):
-		sql = """
-INSERT INTO dati_bambino(
-	id_utente, nome, cognome, classe, peso, altezza, sesso, insert_date
-) VALUES(
-	:id_utente, :nome, :cognome, :classe, :peso, :altezza, :sesso, """ + modulo_sqlite.DATE_TIME_NOW + """
-);
-"""
-		self.cursor_db.execute(sql, {
-			'id_utente': id_utente,
 			'nome': nome,
 			'cognome': cognome,
 			'classe': classe,
