@@ -2,40 +2,73 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-	<div class="col-md-12">
-		<form action="questionnaire_kids_save" method="post">
-			<div class="form-group">
-				<label for="nome"><h4>Nome:</h4></label>
-				<input type="text" id="nome" name="nome" class="form-control"/>
-			</div>
-<!------------------------------------------------------------------>
-			<div class="form-group">
-				<label for="cognome"><h4>Cognome:</h4></label>
-				<input type="text" id="cognome" name="cognome" class="form-control"/>
-			</div>
-				<label for="classe"><h4>Classe:</h4></label>
-				<input type="text" id="classe" name="classe" class="form-control"/>
-				<label for="peso"><h4>Peso (in kg):</h4></label>
-				<input type="number" id="peso" name="peso" class="form-control"/>
-				<label for="altezza"><h4>Altezza (in cm):</h4></label>
-				<input type="number" id="altezza" name="altezza" class="form-control"/>
-				<h4>Sesso:</h4>
-				<label for="maschio">Maschio:</label>
-				<input type="radio" id="maschio" name="sesso" value="M"/><br>
-				<label for="femmina">Femmina:</label>
-				<input type="radio" id="femmina" name="sesso" value="F"/>
-<!------------------------------------------------------------------>
-			</div>
-			<button class="btn btn-primary" type="submit">Salva</button>
-			
-			<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
-			It is a security number.-->
-			{% csrf_token %}
-		</form>
+<form action="questionnaire_kids_save" method="post">
+	<div class="form-group row">
+		<div class="col-md-6">
+			<label for="nome"><h4>Nome:</h4></label>
+			<input type="text" id="nome" name="nome" class="form-control" placeholder="Nome"/>
+		</div>
 	</div>
-</div>
-
-
+	<div class="form-group row">
+		<div class="col-md-6">
+				<label for="cognome"><h4>Cognome:</h4></label>
+				<input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-6">
+				<label for="classe"><h4>Classe:</h4></label>
+				<input type="text" id="classe" name="classe" class="form-control" placeholder="Classe"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-3">
+			<label for="peso"><h4>Peso (in kg):</h4></label>
+			<input type="number" id="peso" name="peso" class="form-control" placeholder="Peso"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-3">
+			<label for="altezza"><h4>Altezza (in cm):</h4></label>
+			<input type="number" id="altezza" name="altezza" class="form-control" placeholder="Altezza"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-6">
+			<h4>Sesso:</h4>
+			<label for="maschio">Maschio:</label>
+			<input type="radio" id="maschio" name="sesso" value="M"/><br>
+			<label for="femmina">Femmina:</label>
+			<input type="radio" id="femmina" name="sesso" value="F"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<h4>...is messy</h4>
+			<label for="1">1</label>
+			<input type="radio" id="1" name="messy" value="1"/>
+			<label for="2">2</label>
+			<input type="radio" id="2" name="messy" value="2"/>
+			<label for="3">3</label>
+			<input type="radio" id="3" name="messy" value="3"/>
+			<label for="4">4</label>
+			<input type="radio" id="4" name="messy" value="4"/>
+			<label for="5">5</label>
+			<input type="radio" id="5" name="messy" value="5"/>
+			<label for="6">6</label>
+			<input type="radio" id="6" name="messy" value="6"/>
+			<label for="7">7</label>
+			<input type="radio" id="7" name="messy" value="7"/>
+			<label for="8">8</label>
+			<input type="radio" id="8" name="messy" value="8"/>
+			<label for="9">9</label>
+			<input type="radio" id="9" name="messy" value="9"/>
+		<div class="col-6"><h4>...is neat</h4></div>
+	<div class="col-sm-10">
+		<button class="btn btn-primary" type="submit">Salva</button>
+	</div>
+	<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
+	It is a security number.-->
+	{% csrf_token %}
+</form>
 
 {% endblock %}
