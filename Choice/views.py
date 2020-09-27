@@ -58,15 +58,12 @@ def questionnaire_kids_save(request):
 	
 	# in the if loop enter the name from html file
 	nome = request.POST.get('nome', None)
-	if 'cognome' in request.POST:
-		cognome = request.POST.get('cognome', '')
-	if 'classe' in request.POST:
-		classe = request.POST.get('classe', '')
-		peso = request.POST.get('peso', '')
-		altezza = request.POST.get('altezza', '')
-		sesso = request.POST.get('sesso', '')
-	# TODO: complete the if loops
-
+	cognome = request.POST.get('cognome', None)
+	classe = request.POST.get('classe', None)
+	peso = request.POST.get('peso', None)
+	altezza = request.POST.get('altezza', None)
+	sesso = request.POST.get('sesso', None)
+	
 	connection_database.insert_utente_bambino(nome, cognome, classe, peso, altezza, sesso)
 	
 	# get the last id created in the database
@@ -168,6 +165,55 @@ def slider_save(request):
 	return response
 
 
+def numerical_comparison(request, template_name='numerical_comparison'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def summation(request, template_name='summation'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def number_after(request, template_name='number_after'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def number_before(request, template_name='number_before'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def number_closer(request, template_name='number_closer'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def shapes(request, template_name='shapes'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
+def pencils_length(request, template_name='pencils_length'):
+	model_map = {
+	
+	}
+	return TemplateResponse(request, template_name, model_map)
+
+
 def final_page(request, template_name='final_page.html'):
 	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
@@ -186,6 +232,6 @@ def final_page(request, template_name='final_page.html'):
 	image_payoff = random.choice(images_payoff)
 
 	model_map = util.init_modelmap(request)
-	model_map['iamge_payoff'] = image_payoff
+	model_map['image_payoff'] = image_payoff
 	model_map['choices'] = images_payoff
 	return TemplateResponse(request, template_name, model_map)
