@@ -2,7 +2,7 @@ from itertools import chain, combinations
 import random
 
 
-def contains(haystack,needle):
+def contains(haystack, needle):
 	return haystack.find(needle) != -1
 
 

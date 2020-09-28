@@ -13,6 +13,7 @@ SESSION_KEY__ID_UTENTE = 'id_utente'
 
 def init_modelmap(request):
 	model_map = {
-		'is_localhost': modulo_django.is_localhost(request)
+		'is_localhost': modulo_django.is_localhost(request),
+		'is_index': modulo_django.is_index(request)
 	}
 	return model_map

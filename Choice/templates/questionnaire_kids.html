@@ -23,48 +23,54 @@
 	</div>
 	<div class="form-group row">
 		<div class="col-md-3">
-			<label for="peso"><h4>Peso (in kg):</h4></label>
+			<label for="peso">Peso (in kg):</label>
 			<input type="number" id="peso" name="peso" class="form-control" placeholder="Peso"/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-md-3">
-			<label for="altezza"><h4>Altezza (in cm):</h4></label>
+			<label for="altezza">Altezza (in cm):</label>
 			<input type="number" id="altezza" name="altezza" class="form-control" placeholder="Altezza"/>
 		</div>
 	</div>
-	<div class="form-group row">
+	<div class="row">
 		<div class="col-md-6">
-			<h4>Sesso:</h4>
-			<label for="maschio">Maschio:</label>
-			<input type="radio" id="maschio" name="sesso" value="M"/><br>
-			<label for="femmina">Femmina:</label>
-			<input type="radio" id="femmina" name="sesso" value="F"/>
+			<label>Sesso:</label>
+			<div class="form-group">
+				<label for="maschio">Maschio:</label>
+				<input type="radio" id="maschio" name="sesso" value="M"/><br>
+				<label for="femmina">Femmina:</label>
+				<input type="radio" id="femmina" name="sesso" value="F"/>
+			</div>
 		</div>
 	</div>
 	<div class="form-group row">
-		<h4>...is messy</h4>
-			<label for="1">1</label>
-			<input type="radio" id="1" name="messy" value="1"/>
-			<label for="2">2</label>
-			<input type="radio" id="2" name="messy" value="2"/>
-			<label for="3">3</label>
-			<input type="radio" id="3" name="messy" value="3"/>
-			<label for="4">4</label>
-			<input type="radio" id="4" name="messy" value="4"/>
-			<label for="5">5</label>
-			<input type="radio" id="5" name="messy" value="5"/>
-			<label for="6">6</label>
-			<input type="radio" id="6" name="messy" value="6"/>
-			<label for="7">7</label>
-			<input type="radio" id="7" name="messy" value="7"/>
-			<label for="8">8</label>
-			<input type="radio" id="8" name="messy" value="8"/>
-			<label for="9">9</label>
-			<input type="radio" id="9" name="messy" value="9"/>
-		<div class="col-6"><h4>...is neat</h4></div>
-	<div class="col-sm-10">
-		<button class="btn btn-primary" type="submit">Salva</button>
+		<div class="col-xs-3 col-sm-3 col-md-3"></div>
+		<div class="col-sm-6">
+			<table border="0">
+				<tr>
+					<td>
+						<h4>...is messy</h4>
+					</td>
+					<td>&nbsp;&nbsp;</td>
+					<td>
+						<label for="1">1</label>
+						<input type="radio" id="1" name="messy" value="1"/>
+					</td>
+					<td>&nbsp;&nbsp;</td>
+					<td>
+						<h4>...is neat</h4>
+					</td>
+				</tr>
+			</table>
+		<!-- insert cycle for the radio buttons -->
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-10">
+			<button class="btn btn-primary" type="submit">Salva</button>
+		</div>
 	</div>
 	<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
 	It is a security number.-->

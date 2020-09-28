@@ -65,7 +65,7 @@ def questionnaire_kids_save(request):
 	sesso = request.POST.get('sesso', None)
 	
 	connection_database.insert_utente_bambino(nome, cognome, classe, peso, altezza, sesso)
-	
+
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
 	# set the value in the session. Session in handled in settings.py.
