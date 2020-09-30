@@ -32,7 +32,7 @@ def apri_connessione_db():
 
 #################################################################################################
 
-MAX_PAGES_NUMERICAL_TEST = 7
+PAGES_NUMERICAL_TEST = 7
 
 last_page = 0
 
@@ -52,9 +52,9 @@ def index(request, template_name='index.html'):		# create the function custom
 
 def questionnaire_kids(request, template_name='questionnaire_kids.html'):
 	model_map = util.init_modelmap(request)
-	model_map['frasi_left'] = util.QUESTIONNAIRE_LEFT
-	model_map['frasi_right'] = util.QUESTIONNAIRE_RIGHT
-	model_map['intensity'] = util.QUESTIONNAIRE_INTENSITY
+	
+	model_map['frasi'] = util.QUESTIONNAIRE
+	model_map['intensity'] = range(util.QUESTIONNAIRE_INTENSITY)
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -175,12 +175,20 @@ def slider_save(request):
 def numerical_test(request, template_name='numerical_test.html'):
 	global last_page
 	
+	immagini = []
 	last_page = 0
 	
 	num_page = int(request.GET.get('num_page', '1'))
-	if num_page < 6:
-		immagini = util.SHAPES
 	
+	if num_page < 4:
+		immagini = util.NUMBERS
+	elif num_page == 4 or 5:
+		immagini = util.DICES
+	elif num_page == 6:
+		immagini = util.SHAPES
+	elif num_page == 7:
+		immagini = util.PENCILS
+		
 	if num_page < last_page:
 		num_page = last_page
 		response = redirect('{}?num_page={}'.format(reverse('numerical_test'), num_page))
@@ -190,8 +198,21 @@ def numerical_test(request, template_name='numerical_test.html'):
 	model_map = util.init_modelmap(request)
 	model_map['num_page'] = num_page
 	model_map['immagini'] = immagini
-	model_map['page_title'] = 'Forme'
-
+	if num_page == 1:
+		model_map['page_title'] = 'Quale numero e` piu` vicino al 6?'
+	elif num_page == 2:
+		model_map['page_title'] = 'Quale numero viene prima del 3?'
+	elif num_page == 3:
+		model_map['page_title'] = 'Quale numero viene dopo il 4?'
+	elif num_page == 4:
+		model_map['page_title'] = 'Quale e` la somma dei puntini?'
+	elif num_page == 5:
+		model_map['page_title'] = 'Quale dado contiene piu` puntini?'
+	elif num_page == 6:
+		model_map['page_title'] = 'Trova il quadrato.'
+	elif num_page == 7:
+		model_map['page_title'] = 'Trova la matita piu` lunga.'
+		
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -204,14 +225,14 @@ def save_numerical_test(request):
 	
 	# inserire il risultato del test
 	if 'risultato' in request.GET:
-		risultato = int(request.GET.get('risultato', ''))
+		risultato = request.GET.get('risultato', '')
 		connection_database.insert_numerical_test(id_utente, num_page, risultato)
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= MAX_PAGES_NUMERICAL_TEST:
+	if num_page >= PAGES_NUMERICAL_TEST:
 		response = redirect('final_page')
 		return response
 	
