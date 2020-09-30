@@ -32,12 +32,15 @@ def apri_connessione_db():
 
 #################################################################################################
 
+MAX_PAGES_NUMERICAL_TEST = 7
+
 last_page = 0
 
 
 def index(request, template_name='index.html'):		# create the function custom
 	global last_page, IMAGES_POWERSET
 	# if the variable has been create outside the function (global) then it must be recalled inside
+	# se devo leggere la variabile non serve, se invece devo modificarla serve global
 	
 	last_page = 0
 	
@@ -49,6 +52,9 @@ def index(request, template_name='index.html'):		# create the function custom
 
 def questionnaire_kids(request, template_name='questionnaire_kids.html'):
 	model_map = util.init_modelmap(request)
+	model_map['frasi_left'] = util.QUESTIONNAIRE_LEFT
+	model_map['frasi_right'] = util.QUESTIONNAIRE_RIGHT
+	model_map['intensity'] = util.QUESTIONNAIRE_INTENSITY
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -111,6 +117,7 @@ def save_choice(request):
 	
 	connection_database = apri_connessione_db()
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
+	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = json.dumps(IMAGES_POWERSET[num_page-1])
@@ -161,57 +168,59 @@ def slider_save(request):
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
-	response = redirect('final_page')
+	response = redirect('numerical_test')
 	return response
 
 
-def numerical_comparison(request, template_name='numerical_comparison'):
-	model_map = {
+def numerical_test(request, template_name='numerical_test.html'):
+	global last_page
 	
-	}
+	last_page = 0
+	
+	num_page = int(request.GET.get('num_page', '1'))
+	if num_page < 6:
+		immagini = util.SHAPES
+	
+	if num_page < last_page:
+		num_page = last_page
+		response = redirect('{}?num_page={}'.format(reverse('numerical_test'), num_page))
+		return response
+	last_page = num_page
+	
+	model_map = util.init_modelmap(request)
+	model_map['num_page'] = num_page
+	model_map['immagini'] = immagini
+	model_map['page_title'] = 'Forme'
+
 	return TemplateResponse(request, template_name, model_map)
 
 
-def summation(request, template_name='summation'):
-	model_map = {
+def save_numerical_test(request):
+	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
+	num_page = int(request.GET.get('num_page', ''))
 
-
-def number_after(request, template_name='number_after'):
-	model_map = {
+	connection_database = apri_connessione_db()
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
-
-
-def number_before(request, template_name='number_before'):
-	model_map = {
+	# inserire il risultato del test
+	if 'risultato' in request.GET:
+		risultato = int(request.GET.get('risultato', ''))
+		connection_database.insert_numerical_test(id_utente, num_page, risultato)
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
-
-
-def number_closer(request, template_name='number_closer'):
-	model_map = {
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
-
-
-def shapes(request, template_name='shapes'):
-	model_map = {
+	# when the pages are finished go to next problem
+	if num_page >= MAX_PAGES_NUMERICAL_TEST:
+		response = redirect('final_page')
+		return response
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
-
-
-def pencils_length(request, template_name='pencils_length'):
-	model_map = {
+	next_page = num_page + 1
 	
-	}
-	return TemplateResponse(request, template_name, model_map)
+	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
+	# we concatenate the parameter num_page with the value next_page
+	response = redirect('{}?num_page={}'.format(reverse('numerical_test'), next_page))
+	return response
 
 
 def final_page(request, template_name='final_page.html'):

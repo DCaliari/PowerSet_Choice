@@ -48,20 +48,24 @@
 		<div class="col-xs-3 col-sm-3 col-md-3"></div>
 		<div class="col-sm-6">
 			<table border="0">
+				{% for frase_left in frasi_left %}
 				<tr>
 					<td>
-						<h4>...is messy</h4>
+						<h4>{{ frase_left }}</h4>
 					</td>
 					<td>&nbsp;&nbsp;</td>
+					{% for numero in intensity %}
 					<td>
-						<label for="1">1</label>
-						<input type="radio" id="1" name="messy" value="1"/>
+						<label for="radio">{{ numero }}</label>
+						<input type="radio" id="radio" name="{{ frase_left }}" value="{{ numero }}"/>
 					</td>
 					<td>&nbsp;&nbsp;</td>
+					{% endfor %}
 					<td>
-						<h4>...is neat</h4>
+						<h4>{{ frasi_right[forloop.counter0] }}</h4>
 					</td>
 				</tr>
+				{% endfor %}
 			</table>
 		<!-- insert cycle for the radio buttons -->
 		</div>
@@ -76,5 +80,8 @@
 	It is a security number.-->
 	{% csrf_token %}
 </form>
+<script>
+
+</script>
 
 {% endblock %}

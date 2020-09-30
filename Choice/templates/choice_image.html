@@ -26,7 +26,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-right">
-			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Click me</button>
+			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Avanti</button>
 		</div>
 	</div>
 </div>
@@ -46,10 +46,12 @@
 		button.disabled = false;
 		button.classList.remove('button_disabled');
 		var image = _(id);
+	// add border to the new selected image
 		image.classList.add('selected_image');
 	}
 	// The last three lines remove the disabled class from the button when the button is clicked.
-
+	
+	// da "selected_image=id" ottengo l'id dell'immagine selezionata e poi lo passo con "+ selected_image" below
 	function on_click_submit(){
 		_('button_submit').disabled = (selected_image == null);
 		location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image;
