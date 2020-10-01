@@ -23,13 +23,17 @@
 </head>
 <body>
 	<div class="container-fluid">
-		{% if is_localhost and is_index is False %}
-		<div class="row">
-			<div class="col-md-12">
-				<button class="btn btn-primary" onclick="return location.reload();">Ricarica Pagina</button>
-			</div>
-		</div>
+		{% if is_index is False %}
+			<br/>
+			{% if is_localhost %}
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-primary" onclick="return location.reload();">Ricarica Pagina</button>
+					</div>
+				</div>
+			{% endif %}
 		{% endif %}
+		
 		{% block content %}
 		{% endblock %}
 	</div>

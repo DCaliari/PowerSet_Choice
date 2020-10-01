@@ -1,4 +1,3 @@
-import os
 import json
 import random
 
@@ -12,17 +11,21 @@ from Choice.custom_moduli import util
 from Moduli import modulo_system
 from Moduli import modulo_functions
 
-# These are the ENDPOINT, because you can call them from outside
-IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 
 # This is a global variable, it is created once at the start and never later.
+IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
+PAGES_NUMERICAL_TEST = 7
+
+# costanti globali
+last_page = 0
+
 
 ###############################################################################################
+
+
 # function to open the connection to the database
-
-
 def apri_connessione_db():
-	path_db = os.path.abspath("RecordChoice.db")
+	path_db = util.FULLPATH_DB
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:
@@ -32,12 +35,9 @@ def apri_connessione_db():
 
 #################################################################################################
 
-PAGES_NUMERICAL_TEST = 7
 
-last_page = 0
-
-
-def index(request, template_name='index.html'):		# create the function custom
+# These are the ENDPOINT, because you can call them from outside
+def index(request, template_name='index.html'):
 	global last_page, IMAGES_POWERSET
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	# se devo leggere la variabile non serve, se invece devo modificarla serve global
@@ -59,10 +59,6 @@ def questionnaire_kids(request, template_name='questionnaire_kids.html'):
 
 
 def questionnaire_kids_save(request):
-	
-	connection_database = apri_connessione_db()
-	
-	# in the if loop enter the name from html file
 	nome = request.POST.get('nome', None)
 	cognome = request.POST.get('cognome', None)
 	classe = request.POST.get('classe', None)
@@ -70,6 +66,7 @@ def questionnaire_kids_save(request):
 	altezza = request.POST.get('altezza', None)
 	sesso = request.POST.get('sesso', None)
 	
+	connection_database = apri_connessione_db()
 	connection_database.insert_utente_bambino(nome, cognome, classe, peso, altezza, sesso)
 
 	# get the last id created in the database

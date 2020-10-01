@@ -1,4 +1,10 @@
+import os
+
 from Moduli import modulo_django
+from PowerSet import settings
+
+
+FULLPATH_DB=os.path.join(settings.BASE_DIR, "RecordChoice.db")
 
 QUESTIONNAIRE = [
 	['...is rather talkative', '...is rather quiet'],

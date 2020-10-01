@@ -30,7 +30,7 @@ create table utente_bambini(
 );
 create table choices_menu(
 	id 				integer primary key autoincrement not null,
-	id_utente  		integer not null,
+	id_utente		integer not null,
 	choice			integer,
 	menu			text,
 	insert_date		timestamp not null,
@@ -40,7 +40,7 @@ create table choices_menu(
 );
 create table choices_slider(
 	id 				integer primary key autoincrement not null,
-	id_utente  		integer not null,
+	id_utente		integer not null,
 	slider			text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utente_bambini(id)
@@ -49,7 +49,7 @@ create table choices_slider(
 );
 create table numerical_test(
 	id 				integer primary key autoincrement not null,
-	id_utente  		integer not null,
+	id_utente		integer not null,
 	num_test		integer not null,
 	risultato		text not null,
 	insert_date		timestamp not null,

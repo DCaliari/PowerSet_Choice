@@ -5,20 +5,20 @@
 <form action="questionnaire_kids_save" method="post">
 	<div class="form-group row">
 		<div class="col-md-6">
-			<label for="nome"><h4>Nome:</h4></label>
+			<label for="nome">Nome:</label>
 			<input type="text" id="nome" name="nome" class="form-control" placeholder="Nome"/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-md-6">
-				<label for="cognome"><h4>Cognome:</h4></label>
-				<input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome"/>
+			<label for="cognome">Cognome:</label>
+			<input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome"/>
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-md-6">
-				<label for="classe"><h4>Classe:</h4></label>
-				<input type="text" id="classe" name="classe" class="form-control" placeholder="Classe"/>
+			<label for="classe">Classe:</label>
+			<input type="text" id="classe" name="classe" class="form-control" placeholder="Classe"/>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -80,8 +80,5 @@
 	It is a security number.-->
 	{% csrf_token %}
 </form>
-<script>
-
-</script>
 
 {% endblock %}

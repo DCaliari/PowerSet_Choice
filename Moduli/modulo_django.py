@@ -7,8 +7,7 @@ def is_localhost(request):
 
 
 def is_index(request):
-	return request.path == "/Choice/"
-	# TODO: fix this, eliminate /Choice
+	return request.path.endswith("/")
 	
 
 def get_full_url(request):
