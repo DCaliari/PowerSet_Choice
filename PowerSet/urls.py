@@ -15,9 +15,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, path		# import more than one -- use comma
+from django.urls import include, path  # import more than one -- use comma
 
 urlpatterns = [
-	path('Choice/', include('Choice.urls')),		# localhost: 8000/Choice
-	path('admin/', admin.site.urls),
+	path('Choice/', include('Choice.urls')),  # localhost: 8000/Choice
+	path('Questionario_teacher/', include('Questionario_teacher.urls')),  # localhost: 8000/Questionario_teacher
+	path('admin/', admin.site.urls)
 ]
+
+# path('Questionario_teacher/', include('Questionario_teacher.urls')),  # localhost: 8000/Questionario_teacher

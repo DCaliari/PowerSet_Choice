@@ -4,7 +4,7 @@ from Moduli import modulo_django
 from PowerSet import settings
 
 
-FULLPATH_DB=os.path.join(settings.BASE_DIR, "RecordChoice.db")
+FULLPATH_DB = os.path.join(settings.BASE_DIR, "RecordChoice.db")
 
 QUESTIONNAIRE = [
 	['...is rather talkative', '...is rather quiet'],
@@ -26,6 +26,20 @@ IMAGES = [
 	'ice-cream.jpg',
 	'pear.jpg',
 	'pizza.jpeg'
+]
+
+IMAGES2 = [
+	'coca.jpg',
+	'fanta.jpg',
+	'the.jpg',
+	'acqua.jpeg'
+]
+
+IMAGES3 = [
+	'coca.jpg',
+	'fanta.jpg',
+	'the.jpg',
+	'acqua.jpeg'
 ]
 
 NUMBERS = [
@@ -59,6 +73,22 @@ SHAPES = [
 PENCILS = [
 	'Matita1.png',
 	'Matita2.png'
+]
+
+VIDEOS = [
+	'Video1.mp4',
+	'Video2.mp4',
+	'Video3.mp4',
+	'Video4.mp4',
+	'Video5.mp4',
+	'Video6.mp4',
+	'Video7.mp4',
+	'Video8.mp4',
+	'Video9.mp4',
+	'Video10.mp4',
+	'Video11.mp4',
+	'Video12.mp4',
+	'Video13.mp4'
 ]
 
 # THIS CONSTANT DEALS WITH THE ID_UTENTE RECORD IN ANY SESSION. SEE VIEWS.PY.

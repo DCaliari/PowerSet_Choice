@@ -56,7 +56,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'PowerSet.urls'
 
 TEMPLATE_DIRS = [
-	os.path.join(BASE_DIR, 'Choice', 'templates')
+	os.path.join(BASE_DIR, 'Choice', 'templates'),
 ]
 
 TEMPLATES = [

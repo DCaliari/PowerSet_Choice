@@ -15,6 +15,10 @@ from Moduli import modulo_functions
 # This is a global variable, it is created once at the start and never later.
 IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 PAGES_NUMERICAL_TEST = 7
+IMAGES2 = util.IMAGES2
+random.shuffle(IMAGES2)
+IMAGES3 = util.IMAGES3
+random.shuffle(IMAGES3)
 
 # costanti globali
 last_page = 0
@@ -28,7 +32,7 @@ def apri_connessione_db():
 	path_db = util.FULLPATH_DB
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
-	if is_db_new:
+	if is_db_new:										# crea le tabelle solo se non ci sono gia'
 		database.schema()
 	return database
 
@@ -77,15 +81,27 @@ def questionnaire_kids_save(request):
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
-	response = redirect('choice_image')
+	response = redirect('video')
 	return response
+
+
+def video(request, template_name='video.html'):
+	num_page = int(request.GET.get('num_page', '0'))
+	next_page = num_page + 1
+	
+	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
+	
+	model_map = util.init_modelmap(request)
+	model_map['video'] = util.VIDEOS[num_page]
+	model_map['next_url_page'] = next_url_page
+	return TemplateResponse(request, template_name, model_map)
 
 
 def choice_image(request, template_name='choice_image.html'):
 	global last_page
 	
-	num_page = int(request.GET.get('num_page', '1'))
 	# the second parameter is needed because if "choice" is empty then '' is passed
+	num_page = int(request.GET.get('num_page', '1'))
 	
 	if num_page < last_page:
 		num_page = last_page
@@ -93,18 +109,21 @@ def choice_image(request, template_name='choice_image.html'):
 		return response
 	last_page = num_page
 	
-	'''to insert pages in between choice pages
-	if num_page == 5:
-		response = redirect('test')
-		return response
-	'''
-	
-	images = IMAGES_POWERSET[num_page-1]
-	
 	model_map = util.init_modelmap(request)
-	model_map['page_title'] = 'Scelta n ' + str(num_page)
 	model_map['num_page'] = num_page
-	model_map['images'] = images
+
+	if num_page < len(IMAGES_POWERSET)+1:
+		images = IMAGES_POWERSET[num_page - 1]
+		model_map['page_title'] = 'Scelta n ' + str(num_page)
+		model_map['images'] = images
+	elif num_page == len(IMAGES_POWERSET)+1:
+		images = IMAGES2
+		model_map['page_title'] = 'Scegli la bibita'
+		model_map['images'] = images
+	elif num_page == len(IMAGES_POWERSET)+2:
+		images = IMAGES3
+		model_map['page_title'] = 'Scegli la bibita'
+		model_map['images'] = images
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -116,26 +135,32 @@ def save_choice(request):
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
 	if 'choice' in request.GET:
-		choice = int(request.GET.get('choice', ''))
-		menu = json.dumps(IMAGES_POWERSET[num_page-1])
-		# json handle objects (like lists) when they are in the dataset
-		# using json.loads I can transform data from the table into list or other objects again
-		
-		connection_database.insert_choices_menu(id_utente, choice, menu)
+		if num_page < len(IMAGES_POWERSET):
+			choice = int(request.GET.get('choice', ''))
+			menu = json.dumps(IMAGES_POWERSET[num_page-1])
+			connection_database.insert_choices_menu(id_utente, choice, menu)
+			# json handle objects (like lists) when they are in the dataset
+			# using json.loads I can transform data from the table into list or other objects again
+		elif num_page == len(IMAGES_POWERSET)+1:
+			choice = request.GET.get('choice', '')
+			menu = json.dumps(IMAGES2)
+			connection_database.insert_choices_menu(id_utente, choice, menu)
+		elif num_page == len(IMAGES_POWERSET)+2:
+			choice = request.GET.get('choice', '')
+			menu = json.dumps(IMAGES3)
+			connection_database.insert_choices_menu(id_utente, choice, menu)
 
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= len(IMAGES_POWERSET):
+	if num_page >= len(IMAGES_POWERSET)+2:
 		response = redirect('slider')
 		return response
 	
-	next_page = num_page + 1
-	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page
-	response = redirect('{}?num_page={}'.format(reverse('choice_image'), next_page))
+	response = redirect('{}?num_page={}'.format(reverse('video'), num_page))
 	return response
 
 

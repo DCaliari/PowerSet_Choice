@@ -1,0 +1,55 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+<form action="questionnaire_teacher_save" method="post">
+	<div class="form-group row">
+		<div class="col-md-6">
+			<label for="nome">Nome:</label>
+			<input type="text" id="nome" name="nome" class="form-control" placeholder="Nome"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-6">
+			<label for="cognome">Cognome:</label>
+			<input type="text" id="cognome" name="cognome" class="form-control" placeholder="Cognome"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-xs-3 col-sm-3 col-md-3"></div>
+		<div class="col-sm-6">
+			<table border="0">
+				{% for x, y in frasi %}
+				<tr>
+					<td>
+						<h4>{{ x }}</h4>
+					</td>
+					<td>&nbsp;&nbsp;</td>
+					{% for numero in intensity %}
+					<td>
+						<label for="radio">{{ numero }}</label>
+						<input type="radio" id="radio" name="{{ x }}" value="{{ numero }}"/>
+					</td>
+					<td>&nbsp;&nbsp;</td>
+					{% endfor %}
+					<td>
+						<h4>{{ y }}</h4>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		<!-- insert cycle for the radio buttons -->
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	<div class="row">
+		<div class="col-sm-10">
+			<button class="btn btn-primary" type="submit">Salva</button>
+		</div>
+	</div>
+	<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
+	It is a security number.-->
+	{% csrf_token %}
+</form>
+
+{% endblock %}

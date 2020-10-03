@@ -9,12 +9,25 @@
 	<div class="col-md-12 text-center">
 		<span><h2>{{ page_title }}</h2></span>
 	</div>
+	{% if num_page < 12 %}
 	<div class="col-md-12 text-center">
 		{% for image in images %}
 			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		{% endfor %}
-		
+	{% elif num_page == 12 %}
+	<div class="col-md-12 text-center">
+		{% for image in images %}
+			<img id="{{ forloop.counter0 }}_bibita" src="{% static "" %}images_bibite/{{ image }}" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+		{% endfor %}
+	{% elif num_page == 13 %}
+	<div class="col-md-12 text-center">
+		{% for image in images %}
+			<img id="{{ forloop.counter0 }}_snack" src="{% static "" %}images_bibite/{{ image }}" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+		{% endfor %}
+	{% endif %}
 
 		<!-- javascript code: function _ connect to the element using the id of the element-->
 		<!-- function on_click_image transform the variable selected_image into the id: index-->
