@@ -22,6 +22,9 @@ create table questionario_teacher(
 	id				integer primary key autoincrement not null,
 	nome			text not null,
 	cognome			text not null,
+	classe_alunno	text,
+	data_nascita	date,
+	traits			integer,
 	insert_date		timestamp not null
 );
 

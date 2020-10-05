@@ -1,10 +1,8 @@
-import os
+from custom_project_moduli import project_util
 
-from Moduli import modulo_django
-from PowerSet import settings
+APP_TITLE = 'Questionario'
+APP_LOGO = 'pear.jpg'
 
-
-FULLPATH_DB = os.path.join(settings.BASE_DIR, "RecordChoice.db")
 
 QUESTIONNAIRE = [
 	['...is rather talkative', '...is rather quiet'],
@@ -23,9 +21,4 @@ QUESTIONNAIRE_INTENSITY = 10
 
 
 def init_modelmap(request):
-	model_map = {
-		'is_localhost': modulo_django.is_localhost(request),
-		'is_index': modulo_django.is_index(request)
-	}
-	return model_map
-
+	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO)

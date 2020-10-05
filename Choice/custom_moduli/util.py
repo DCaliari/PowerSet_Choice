@@ -1,25 +1,7 @@
-import os
+from custom_project_moduli import project_util
 
-from Moduli import modulo_django
-from PowerSet import settings
-
-
-FULLPATH_DB = os.path.join(settings.BASE_DIR, "RecordChoice.db")
-
-QUESTIONNAIRE = [
-	['...is rather talkative', '...is rather quiet'],
-	['...is messy', '...is neat'],
-	['...is good-natured', '...is irritable'],
-	['...is disinterested', '...is curious to learn'],
-	['...is self-confident', '...is insecure'],
-	['...is withdrawn', '...is outgoing'],
-	['...is focused', '...easily distracted'],
-	['...is disobedient', '...is obedient'],
-	['...is quick at learning new things', '...needs more time'],
-	['...is timid', '...is fearless']
-]
-
-QUESTIONNAIRE_INTENSITY = 10
+APP_TITLE = 'Esperimento'
+APP_LOGO = 'apple.jpg'
 
 IMAGES = [
 	'apple.jpg',
@@ -91,14 +73,6 @@ VIDEOS = [
 	'Video13.mp4'
 ]
 
-# THIS CONSTANT DEALS WITH THE ID_UTENTE RECORD IN ANY SESSION. SEE VIEWS.PY.
-SESSION_KEY__ID_UTENTE = 'id_utente'
-
 
 def init_modelmap(request):
-	model_map = {
-		'is_localhost': modulo_django.is_localhost(request),
-		'is_index': modulo_django.is_index(request)
-	}
-	return model_map
-
+	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO)

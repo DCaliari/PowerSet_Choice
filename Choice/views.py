@@ -1,10 +1,12 @@
 import json
 import random
+import os
 
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
+from custom_project_moduli import project_util
 from Choice.custom_moduli import modulo_database
 from Choice.custom_moduli import util
 
@@ -23,13 +25,14 @@ random.shuffle(IMAGES3)
 # costanti globali
 last_page = 0
 
+CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 ###############################################################################################
 
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = util.FULLPATH_DB
+	path_db = project_util.FULLPATH_DB
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:										# crea le tabelle solo se non ci sono gia'
@@ -41,7 +44,7 @@ def apri_connessione_db():
 
 
 # These are the ENDPOINT, because you can call them from outside
-def index(request, template_name='index.html'):
+def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
 	global last_page, IMAGES_POWERSET
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	# se devo leggere la variabile non serve, se invece devo modificarla serve global
@@ -54,11 +57,8 @@ def index(request, template_name='index.html'):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def questionnaire_kids(request, template_name='questionnaire_kids.html'):
+def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, 'questionnaire_kids.html')):
 	model_map = util.init_modelmap(request)
-	
-	model_map['frasi'] = util.QUESTIONNAIRE
-	model_map['intensity'] = range(util.QUESTIONNAIRE_INTENSITY)
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -76,7 +76,7 @@ def questionnaire_kids_save(request):
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
 	# set the value in the session. Session in handled in settings.py.
-	request.session[util.SESSION_KEY__ID_UTENTE] = id_utente
+	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -85,7 +85,7 @@ def questionnaire_kids_save(request):
 	return response
 
 
-def video(request, template_name='video.html'):
+def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
 	num_page = int(request.GET.get('num_page', '0'))
 	next_page = num_page + 1
 	
@@ -97,7 +97,7 @@ def video(request, template_name='video.html'):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def choice_image(request, template_name='choice_image.html'):
+def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, 'choice_image.html')):
 	global last_page
 	
 	# the second parameter is needed because if "choice" is empty then '' is passed
@@ -128,14 +128,14 @@ def choice_image(request, template_name='choice_image.html'):
 
 
 def save_choice(request):
-	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	num_page = int(request.GET.get('num_page', ''))
 	
 	connection_database = apri_connessione_db()
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
 	if 'choice' in request.GET:
-		if num_page < len(IMAGES_POWERSET):
+		if num_page < len(IMAGES_POWERSET)+1:
 			choice = int(request.GET.get('choice', ''))
 			menu = json.dumps(IMAGES_POWERSET[num_page-1])
 			connection_database.insert_choices_menu(id_utente, choice, menu)
@@ -164,7 +164,7 @@ def save_choice(request):
 	return response
 
 
-def slider(request, template_name='slider.html'):
+def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, 'slider.html')):
 	slider_images = util.IMAGES
 	
 	model_map = util.init_modelmap(request)
@@ -174,7 +174,7 @@ def slider(request, template_name='slider.html'):
 
 
 def slider_save(request):
-	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	slider_images = util.IMAGES
 	
 	connection_database = apri_connessione_db()
@@ -194,7 +194,7 @@ def slider_save(request):
 	return response
 
 
-def numerical_test(request, template_name='numerical_test.html'):
+def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numerical_test.html')):
 	global last_page
 	
 	immagini = []
@@ -239,7 +239,7 @@ def numerical_test(request, template_name='numerical_test.html'):
 
 
 def save_numerical_test(request):
-	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	
 	num_page = int(request.GET.get('num_page', ''))
 
@@ -266,8 +266,8 @@ def save_numerical_test(request):
 	return response
 
 
-def final_page(request, template_name='final_page.html'):
-	id_utente = request.session[util.SESSION_KEY__ID_UTENTE]
+def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_page.html')):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()
 	choices = connection_database.select_choices_menu(id_utente)

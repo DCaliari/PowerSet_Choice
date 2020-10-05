@@ -1,18 +1,17 @@
-import json
-import random
+import os
 
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from django.urls import reverse
 
+from custom_project_moduli import project_util
 from Questionario_teacher.custom_moduli import modulo_database
 from Questionario_teacher.custom_moduli import util
 
 from Moduli import modulo_system
-from Moduli import modulo_functions
 
 
-# costanti globali
+# get l'ultima parte del path della cartella corrente
+CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
+
 last_page = 0
 
 
@@ -21,7 +20,7 @@ last_page = 0
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = util.FULLPATH_DB
+	path_db = project_util.FULLPATH_DB
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:										# crea le tabelle solo se non ci sono gia'
@@ -33,7 +32,7 @@ def apri_connessione_db():
 
 
 # These are the ENDPOINT, because you can call them from outside
-def index(request, template_name='index.html'):
+def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
 	global last_page
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	# se devo leggere la variabile non serve, se invece devo modificarla serve global
@@ -44,7 +43,7 @@ def index(request, template_name='index.html'):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def questionnaire_teacher(request, template_name='questionnaire_teacher.html'):
+def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE, 'questionnaire_teacher.html')):
 	model_map = util.init_modelmap(request)
 	
 	model_map['frasi'] = util.QUESTIONNAIRE

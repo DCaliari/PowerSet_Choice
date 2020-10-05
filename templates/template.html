@@ -2,12 +2,12 @@
 
 <html>
 <head>
-	<title>Esperimento</title>
+	<title>{{ app_title }}</title>
 	
 	<!-- layout responsive: viene visualizzato correttamente da telefono o tablet -->
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	<link rel="shortcut icon" href="{% static "" %}images/apple.jpg" type="image/x-icon" />
+	<link rel="shortcut icon" href="{% static "" %}images/{{ app_logo }}" type="image/x-icon" />
 	<link rel="stylesheet" href="{% static "" %}css/my_style.css"/>
 	
 	<!-- funzioni gia' fatte per gestioni varie -->
