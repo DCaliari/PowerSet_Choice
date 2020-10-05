@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<form action="questionnaire_teacher_save" method="post">
+<form action="questionnaire_teacher_save?num_page={{ num_page }}" method="post">
 	<div class="form-group row">
 		<div class="col-md-6">
 			<label for="nome">Nome:</label>
@@ -17,8 +17,14 @@
 	</div>
 	<div class="form-group row">
 		<div class="col-md-6">
-			<label for="classe">Classe dell'alunno:</label>
-			<input type="text" id="classe" name="classe" class="form-control" placeholder="Classe"/>
+			<label for="classe_alunno">Classe dell'alunno:</label>
+			<input type="text" id="classe_alunno" name="classe_alunno" class="form-control" placeholder="Classe"/>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-md-3">
+			<label for="data_nascita">Data di Nascita:</label>
+			<input type="date" id="data_nascita" name="data_nascita" class="form-control" placeholder="Data di Nascita"/>
 		</div>
 	</div>
 	<div class="form-group row">
@@ -34,7 +40,7 @@
 					{% for numero in intensity %}
 					<td>
 						<label for="radio">{{ numero }}</label>
-						<input type="radio" id="radio" name="{{ x }}" value="{{ numero }}"/>
+						<input type="radio" id="radio" name="trait{{ numero }}" value="{{ numero }}"/>
 					</td>
 					<td>&nbsp;&nbsp;</td>
 					{% endfor %}
@@ -57,5 +63,4 @@
 	It is a security number.-->
 	{% csrf_token %}
 </form>
-
 {% endblock %}

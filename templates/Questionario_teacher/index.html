@@ -2,15 +2,13 @@
 {% load static %}
 
 {% block content %}
-
 <div id="first_page" class="row h-100">
 	<!-- col-md-12: bootstrap divide la pagina in 12 colonne. Io dico che questo div deve occupare 12 colonne -->
 	<div class="col-md-12 my-auto text-center">
 		<a id="start_button" class="h2 btn btn-primary" role="button" onclick="return fullscreen_and_iframe()">Inizio</a>
 	</div>
 </div>
-
-<iframe id="iframe_fullpage" src="questionnaire_teacher" title="Start" class="iframe_fullpage"></iframe>
+<iframe id="iframe_fullpage" src="numero_alunni" title="Start" class="iframe_fullpage"></iframe>
 <script>
 	function fullscreen_and_iframe() {
 		if (!is_localhost()) {
@@ -19,5 +17,6 @@
 		_('iframe_fullpage').style.display = 'block';
 		_('first_page').style.display = 'none';
 	}
+
 </script>
 {% endblock %}
