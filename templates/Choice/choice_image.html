@@ -12,7 +12,7 @@
 	{% if num_page < 12 %}
 	<div class="col-md-12 text-center">
 		{% for image in images %}
-			<img id="{{ forloop.counter0 }}_merenda" src="{% static "" %}images/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		{% endfor %}
 	{% elif num_page == 12 %}

@@ -73,6 +73,57 @@ VIDEOS = [
 	'Video13.mp4'
 ]
 
+LANGUAGE_IMAGES = [
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+	[
+		'pic_1.jpg',
+		'pic_2.jpg',
+		'pic_3.jpg',
+		'pic_4.jpg',
+		'pic_5.jpg',
+		'pic_6.jpg'
+	],
+]
+
 
 def init_modelmap(request):
 	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO)

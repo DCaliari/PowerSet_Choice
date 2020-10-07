@@ -13,5 +13,7 @@ urlpatterns = [
 	path('slider_save', views.slider_save, name='slider_save'),
 	path('numerical_test', views.numerical_test, name='numerical_test'),
 	path('save_numerical_test', views.save_numerical_test, name='save_numerical_test'),
+	path('language_test', views.language_test, name='language_test'),
+	path('save_language_test', views.save_language_test, name='save_language_test'),
 	path('final_page', views.final_page, name='final_page')
 ]

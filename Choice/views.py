@@ -17,6 +17,7 @@ from Moduli import modulo_functions
 # This is a global variable, it is created once at the start and never later.
 IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 PAGES_NUMERICAL_TEST = 7
+PAGES_LANGUAGE_TEST = len(util.LANGUAGE_IMAGES)
 IMAGES2 = util.IMAGES2
 random.shuffle(IMAGES2)
 IMAGES3 = util.IMAGES3
@@ -255,7 +256,7 @@ def save_numerical_test(request):
 	
 	# when the pages are finished go to next problem
 	if num_page >= PAGES_NUMERICAL_TEST:
-		response = redirect('final_page')
+		response = redirect('language_test')
 		return response
 	
 	next_page = num_page + 1
@@ -263,6 +264,61 @@ def save_numerical_test(request):
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page
 	response = redirect('{}?num_page={}'.format(reverse('numerical_test'), next_page))
+	return response
+
+
+def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'language_test.html')):
+	global last_page
+	
+	immagini = []
+	last_page = 0
+	
+	num_page = int(request.GET.get('num_page', '0'))
+	
+	for i in range(PAGES_LANGUAGE_TEST):
+		if num_page == i:
+			immagini = util.LANGUAGE_IMAGES[i]
+	# I go and take different images for each num_page in the language test
+	
+	if num_page < last_page:
+		num_page = last_page
+		response = redirect('{}?num_page={}'.format(reverse('language_test'), num_page))
+		return response
+	last_page = num_page
+	
+	model_map = util.init_modelmap(request)
+	model_map['num_page'] = num_page
+	model_map['immagini'] = immagini
+	model_map['page_title'] = "Scegli l'immagine corretta"
+	
+	return TemplateResponse(request, template_name, model_map)
+
+
+def save_language_test(request):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	num_page = int(request.GET.get('num_page', ''))
+	
+	connection_database = apri_connessione_db()
+	
+	# inserire il risultato del test
+	if 'risultato' in request.GET:
+		risultato = request.GET.get('risultato', '')
+		connection_database.insert_language_test(id_utente, num_page, risultato)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+
+	# when the pages are finished go to next problem
+	if num_page+1 >= PAGES_LANGUAGE_TEST:
+		response = redirect('final_page')
+		return response
+	
+	next_page = num_page + 1
+	
+	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
+	# we concatenate the parameter num_page with the value next_page
+	response = redirect('{}?num_page={}'.format(reverse('language_test'), next_page))
 	return response
 
 
