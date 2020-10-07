@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-from Moduli.rete import modulo_networking
+from moduli.rete import modulo_networking
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,9 +48,8 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	# added by me
 	# abilito l'utilizzo del sito tramite iFrame
-	'Choice.custom_moduli.MyMiddleware.MyMiddleware'
+	'moduli_custom_project.MyMiddleware.MyMiddleware'
 ]
 
 ROOT_URLCONF = 'PowerSet.urls'

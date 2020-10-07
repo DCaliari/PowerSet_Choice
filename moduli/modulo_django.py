@@ -1,4 +1,4 @@
-from Moduli import modulo_functions
+from moduli import modulo_functions
 
 
 def is_localhost(request):

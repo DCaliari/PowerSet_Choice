@@ -6,12 +6,12 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from custom_project_moduli import project_util
-from Choice.custom_moduli import modulo_database
+from moduli_custom_project import project_util
+from moduli_custom_project import modulo_database
 from Choice.custom_moduli import util
 
-from Moduli import modulo_system
-from Moduli import modulo_functions
+from moduli import modulo_system
+from moduli import modulo_functions
 
 
 # This is a global variable, it is created once at the start and never later.
@@ -33,7 +33,7 @@ CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__))
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB_CHOICE
+	path_db = project_util.FULLPATH_DB_POWERSET
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:										# crea le tabelle solo se non ci sono gia'
@@ -117,39 +117,39 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, 'choice_
 		images = IMAGES_POWERSET[num_page - 1]
 		model_map['page_title'] = 'Scelta n ' + str(num_page)
 		model_map['images'] = images
+		model_map['tipo_test'] = 0
 	elif num_page == len(IMAGES_POWERSET)+1:
 		images = IMAGES2
 		model_map['page_title'] = 'Scegli la bibita'
 		model_map['images'] = images
+		model_map['tipo_test'] = 1
 	elif num_page == len(IMAGES_POWERSET)+2:
 		images = IMAGES3
 		model_map['page_title'] = 'Scegli la bibita'
 		model_map['images'] = images
+		model_map['tipo_test'] = 2
 	return TemplateResponse(request, template_name, model_map)
 
 
 def save_choice(request):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	num_page = int(request.GET.get('num_page', ''))
+	tipo_test = int(request.GET.get('tipo_test', ''))
 	
 	connection_database = apri_connessione_db()
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
 	if 'choice' in request.GET:
+		choice = int(request.GET.get('choice', ''))
 		if num_page < len(IMAGES_POWERSET)+1:
-			choice = int(request.GET.get('choice', ''))
 			menu = json.dumps(IMAGES_POWERSET[num_page-1])
-			connection_database.insert_choices_menu(id_utente, choice, menu)
 			# json handle objects (like lists) when they are in the dataset
 			# using json.loads I can transform data from the table into list or other objects again
 		elif num_page == len(IMAGES_POWERSET)+1:
-			choice = request.GET.get('choice', '')
 			menu = json.dumps(IMAGES2)
-			connection_database.insert_choices_menu(id_utente, choice, menu)
 		elif num_page == len(IMAGES_POWERSET)+2:
-			choice = request.GET.get('choice', '')
 			menu = json.dumps(IMAGES3)
-			connection_database.insert_choices_menu(id_utente, choice, menu)
+		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
 
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -320,7 +320,7 @@ def save_language_test(request):
 
 
 def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_page.html')):
-	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	id_utente = 1#request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()
 	choices = connection_database.select_choices_menu(id_utente)
@@ -328,12 +328,13 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_pag
 	# elaboro le scelte
 	images_payoff = []
 	for choice in choices:
+		tipo_test = choice['tipo_test']
 		# choice e' la riga della tabella, per selezionare una colonna usare le parentesi quadre come un array
 		num_choice = choice['choice']
 		menu = json.loads(choice['menu'])
 		image_chosen = menu[num_choice]
+		image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
 		images_payoff.append(image_chosen)
-		# TODO: trasformare le scelte in integers, mostrare la bibita e lo snack scelto insieme alle altre scelte
 	# scelgo un'immagine a caso
 	image_payoff = random.choice(images_payoff)
 

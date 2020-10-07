@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class QuestionarioTeacherConfig(AppConfig):
-    name = 'Questionario_teacher'
+	name = 'Questionario_teacher'

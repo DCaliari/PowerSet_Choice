@@ -9,37 +9,35 @@
 	<div class="col-md-12 text-center">
 		<span><h2>{{ page_title }}</h2></span>
 	</div>
-	{% if num_page < 12 %}
 	<div class="col-md-12 text-center">
-		{% for image in images %}
-			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
-				onclick="return on_click_image(this.id);"/>
-		{% endfor %}
-	{% elif num_page == 12 %}
-	<div class="col-md-12 text-center">
-		{% for image in images %}
-			<img id="{{ forloop.counter0 }}_bibita" src="{% static "" %}images/images_bibite/{{ image }}" class="choice_image"
-				onclick="return on_click_image(this.id);"/>
-		{% endfor %}
-	{% elif num_page == 13 %}
-	<div class="col-md-12 text-center">
-		{% for image in images %}
-			<img id="{{ forloop.counter0 }}_snack" src="{% static "" %}images/images_snack/{{ image }}" class="choice_image"
-				onclick="return on_click_image(this.id);"/>
-		{% endfor %}
-	{% endif %}
-
-		<!-- javascript code: function _ connect to the element using the id of the element-->
-		<!-- function on_click_image transform the variable selected_image into the id: index-->
-		<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
-		<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
-			which is the id of the image taken from the parameter "index" in the for loop -->
+		{% if num_page < 12 %}
+			{% for image in images %}
+				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
+					onclick="return on_click_image(this.id);"/>
+			{% endfor %}
+		{% elif num_page == 12 %}
+			{% for image in images %}
+				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_bibite/{{ image }}" class="choice_image"
+					onclick="return on_click_image(this.id);"/>
+			{% endfor %}
+		{% elif num_page == 13 %}
+			{% for image in images %}
+				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_snack/{{ image }}" class="choice_image"
+					onclick="return on_click_image(this.id);"/>
+			{% endfor %}
+		{% endif %}
 	</div>
+	
+	<!-- javascript code: function _ connect to the element using the id of the element-->
+	<!-- function on_click_image transform the variable selected_image into the id: index-->
+	<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
+	<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
+		which is the id of the image taken from the parameter "index" in the for loop -->
 </div>
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-right">
-			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Avanti</button>
+			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit({{ tipo_test }})" disabled>Avanti</button>
 		</div>
 	</div>
 </div>
@@ -59,15 +57,15 @@
 		button.disabled = false;
 		button.classList.remove('button_disabled');
 		var image = _(id);
-	// add border to the new selected image
+		// add border to the new selected image
 		image.classList.add('selected_image');
 	}
 	// The last three lines remove the disabled class from the button when the button is clicked.
 	
 	// da "selected_image=id" ottengo l'id dell'immagine selezionata e poi lo passo con "+ selected_image" below
-	function on_click_submit(){
+	function on_click_submit(tipo_test){
 		_('button_submit').disabled = (selected_image == null);
-		location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image;
+		location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image + "&tipo_test=" + tipo_test;
 	}
 
 </script>

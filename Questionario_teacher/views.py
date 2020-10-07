@@ -4,17 +4,18 @@ from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from custom_project_moduli import project_util
-from Questionario_teacher.custom_moduli import modulo_database
+from moduli_custom_project import project_util
+from moduli_custom_project import modulo_database
 from Questionario_teacher.custom_moduli import util
+from Questionario_teacher.custom_moduli.views import view_index
 
-from Moduli import modulo_system
+from moduli import modulo_system
 
 # get l'ultima parte del path della cartella corrente
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 last_page = 0
-n_alunni = 0
+n_alunni = 1
 
 
 ###############################################################################################
@@ -22,7 +23,7 @@ n_alunni = 0
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB_QUESTION_TEACHER
+	path_db = project_util.FULLPATH_DB_POWERSET
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
 	if is_db_new:  # crea le tabelle solo se non ci sono gia'
@@ -34,13 +35,8 @@ def apri_connessione_db():
 
 
 # These are the ENDPOINT, because you can call them from outside
-def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
-	global last_page
-	# if the variable has been create outside the function (global) then it must be recalled inside
-	# se devo leggere la variabile non serve, se invece devo modificarla serve global
-	
-	model_map = util.init_modelmap(request)
-	return TemplateResponse(request, template_name, model_map)
+def index(request):
+	return view_index.index(request, CARTELLA_CORRENTE)# TODO: fare cosi' dappertutto
 
 
 def numero_alunni(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numero_alunni.html')):
@@ -51,7 +47,7 @@ def numero_alunni(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numero
 def numero_alunni_save(request):
 	global n_alunni
 	
-	n_alunni = int(request.POST.get('n_alunni', 0))
+	n_alunni = int(request.POST.get('n_alunni', 1))
 
 	response = redirect('questionnaire_teacher')
 	return response

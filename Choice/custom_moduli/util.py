@@ -1,7 +1,9 @@
-from custom_project_moduli import project_util
+import os
+
+from moduli_custom_project import project_util
 
 APP_TITLE = 'Esperimento'
-APP_LOGO = 'apple.jpg'
+APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_choice.png')
 
 IMAGES = [
 	'apple.jpg',
