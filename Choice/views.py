@@ -33,7 +33,7 @@ CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__))
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB
+	path_db = project_util.FULLPATH_DB_CHOICE
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:										# crea le tabelle solo se non ci sono gia'
@@ -270,14 +270,11 @@ def save_numerical_test(request):
 def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'language_test.html')):
 	global last_page
 	
-	immagini = []
 	last_page = 0
 	
 	num_page = int(request.GET.get('num_page', '0'))
 	
-	for i in range(PAGES_LANGUAGE_TEST):
-		if num_page == i:
-			immagini = util.LANGUAGE_IMAGES[i]
+	immagini = util.LANGUAGE_IMAGES[num_page]
 	# I go and take different images for each num_page in the language test
 	
 	if num_page < last_page:
@@ -336,6 +333,7 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_pag
 		menu = json.loads(choice['menu'])
 		image_chosen = menu[num_choice]
 		images_payoff.append(image_chosen)
+		# TODO: trasformare le scelte in integers, mostrare la bibita e lo snack scelto insieme alle altre scelte
 	# scelgo un'immagine a caso
 	image_payoff = random.choice(images_payoff)
 

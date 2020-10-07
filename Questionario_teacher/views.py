@@ -14,7 +14,7 @@ from Moduli import modulo_system
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 last_page = 0
-n_alunni = '0'
+n_alunni = 0
 
 
 ###############################################################################################
@@ -22,7 +22,7 @@ n_alunni = '0'
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB
+	path_db = project_util.FULLPATH_DB_QUESTION_TEACHER
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
 	if is_db_new:  # crea le tabelle solo se non ci sono gia'
@@ -51,8 +51,8 @@ def numero_alunni(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numero
 def numero_alunni_save(request):
 	global n_alunni
 	
-	n_alunni = request.POST.get('n_alunni', '0')
-	
+	n_alunni = int(request.POST.get('n_alunni', 0))
+
 	response = redirect('questionnaire_teacher')
 	return response
 
@@ -70,6 +70,7 @@ def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE,
 	
 	model_map = util.init_modelmap(request)
 	
+	model_map['page_title'] = 'Questionario ' + str(num_page)
 	model_map['num_page'] = num_page
 	model_map['frasi'] = util.QUESTIONNAIRE
 	model_map['intensity'] = range(util.QUESTIONNAIRE_INTENSITY)
@@ -86,22 +87,18 @@ def questionnaire_teacher_save(request):
 	cognome = request.POST.get('cognome', None)
 	classe_alunno = request.POST.get('classe_alunno', None)
 	data_nascita = request.POST.get('data_nascita', None)
-	traits = dict()
-	for i in range(1, util.QUESTIONNAIRE_INTENSITY + 1):
-		traits[str(i)] = request.POST.get('trait' + str(i), None)
 	
 	connection_database = apri_connessione_db()
-	connection_database.insert_questionario_teacher(nome, cognome, classe_alunno, data_nascita, traits['1'],
-													traits['2'], traits['3'],
-													traits['4'], traits['5'], traits['6'], traits['7'], traits['8'],
-													traits['9'], traits['10'])
+	connection_database.insert_utenti(nome, cognome, classe_alunno, data_nascita)
+	id_utente = connection_database.cursor_db.lastrowid
+	for num_trait in range(util.QUESTIONNAIRE_INTENSITY):
+		trait = request.POST.get('trait' + str(num_trait), None)
+		connection_database.insert_personality_traits(id_utente, trait, num_trait)
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
-	max_num_page = n_alunni
-
-	if num_page >= int(max_num_page):
+	if num_page >= n_alunni:
 		response = redirect('fine')
 		return response
 	

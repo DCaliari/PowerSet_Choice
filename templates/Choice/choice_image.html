@@ -12,19 +12,19 @@
 	{% if num_page < 12 %}
 	<div class="col-md-12 text-center">
 		{% for image in images %}
-			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		{% endfor %}
 	{% elif num_page == 12 %}
 	<div class="col-md-12 text-center">
 		{% for image in images %}
-			<img id="{{ forloop.counter0 }}_bibita" src="{% static "" %}images_bibite/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}_bibita" src="{% static "" %}images/images_bibite/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		{% endfor %}
 	{% elif num_page == 13 %}
 	<div class="col-md-12 text-center">
 		{% for image in images %}
-			<img id="{{ forloop.counter0 }}_snack" src="{% static "" %}images_bibite/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}_snack" src="{% static "" %}images/images_snack/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		{% endfor %}
 	{% endif %}

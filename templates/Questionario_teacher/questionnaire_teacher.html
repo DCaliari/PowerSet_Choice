@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<h1>{{ page_title }}</h1>
+	</div>
+</div>
 <form action="questionnaire_teacher_save?num_page={{ num_page }}" method="post">
 	<div class="form-group row">
 		<div class="col-md-6">
@@ -40,7 +45,7 @@
 					{% for numero in intensity %}
 					<td>
 						<label for="radio">{{ numero }}</label>
-						<input type="radio" id="radio" name="trait{{ numero }}" value="{{ numero }}"/>
+						<input type="radio" id="radio" name="trait{{ forloop.parentloop.counter0 }}" value="{{ numero }}"/>
 					</td>
 					<td>&nbsp;&nbsp;</td>
 					{% endfor %}

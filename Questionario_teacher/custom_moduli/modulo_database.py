@@ -18,40 +18,35 @@ class Database(modulo_sqlite.Sqlite):
 	# metodi
 	def schema(self):
 		sql = """
-create table questionario_teacher(
+create table utenti(
 	id					integer primary key autoincrement not null,
 	nome				text not null,
 	cognome				text not null,
 	classe_alunno		text,
 	data_nascita		date,
-	trait1				integer,
-	trait2				integer,
-	trait3				integer,
-	trait4				integer,
-	trait5				integer,
-	trait6				integer,
-	trait7				integer,
-	trait8				integer,
-	trait9				integer,
-	trait10 			integer,
 	insert_date			timestamp not null
 );
-
+create table personality_traits(
+	id_utente			integer not null,
+	trait				integer not null,
+	num_trait			integer not null,
+	insert_date			timestamp not null,
+	foreign key(id_utente) references utenti(id)
+		ON UPDATE NO ACTION
+		ON DELETE RESTRICT
+);
 """
 		# id is the name of the column. 'primary key' = always different. 'not null' = not empty
 		# 'timestamp' = memorize day, month, year and hours.
 		super().schema(sql)
 	
 	####################################################################################################
-	def insert_questionario_teacher(self, nome, cognome, classe_alunno, data_nascita, trait1, trait2, trait3, trait4,
-									trait5, trait6, trait7, trait8, trait9, trait10):
+	def insert_utenti(self, nome, cognome, classe_alunno, data_nascita):
 		sql = """
-INSERT INTO questionario_teacher(
-	nome, cognome, classe_alunno, data_nascita, trait1, trait2, trait3, trait4,
-									trait5, trait6, trait7, trait8, trait9, trait10, insert_date
+INSERT INTO utenti(
+	nome, cognome, classe_alunno, data_nascita, insert_date
 ) VALUES(
-	:nome, :cognome, :classe_alunno, :data_nascita, :trait1, :trait2, :trait3, :trait4,
-									:trait5, :trait6, :trait7, :trait8, :trait9, :trait10, """ + modulo_sqlite.DATE_TIME_NOW + """
+	:nome, :cognome, :classe_alunno, :data_nascita, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		self.cursor_db.execute(sql, {
@@ -59,14 +54,19 @@ INSERT INTO questionario_teacher(
 			'cognome': cognome,
 			'classe_alunno': classe_alunno,
 			'data_nascita': data_nascita,
-			'trait1': trait1,
-			'trait2': trait2,
-			'trait3': trait3,
-			'trait4': trait4,
-			'trait5': trait5,
-			'trait6': trait6,
-			'trait7': trait7,
-			'trait8': trait8,
-			'trait9': trait9,
-			'trait10': trait10,
+		})
+	
+	####################################################################################################
+	def insert_personality_traits(self, id_utente, trait, num_trait):
+		sql = """
+INSERT INTO personality_traits(
+	id_utente, trait, num_trait, insert_date
+) VALUES(
+	:id_utente, :trait, :num_trait, """ + modulo_sqlite.DATE_TIME_NOW + """
+);
+"""
+		self.cursor_db.execute(sql, {
+			'id_utente': id_utente,
+			'trait': trait,
+			'num_trait': num_trait
 		})

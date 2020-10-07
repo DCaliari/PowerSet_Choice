@@ -101,22 +101,21 @@
 
 .slider_apple\.jpg::-webkit-slider-thumb,
 .slider_apple\.jpg::-moz-range-thumb {
-	background-image: url('../images/apple.jpg');
+	background-image: url('../images/images_choice/apple.jpg');
 }
 
 .slider_ice-cream\.jpg::-webkit-slider-thumb,
 .slider_ice-cream\.jpg::-moz-range-thumb {
-	background-image: url('../images/ice-cream.jpg');
+	background-image: url('../images/images_choice/ice-cream.jpg');
 }
 
 .slider_pear\.jpg::-webkit-slider-thumb,
 .slider_pear\.jpg::-moz-range-thumb {
-	background-image: url('../images/pear.jpg');
+	background-image: url('../images/images_choice/pear.jpg');
 }
 
 .slider_pizza\.jpeg::-webkit-slider-thumb,
 .slider_pizza\.jpeg::-moz-range-thumb {
-	background-image: url('../images/pizza.jpeg');
+	background-image: url('../images/images_choice/pizza.jpeg');
 }
-
 
