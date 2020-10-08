@@ -9,7 +9,7 @@ from moduli_custom_project import modulo_database
 from Questionario_teacher.custom_moduli import util
 from Questionario_teacher.custom_moduli.views import view_index
 
-from moduli import modulo_system
+from Moduli import modulo_system
 
 # get l'ultima parte del path della cartella corrente
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))

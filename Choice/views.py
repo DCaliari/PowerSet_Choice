@@ -10,8 +10,8 @@ from moduli_custom_project import project_util
 from moduli_custom_project import modulo_database
 from Choice.custom_moduli import util
 
-from moduli import modulo_system
-from moduli import modulo_functions
+from Moduli import modulo_system
+from Moduli import modulo_functions
 
 
 # This is a global variable, it is created once at the start and never later.

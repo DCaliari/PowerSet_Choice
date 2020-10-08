@@ -1,7 +1,7 @@
 import os
 
 from PowerSet import settings
-from moduli import modulo_django
+from Moduli import modulo_django
 
 CARTELLA_DATABASE = 'databases'
 CARTELLA_FAVICONS = 'favicons'

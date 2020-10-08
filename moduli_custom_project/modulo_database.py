@@ -1,5 +1,5 @@
-from moduli import modulo_sqlite
-from moduli import modulo_strings
+from Moduli import modulo_sqlite
+from Moduli import modulo_strings
 
 
 class Database(modulo_sqlite.Sqlite):
