@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1>Quanto ti piace lo snack?</h1>
-		
+		<br><br><br><br>
 		<!-- all data sent to views.py slider and use method post to not save in url -->
 		<form action="slider_save" method="post">
 			{% for image in images %}
@@ -26,7 +26,10 @@
 			{% csrf_token %}
 			
 			<!-- this button sends the data to views.py -->
-			<input class="btn btn-primary" type="submit" value="invia"/>
+			<br><br><br><br>
+			<div class="text-center">
+				<input class="btn btn-lg btn-primary" type="submit" value="invia"/>
+			</div>
 		</form>
 	</div>
 </div>

@@ -9,7 +9,9 @@
 	<div class="col-md-12 text-center">
 		<span><h2>{{ page_title }}</h2></span>
 	</div>
-	<div class="col-md-12 text-center">
+	<br><br><br><br><br>
+	<div class="col-xs-1"></div>
+	<div class="col-xs-10 text-center">
 		{% if num_page < 12 %}
 			{% for image in images %}
 				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
@@ -27,6 +29,7 @@
 			{% endfor %}
 		{% endif %}
 	</div>
+	<div class="col-xs-1"></div>
 	
 	<!-- javascript code: function _ connect to the element using the id of the element-->
 	<!-- function on_click_image transform the variable selected_image into the id: index-->
@@ -34,10 +37,11 @@
 	<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
 		which is the id of the image taken from the parameter "index" in the for loop -->
 </div>
+<br><br><br><br>
 <div class="row">
 	<div class="col-md-12">
-		<div class="text-right">
-			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit({{ tipo_test }})" disabled>Avanti</button>
+		<div class="text-center">
+			<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit({{ tipo_test }})" disabled>Avanti</button>
 		</div>
 	</div>
 </div>
@@ -55,7 +59,6 @@
 		selected_image = id;
 		var button = _('button_submit');
 		button.disabled = false;
-		button.classList.remove('button_disabled');
 		var image = _(id);
 		// add border to the new selected image
 		image.classList.add('selected_image');

@@ -320,7 +320,7 @@ def save_language_test(request):
 
 
 def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_page.html')):
-	id_utente = 1#request.session[project_util.SESSION_KEY__ID_UTENTE]
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()
 	choices = connection_database.select_choices_menu(id_utente)
