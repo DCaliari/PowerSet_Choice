@@ -3,15 +3,16 @@
 
 {% block content %}
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-12">
 		<div class="embed-responsive embed-responsive-16by9">
-			<video controls autoplay>
+			<video autoplay onended="return go_to_next_page()">
 				<source src="{% static "" %}videos/{{ video }}" type="video/mp4">
 				 Your browser does not support the video tag.
 			</video>
 		</div>
 	</div>
 </div>
+<!---
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-right">
@@ -19,4 +20,10 @@
 		</div>
 	</div>
 </div>
+----->
+<script>
+	function go_to_next_page() {
+		location.href="{{ next_url_page }}";
+		}
+</script>
 {% endblock %}

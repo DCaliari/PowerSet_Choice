@@ -12,6 +12,7 @@ from Choice.custom_moduli import util
 
 from moduli import modulo_system
 from moduli import modulo_functions
+from moduli import modulo_django
 
 
 # This is a global variable, it is created once at the start and never later.
@@ -82,7 +83,10 @@ def questionnaire_kids_save(request):
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
-	response = redirect('video')
+	if modulo_django.is_localhost(request):
+		response = redirect('choice_image')
+	else:
+		response = redirect('video')
 	return response
 
 
@@ -149,6 +153,8 @@ def save_choice(request):
 			menu = json.dumps(IMAGES2)
 		elif num_page == len(IMAGES_POWERSET)+2:
 			menu = json.dumps(IMAGES3)
+		else:
+			menu = None
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
 
 	connection_database.conn_db.commit()
