@@ -339,6 +339,7 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_pag
 	image_payoff = random.choice(images_payoff)
 
 	model_map = util.init_modelmap(request, None)
+	model_map['page_title'] = 'Fine'
 	model_map['image_payoff'] = image_payoff
 	model_map['choices'] = images_payoff
 	return TemplateResponse(request, template_name, model_map)

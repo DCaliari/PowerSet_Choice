@@ -3,20 +3,25 @@
 
 {% block content %}
 <div class="row">
+	<div class="col-md-12 text-center">
+		<span><h1>{{ page_title }}</h1></span>
+	</div>
+</div>
+<div class="row">
 	{% for image in choices %}
-		<div class="col-md-4">
-			<img src="{% static "" %}images/{{ image }}" class="choice_image"/>
+		<div class="col-md-4" align="center">
+			<img src="{% static "" %}images/{{ image }}" class="choice_final_mage"/>
 		</div>
 	{% endfor %}
 </div>
+<!--------
 <div class="row">
 	<div class="col-md-12">
 		<div><h1>Your Result is:</h1></div>
 		<div>
-			<!-- insert the image that has been selected using a wheel that represents -->
-			<!-- a random draw for kids. If too difficult, think of an alternative -->
 			<img src="{% static "" %}images/{{ image_payoff }}" class="choice_image align_left"/>
 		</div>
 	</div>
 </div>
+--------->
 {% endblock %}

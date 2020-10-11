@@ -16,10 +16,11 @@
 		</div>
 	{% endfor %}
 </div>
+<br><br><br>
 <div class="row">
 	<div class="col-md-12">
 		<div class="text-right">
-			<button id="button_submit" class="button button_disabled" onclick="return on_click_submit()" disabled>Avanti</button>
+			<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit()" disabled>Avanti</button>
 		</div>
 	</div>
 </div>
@@ -37,7 +38,6 @@
 		selected_image = id;
 		var button = _('button_submit');
 		button.disabled = false;
-		button.classList.remove('button_disabled');
 		var image = _(id);
 		image.classList.add('selected_image');
 	}
