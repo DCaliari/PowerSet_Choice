@@ -167,7 +167,11 @@ def save_choice(request):
 	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page
-	response = redirect('{}?num_page={}'.format(reverse('video'), num_page))
+	if modulo_django.is_localhost(request):
+		next_page = num_page + 1
+		response = redirect('{}?num_page={}'.format(reverse('choice_image'), next_page))
+	else:
+		response = redirect('{}?num_page={}'.format(reverse('video'), num_page))
 	return response
 
 
