@@ -1,7 +1,7 @@
 import os
 
 from PowerSet import settings
-from Moduli import modulo_django
+from moduli import modulo_django
 
 CARTELLA_DATABASE = 'databases'
 CARTELLA_FAVICONS = 'favicons'
@@ -12,13 +12,15 @@ FULLPATH_DB_POWERSET = os.path.join(settings.BASE_DIR, CARTELLA_DATABASE, "Recor
 SESSION_KEY__ID_UTENTE = 'id_utente'
 
 
-def init_modelmap(request, app_title, app_logo):
+def init_modelmap(request, app_title, app_logo, formBean):
 	model_map = {
 		'is_localhost': modulo_django.is_localhost(request),
 		'is_index': modulo_django.is_index(request),
 		'app_title': app_title,
 		'app_logo': app_logo
 	}
+	if formBean is not None:
+		model_map['formBean'] = formBean
 	return model_map
 
 def from_tipo_test_to_cartella_immagini(tipo_test):

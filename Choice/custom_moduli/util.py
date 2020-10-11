@@ -127,5 +127,6 @@ LANGUAGE_IMAGES = [
 ]
 
 
-def init_modelmap(request):
-	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO)
+def init_modelmap(request, formBean):
+	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO, formBean)
+

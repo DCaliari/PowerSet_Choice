@@ -5,6 +5,8 @@ from moduli_custom_project import project_util
 APP_TITLE = 'Questionario'
 APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_questionario.png')
 
+TEMPLATE_NAME__QUESTIONARIO_TEACHER='questionnaire_teacher.html'#TODO: mettere cartella davanti
+
 
 QUESTIONNAIRE = [
 	['...is rather talkative', '...is rather quiet'],
@@ -22,5 +24,5 @@ QUESTIONNAIRE = [
 QUESTIONNAIRE_INTENSITY = 10
 
 
-def init_modelmap(request):
-	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO)
+def init_modelmap(request, formBean):
+	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO, formBean)

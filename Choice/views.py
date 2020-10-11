@@ -10,8 +10,8 @@ from moduli_custom_project import project_util
 from moduli_custom_project import modulo_database
 from Choice.custom_moduli import util
 
-from Moduli import modulo_system
-from Moduli import modulo_functions
+from moduli import modulo_system
+from moduli import modulo_functions
 
 
 # This is a global variable, it is created once at the start and never later.
@@ -54,12 +54,12 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
 	
 	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 
 
 def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, 'questionnaire_kids.html')):
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -92,7 +92,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
 	
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['video'] = util.VIDEOS[num_page]
 	model_map['next_url_page'] = next_url_page
 	return TemplateResponse(request, template_name, model_map)
@@ -110,7 +110,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, 'choice_
 		return response
 	last_page = num_page
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 
 	if num_page < len(IMAGES_POWERSET)+1:
@@ -168,7 +168,7 @@ def save_choice(request):
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, 'slider.html')):
 	slider_images = util.IMAGES
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['images'] = slider_images
 
 	return TemplateResponse(request, template_name, model_map)
@@ -218,7 +218,7 @@ def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numer
 		return response
 	last_page = num_page
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	model_map['immagini'] = immagini
 	if num_page == 1:
@@ -283,7 +283,7 @@ def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'langua
 		return response
 	last_page = num_page
 	
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	model_map['immagini'] = immagini
 	model_map['page_title'] = "Scegli l'immagine corretta"
@@ -338,7 +338,7 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_pag
 	# scelgo un'immagine a caso
 	image_payoff = random.choice(images_payoff)
 
-	model_map = util.init_modelmap(request)
+	model_map = util.init_modelmap(request, None)
 	model_map['image_payoff'] = image_payoff
 	model_map['choices'] = images_payoff
 	return TemplateResponse(request, template_name, model_map)
