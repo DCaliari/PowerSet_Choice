@@ -98,6 +98,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['video'] = util.VIDEOS[num_page]
+	# TODO: video
 	model_map['next_url_page'] = next_url_page
 	return TemplateResponse(request, template_name, model_map)
 

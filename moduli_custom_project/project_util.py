@@ -23,6 +23,7 @@ def init_modelmap(request, app_title, app_logo, formBean):
 		model_map['formBean'] = formBean
 	return model_map
 
+
 def from_tipo_test_to_cartella_immagini(tipo_test):
 	if tipo_test == 0:
 		return "images_choice"

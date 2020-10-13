@@ -5,9 +5,8 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="embed-responsive embed-responsive-16by9">
-			<video autoplay onended="return go_to_next_page()">
+			<video controls autoplay onended="return go_to_next_page()">
 				<source src="{% static "" %}videos/{{ video }}" type="video/mp4">
-				 Your browser does not support the video tag.
 			</video>
 		</div>
 	</div>

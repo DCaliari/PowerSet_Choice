@@ -1,3 +1,8 @@
+import os
+
+from django.utils.deprecation import MiddlewareMixin
+
+
 class MyMiddleware:
 	
 	def __init__(self, get_response):
@@ -8,4 +13,4 @@ class MyMiddleware:
 		# allow iframe to be inserted in webpages
 		response['X-Frame-Options'] = 'SAMEORIGIN'
 		return response
-
+	
