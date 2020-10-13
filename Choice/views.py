@@ -13,6 +13,7 @@ from Choice.custom_moduli import util
 from moduli import modulo_system
 from moduli import modulo_functions
 from moduli import modulo_django
+from moduli.rete import modulo_networking
 
 
 # This is a global variable, it is created once at the start and never later.
@@ -97,8 +98,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
 	
 	model_map = util.init_modelmap(request, None)
-	model_map['video'] = util.VIDEOS[num_page]
-	# TODO: video
+	model_map['video'] = 'http://' + modulo_networking.get_ip() + '/videos/' + util.VIDEOS[num_page]
 	model_map['next_url_page'] = next_url_page
 	return TemplateResponse(request, template_name, model_map)
 
