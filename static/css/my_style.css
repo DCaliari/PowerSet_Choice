@@ -10,27 +10,21 @@ input[type="date"].form-control {
 	line-height: inherit !important;
 }
 
-.first_page {
-	display: grid;
-}
-
-.choice_final_mage {
-	width:150px;
-	height:auto;
-}
-
 .choice_image {
 	width:230px;
 	height:auto;
 }
-
-.pencils {
-	width:auto;
+.choice_final_page {
+	width:150px;
 	height:auto;
 }
 
 .selected_image {
-		border: 1px solid black;
+	border: 1px solid black;
+}
+.pencils {
+	width:auto;
+	height:auto;
 }
 
 .button {
@@ -42,7 +36,6 @@ input[type="date"].form-control {
 	text-decoration: none;
 	font-size: 16px;
 }
-
 .button:hover {background-color: #3e8e41}
 
 .button:active {
@@ -56,24 +49,10 @@ input[type="date"].form-control {
 	cursor: not-allowed;
 }
 
-.drag_element {
-	float: left;
-	width: 50px;
-	height: 50px;
-	border: 1px solid black;
-}
-
-.drag_element img {
-	width: 100%;
-	height: 100%;
-}
-
 .slidecontainer {
 	width: 100%;
 }
-
 /* the following are styles for each slider: fix it into only one style */
-
 .slider {
 	-webkit-appearance: none;
 	width: 100%;

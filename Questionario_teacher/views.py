@@ -41,7 +41,7 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	
 	last_page = 0
 	model_map = util.init_modelmap(request, None)
-	return TemplateResponse(request, template_name, model_map)
+	return TemplateResponse(request, template_name, model_map)#TODO: adeguare html come fatto in choice
 
 
 def numero_alunni(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__NUMERO_ALUNNI)):
@@ -105,6 +105,11 @@ def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORR
 	return response
 
 
+def fine(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
+	model_map = util.init_modelmap(request, None)
+	return TemplateResponse(request, template_name, model_map)
+
+
 def questionnaire_teacher__init_model_map(request, formBean, num_page):
 	model_map = util.init_modelmap(request, formBean)
 	
@@ -115,7 +120,3 @@ def questionnaire_teacher__init_model_map(request, formBean, num_page):
 	model_map['intensity'] = range(util.QUESTIONNAIRE_INTENSITY)
 	return model_map
 
-
-def fine(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
-	model_map = util.init_modelmap(request, None)
-	return TemplateResponse(request, template_name, model_map)
