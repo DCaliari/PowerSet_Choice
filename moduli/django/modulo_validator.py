@@ -3,8 +3,8 @@ from django import forms
 from moduli import modulo_date
 
 DEFAULT_ERRORS = {
-    'required': 'Questo campo è obbligatorio.',
-    'invalid': 'Inserisci un valore valido.'
+	'required': 'Questo campo è obbligatorio.',
+	'invalid': 'Inserisci un valore valido.'
 }
 
 def chack_field_date_not_future(data):

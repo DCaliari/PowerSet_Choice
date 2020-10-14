@@ -5,6 +5,11 @@
 	display: none;
 }
 
+/* fix bootstrap */
+input[type="date"].form-control {
+	line-height: inherit !important;
+}
+
 .first_page {
 	display: grid;
 }

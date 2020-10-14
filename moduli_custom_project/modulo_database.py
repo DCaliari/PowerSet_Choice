@@ -83,6 +83,7 @@ create table utenti(
 	insert_date			timestamp not null
 );
 create table personality_traits(
+	id 					integer primary key autoincrement not null,
 	id_utente			integer not null,
 	trait				integer not null,
 	num_trait			integer not null,
