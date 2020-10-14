@@ -108,3 +108,12 @@ input[type="date"].form-control {
 	background-image: url('../images/images_choice/pizza.jpeg');
 }
 
+th, td {
+	width: 200px;
+	height: 70px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+	vertical-align: middle;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
