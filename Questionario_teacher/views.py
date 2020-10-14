@@ -74,6 +74,7 @@ def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE,
 
 
 def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
+	# TODO: perche richiamo il template nella save page?
 	num_page = int(request.GET.get('num_page', 1))
 	next_page = num_page + 1
 	formBean = QuestionarioTeacherFormBean(request.POST)
@@ -98,14 +99,14 @@ def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORR
 	connection_database.close_conn()
 	
 	if num_page >= preFormBean.n_alunni:
-		response = redirect('fine')
+		response = redirect('final_page')
 		return response
 	
 	response = redirect('{}?num_page={}'.format(reverse('questionnaire_teacher'), next_page))
 	return response
 
 
-def fine(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
+def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 

@@ -47,7 +47,7 @@ def apri_connessione_db():
 
 
 # These are the ENDPOINT, because you can call them from outside
-def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
+def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__INDEX)):
 	global last_page, IMAGES_POWERSET
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	# se devo leggere la variabile non serve, se invece devo modificarla serve global
@@ -60,7 +60,7 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, 'index.html')):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, 'questionnaire_kids.html')):
+def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_KIDS)):
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 
@@ -91,7 +91,7 @@ def questionnaire_kids_save(request):
 	return response
 
 
-def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
+def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__VIDEO)):
 	num_page = int(request.GET.get('num_page', '0'))
 	next_page = num_page + 1
 	
@@ -103,7 +103,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, 'video.html')):
 	return TemplateResponse(request, template_name, model_map)
 
 
-def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, 'choice_image.html')):
+def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__CHOICE)):
 	global last_page
 	
 	# the second parameter is needed because if "choice" is empty then '' is passed
@@ -176,7 +176,7 @@ def save_choice(request):
 	return response
 
 
-def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, 'slider.html')):
+def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
 	slider_images = util.IMAGES
 	
 	model_map = util.init_modelmap(request, None)
@@ -206,7 +206,7 @@ def slider_save(request):
 	return response
 
 
-def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'numerical_test.html')):
+def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__NUMERICAL_TEST)):
 	global last_page
 	
 	immagini = []
@@ -278,7 +278,7 @@ def save_numerical_test(request):
 	return response
 
 
-def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, 'language_test.html')):
+def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__LANGUAGE_TEST)):
 	global last_page
 	
 	last_page = 0
@@ -330,7 +330,7 @@ def save_language_test(request):
 	return response
 
 
-def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, 'final_page.html')):
+def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()

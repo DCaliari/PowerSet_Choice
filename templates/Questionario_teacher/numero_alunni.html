@@ -2,17 +2,19 @@
 {% load static %}
 
 {% block content %}
+<br><br><br>
 <form action="numero_alunni_save" method="post">
 	<div class="form-group row">
-		<div class="col-md-6">
-			<label for="n_alunni">Numero di Alunni:</label>
+		<div class="col-md-3"></div>
+		<div class="col-md-6 text-center">
+			<label for="n_alunni"><h3>Numero di Alunni:</h3></label>
 			<input type="number" id="n_alunni" name="n_alunni" class="form-control" placeholder="Numero di alunni" required />
 		</div>
 	</div>
-
+	<br><br><br><br>
 	<div class="row">
-		<div class="col-sm-10">
-			<button class="btn btn-primary" type="submit">Salva</button>
+		<div class="col-sm-12 text-center">
+			<button class="btn btn-lg btn-primary" type="submit">Salva</button>
 		</div>
 	</div>
 	<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."

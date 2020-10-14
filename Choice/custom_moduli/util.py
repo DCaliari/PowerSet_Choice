@@ -5,6 +5,15 @@ from moduli_custom_project import project_util
 APP_TITLE = 'Esperimento'
 APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_choice.png')
 
+TEMPLATE_NAME__INDEX = 'index.html'
+TEMPLATE_NAME__QUESTIONARIO_KIDS = 'questionnaire_kids.html'
+TEMPLATE_NAME__VIDEO = 'video.html'
+TEMPLATE_NAME__CHOICE = 'choice_image.html'
+TEMPLATE_NAME__SLIDER = 'slider.html'
+TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
+TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
+TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
+
 IMAGES = [
 	'apple.jpg',
 	'ice-cream.jpg',

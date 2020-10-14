@@ -5,10 +5,10 @@ from moduli_custom_project import project_util
 APP_TITLE = 'Questionario'
 APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_questionario.png')
 
-TEMPLATE_NAME__INDEX='index.html'
-TEMPLATE_NAME__QUESTIONARIO_TEACHER='questionnaire_teacher.html'
-TEMPLATE_NAME__NUMERO_ALUNNI='numero_alunni.html'
-TEMPLATE_NAME__FINAL_PAGE='fine.html'
+TEMPLATE_NAME__INDEX = 'index.html'
+TEMPLATE_NAME__QUESTIONARIO_TEACHER = 'questionnaire_teacher.html'
+TEMPLATE_NAME__NUMERO_ALUNNI = 'numero_alunni.html'
+TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
 
 
 QUESTIONNAIRE = [

@@ -10,7 +10,7 @@
 		<form action="slider_save" method="post">
 			{% for image in images %}
 			<div class="slidecontainer">
-				<input type="range" name="{{ image }}" class="slider slider_{{ image }}" id="{{ image }}" min="1" max="10" value="5"/>
+				<input type="range" name="{{ image }}" class="slider slider_{{ image }}" id="{{ image }}" min="0" max="10" value="5"/>
 				<p><h2><span id="{{ image }}_value"></span></h2></p>
 			</div>
 			<script>
