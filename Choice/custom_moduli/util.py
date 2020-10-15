@@ -86,52 +86,60 @@ VIDEOS = [
 
 LANGUAGE_IMAGES = [
 	[
-		'pic_1.jpg',
-		'pic_2.jpg',
-		'pic_3.jpg',
-		'pic_4.jpg',
-		'pic_5.jpg',
-		'pic_6.jpg'
+		'matita.png',
+		'treno.png',
+		'forbice.png',
+		'tv.png',
+		'gelato.png',
+		'mela.png'
 	],
 	[
-		'pic_7.jpg',
-		'pic_8.jpg',
-		'pic_9.jpg',
-		'pic_10.jpg',
-		'pic_11.jpg',
-		'pic_12.jpg'
+		'orologio.png',
+		'bandiera.png',
+		'scopa.png',
+		'pane.png',
+		'nastro.png',
+		'scarpa.png'
 	],
 	[
-		'pic_1.jpg',
-		'pic_2.jpg',
-		'pic_3.jpg',
-		'pic_4.jpg',
-		'pic_5.jpg',
-		'pic_6.jpg'
+		'scala.png',
+		'stagno.png',
+		'freccia.png',
+		'cannocchiale.png',
+		'pinguino.png',
+		'scatola.png'
 	],
 	[
-		'pic_1.jpg',
-		'pic_2.jpg',
-		'pic_3.jpg',
-		'pic_4.jpg',
-		'pic_5.jpg',
-		'pic_6.jpg'
+		'serratura.png',
+		'lampada.png',
+		'pigna.png',
+		'spiga.png',
+		'pentola.png',
+		'steccato.png'
 	],
 	[
-		'pic_1.jpg',
-		'pic_2.jpg',
-		'pic_3.jpg',
-		'pic_4.jpg',
-		'pic_5.jpg',
-		'pic_6.jpg'
+		'ciabatte.png',
+		'astronauta.png',
+		'pallone.png',
+		'lucchetto.png',
+		'imbuto.png',
+		'paracadute.png'
 	],
 	[
-		'pic_1.jpg',
-		'pic_2.jpg',
-		'pic_3.jpg',
-		'pic_4.jpg',
-		'pic_5.jpg',
-		'pic_6.jpg'
+		'nave.png',
+		'telefono.png',
+		'gomma.png',
+		'giornale.png',
+		'ferrodastiro.png',
+		'sedia.png'
+	],
+	[
+		'topo.png',
+		'quadro.png',
+		'ombrello.png',
+		'uva.png',
+		'occhiali.png',
+		'mucca.png'
 	],
 ]
 

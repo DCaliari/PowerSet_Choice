@@ -106,7 +106,7 @@ def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORR
 	return response
 
 
-def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
+def fine(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):#TODO: rinominare in final_page
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 

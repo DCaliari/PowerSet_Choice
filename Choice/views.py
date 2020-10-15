@@ -52,10 +52,6 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	# if the variable has been create outside the function (global) then it must be recalled inside
 	# se devo leggere la variabile non serve, se invece devo modificarla serve global
 	
-	last_page = 0
-	
-	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
-	
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 
@@ -66,6 +62,8 @@ def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, ut
 
 
 def questionnaire_kids_save(request):
+	global last_page, IMAGES_POWERSET
+	
 	nome = request.POST.get('nome', None)
 	cognome = request.POST.get('cognome', None)
 	classe = request.POST.get('classe', None)
@@ -80,6 +78,9 @@ def questionnaire_kids_save(request):
 	id_utente = connection_database.cursor_db.lastrowid
 	# set the value in the session. Session in handled in settings.py.
 	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
+	
+	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
+	last_page = 0
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()

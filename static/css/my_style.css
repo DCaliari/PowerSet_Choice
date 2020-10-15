@@ -26,6 +26,10 @@ input[type="date"].form-control {
 	width:auto;
 	height:auto;
 }
+.numerical_test {
+	width:230px;
+	height:380px;
+}
 
 .button {
 	background-color: #4CAF50;
