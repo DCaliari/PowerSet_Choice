@@ -16,6 +16,8 @@ from moduli import modulo_django
 from moduli.rete import modulo_networking
 
 
+CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
+
 # This is a global variable, it is created once at the start and never later.
 IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 PAGES_NUMERICAL_TEST = 7
@@ -28,7 +30,7 @@ random.shuffle(IMAGES3)
 # costanti globali
 last_page = 0
 
-CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
+
 
 ###############################################################################################
 

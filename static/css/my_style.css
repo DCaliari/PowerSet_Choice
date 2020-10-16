@@ -73,15 +73,7 @@ input[type="date"].form-control {
 	opacity: 1;
 }
 
-.slider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 75px;
-	height: 75px;
-	border: 0;
-	background-size: 75px;
-	cursor: pointer;
-}
+.slider::-webkit-slider-thumb,
 .slider::-moz-range-thumb {
 	-webkit-appearance: none;
 	appearance: none;
@@ -112,7 +104,8 @@ input[type="date"].form-control {
 	background-image: url('../images/images_choice/pizza.jpeg');
 }
 
-th, td {
+table.tabella_questionario th,
+table.tabella_questionario td {
 	width: 200px;
 	height: 70px;
 	text-align: center;
@@ -120,4 +113,4 @@ th, td {
 	vertical-align: middle;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;}
+table.tabella_questionario tr:nth-child(even) {background-color: #f2f2f2;}
