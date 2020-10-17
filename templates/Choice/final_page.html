@@ -7,11 +7,31 @@
 		<span><h1>{{ page_title }}</h1></span>
 	</div>
 </div>
+<div><h2>Merenda</h2></div>
 <div class="row">
 	{% for image in choices %}
-		<div class="col-md-4" align="center">
-			<img src="{% static "" %}images/{{ image }}" class="choice_final_page"/>
-		</div>
+		{% if forloop.counter0 < 11 %}
+			<div class="col-md-2" align="center">
+				<br><br>
+				<div align="center"><h3>{{ forloop.counter0 }}</h3></div>
+				<br><br>
+				<img src="{% static "" %}images/{{ image }}" class="choice_final_page"/>
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>
+<br><br>
+<div><h2>Bibita & Snack</h2></div>
+<div class="row">
+	{% for image in choices %}
+		{% if forloop.counter0 > 10 %}
+			<div class="col-md-2" align="center">
+				<br><br>
+				<div><h3>{{ forloop.counter0 }}</h3></div>
+				<br><br>
+				<img src="{% static "" %}images/{{ image }}" class="choice_final_page"/>
+			</div>
+		{% endif %}
 	{% endfor %}
 </div>
 <!--------
