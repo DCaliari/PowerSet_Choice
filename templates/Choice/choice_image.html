@@ -10,8 +10,8 @@
 		<span><h2>{{ page_title }}</h2></span>
 	</div>
 	<br><br><br><br><br>
-	<div class="col-xs-1"></div>
-	<div class="col-xs-10 text-center">
+	<div class="col-xs-2"></div>
+	<div class="col-xs-8 text-center">
 		{% if num_page < 12 %}
 			{% for image in images %}
 				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
@@ -29,7 +29,7 @@
 			{% endfor %}
 		{% endif %}
 	</div>
-	<div class="col-xs-1"></div>
+	<div class="col-xs-2"></div>
 	
 	<!-- javascript code: function _ connect to the element using the id of the element-->
 	<!-- function on_click_image transform the variable selected_image into the id: index-->

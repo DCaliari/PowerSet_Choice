@@ -11,8 +11,8 @@ input[type="date"].form-control {
 }
 
 .choice_image {
-	width:230px;
-	height:auto;
+	width:160px;
+	height:160px;
 }
 .choice_final_page {
 	width:150px;
@@ -27,8 +27,8 @@ input[type="date"].form-control {
 	height:auto;
 }
 .numerical_test {
-	width:230px;
-	height:380px;
+	width:170px;
+	height:230px;
 }
 
 .button {

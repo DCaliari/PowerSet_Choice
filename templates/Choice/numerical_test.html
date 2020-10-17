@@ -8,15 +8,15 @@
 	</div>
 	{% if num_page == 4 %}
 	<div class="col-md-12 text-center">
-		<img src="{% static "" %}images/dices/Two.png" class="numerical_test" />
-		<img src="{% static "" %}images/dices/Five.png" class="numerical_test" />
+		<img src="{% static "" %}images/dices/Two.png" class="choice_image" />
+		<img src="{% static "" %}images/dices/Five.png" class="choice_image" />
 	</div>
 	{% endif %}
 	<br><br><br>
 	<div class="col-md-12 text-center">
-		<span><h2 style=font-size:80px>{{ page_title }}</h2></span>
+		<span><h4 style=font-size:60px>{{ page_title }}</h4></span>
 	</div>
-	<br><br><br>
+	<br><br><br><br><br>
 	{% if num_page == 1 %}
 	<div class="col-md-12 text-center">
 		<img id="quattro" src="{% static "" %}images/numbers/Quattro.png" class="numerical_test"
@@ -47,9 +47,9 @@
 	</div>
 	{% elif num_page == 5 %}
 	<div class="col-md-12 text-center">
-		<img id="four" src="{% static "" %}images/dices/Four.png" class="numerical_test"
+		<img id="four" src="{% static "" %}images/dices/Four.png" class="choice_image"
 			onclick="return on_click_image(this.id);"/>
-		<img id="five" src="{% static "" %}images/dices/Five.png" class="numerical_test"
+		<img id="five" src="{% static "" %}images/dices/Five.png" class="choice_image"
 			onclick="return on_click_image(this.id);"/>
 	</div>
 	{% elif num_page == 6 %}
