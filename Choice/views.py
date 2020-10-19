@@ -19,6 +19,12 @@ from moduli.rete import modulo_networking
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 # This is a global variable, it is created once at the start and never later.
+
+# IMAGES_POWERSET = []
+# IMAGES_POWERSET += 20 * [modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]]
+# last_page = []
+# last_page += 20 * [0]
+
 IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
 PAGES_NUMERICAL_TEST = 7
 PAGES_LANGUAGE_TEST = len(util.LANGUAGE_IMAGES)
@@ -27,11 +33,8 @@ random.shuffle(IMAGES2)
 IMAGES3 = util.IMAGES3
 random.shuffle(IMAGES3)
 
-# costanti globali
 last_page = 0
-
-
-
+# TODO: risolvere problema variabili globali che devono essere diverse per ogni utente
 ###############################################################################################
 
 
@@ -81,11 +84,11 @@ def questionnaire_kids_save(request):
 	# set the value in the session. Session in handled in settings.py.
 	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
 	
-	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
-	last_page = 0
-	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
+	
+	modulo_functions.shuffle_powerset(IMAGES_POWERSET[id_utente])
+	last_page = 0
 	
 	if modulo_django.is_localhost(request):
 		response = redirect('choice_image')
