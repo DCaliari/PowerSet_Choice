@@ -25,6 +25,11 @@ input[type="date"].form-control {
 	height:auto;
 }
 
+.slider_image {
+	width:80px;
+	height:80px;
+}
+
 .selected_image {
 	border: 1px solid black;
 }

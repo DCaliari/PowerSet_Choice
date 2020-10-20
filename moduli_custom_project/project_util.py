@@ -12,7 +12,7 @@ CARTELLA_FAVICONS = 'favicons'
 FULLPATH_CARTELLA_IMG = os.path.join(FULLPATH_CARTELLA_STATIC, 'images')
 FULLPATH_CARTELLA_IMG_CHOICE = os.path.join(FULLPATH_CARTELLA_IMG, 'images_choice')
 
-CARTELLA_VIDEO = "video"
+CARTELLA_VIDEO = "videos"
 
 URL_FILE_STATICI_ESTERNI = 'http://' + modulo_networking.get_ip()
 URL_VIDEO = URL_FILE_STATICI_ESTERNI + '/' + CARTELLA_VIDEO
