@@ -10,6 +10,12 @@ input[type="date"].form-control {
 	line-height: inherit !important;
 }
 
+.contenuto_bottom_right {
+	position:absolute;
+	bottom:0.5em;
+	right:1em;
+}
+
 .choice_image {
 	width:160px;
 	height:160px;

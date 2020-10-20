@@ -1,7 +1,3 @@
-import os
-
-from django.utils.deprecation import MiddlewareMixin
-
 
 class MyMiddleware:
 	

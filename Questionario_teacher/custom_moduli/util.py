@@ -8,7 +8,7 @@ APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_questionario.pn
 TEMPLATE_NAME__INDEX = 'index.html'
 TEMPLATE_NAME__QUESTIONARIO_TEACHER = 'questionnaire_teacher.html'
 TEMPLATE_NAME__NUMERO_ALUNNI = 'numero_alunni.html'
-TEMPLATE_NAME__FINAL_PAGE = 'fine.html'
+TEMPLATE_NAME__FINAL_PAGE = 'fine.html'#TODO: rinominare in final_page
 
 
 QUESTIONNAIRE = [

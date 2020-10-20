@@ -7,7 +7,7 @@
 		<a href="{% url 'index' %}">Tornare alla Pagina Iniziale</a>
 	</div>
 	<div class="col-md-12 text-center">
-		<span><h2 style=font-size:60px>{{ page_title }}</h2></span>
+		<h1 class="display-3">{{ page_title }}</h1><!-- TODO fare cosi' dappertutto, non usare style, usare class -->
 	</div>
 	{% for image in immagini %}
 		<div class="col-md-4 text-center">
@@ -16,10 +16,10 @@
 		</div>
 	{% endfor %}
 </div>
-<br><br><br>
-<div class="row">
-	<div class="col-md-12">
-		<div class="text-right">
+
+<div class="contenuto_bottom_right"><!-- TODO fare cosi' dappertutto, questa riga mette i bottoni in basso a destra -->
+	<div class="row">
+		<div class="col-md-12">
 			<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit()" disabled>Avanti</button>
 		</div>
 	</div>

@@ -6,9 +6,13 @@ def contains(haystack, needle):
 	return haystack.find(needle) != -1
 
 
-def powerset(iterable):
+def powerset(iterable, delete_single_items):
 	"powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
-	return list(chain.from_iterable(combinations(iterable, r) for r in range(len(iterable) + 1)))
+	num_elementi = len(iterable)
+	lista = list(chain.from_iterable(combinations(iterable, r) for r in range(num_elementi + 1)))
+	if delete_single_items is True:
+		lista = lista[num_elementi + 1:]
+	return lista
 
 
 def shuffle_powerset(lista):

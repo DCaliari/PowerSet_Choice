@@ -14,12 +14,8 @@ TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
 TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
 
-IMAGES = [
-	'apple.jpg',
-	'ice-cream.jpg',
-	'pear.jpg',
-	'pizza.jpeg'
-]
+# TODO: adeguare il codice come la riga qui sotto
+IMAGES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
 
 IMAGES2 = [
 	'coca.jpg',

@@ -1,46 +1,35 @@
 import json
-import random
 import os
+import random
 
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from moduli_custom_project import project_util
-from moduli_custom_project import modulo_database
 from Choice.custom_moduli import util
-
-from moduli import modulo_system
-from moduli import modulo_functions
 from moduli import modulo_django
-from moduli.rete import modulo_networking
+from moduli import modulo_functions
+from moduli import modulo_system
+from moduli_custom_project import modulo_database
+from moduli_custom_project import project_util
 
 
+# This is a global variable, it is created once at the start and never modified later.
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-# This is a global variable, it is created once at the start and never later.
-
-# IMAGES_POWERSET = []
-# IMAGES_POWERSET += 20 * [modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]]
-# last_page = []
-# last_page += 20 * [0]
-
-IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES)[len(util.IMAGES) + 1:]
-PAGES_NUMERICAL_TEST = 7
+IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES, True)
+PAGES_NUMERICAL_TEST = 7	#TODO: spostare in util
 PAGES_LANGUAGE_TEST = len(util.LANGUAGE_IMAGES)
 IMAGES2 = util.IMAGES2
-random.shuffle(IMAGES2)
 IMAGES3 = util.IMAGES3
-random.shuffle(IMAGES3)
 
-last_page = 0
-# TODO: risolvere problema variabili globali che devono essere diverse per ogni utente
+
 ###############################################################################################
 
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB_POWERSET
+	path_db = project_util.FULLPATH_DATABASE
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
 	if is_db_new:										# crea le tabelle solo se non ci sono gia'
@@ -53,9 +42,12 @@ def apri_connessione_db():
 
 # These are the ENDPOINT, because you can call them from outside
 def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__INDEX)):
-	global last_page, IMAGES_POWERSET
-	# if the variable has been create outside the function (global) then it must be recalled inside
-	# se devo leggere la variabile non serve, se invece devo modificarla serve global
+	global IMAGES_POWERSET, IMAGES2, IMAGES3
+	
+	#mischio le immagini
+	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
+	random.shuffle(IMAGES2)
+	random.shuffle(IMAGES3)
 	
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
@@ -67,8 +59,6 @@ def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, ut
 
 
 def questionnaire_kids_save(request):
-	global last_page, IMAGES_POWERSET
-	
 	nome = request.POST.get('nome', None)
 	cognome = request.POST.get('cognome', None)
 	classe = request.POST.get('classe', None)
@@ -81,14 +71,13 @@ def questionnaire_kids_save(request):
 
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
-	# set the value in the session. Session in handled in settings.py.
-	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
 	
-	modulo_functions.shuffle_powerset(IMAGES_POWERSET[id_utente])
-	last_page = 0
+	# set the value in the session.
+	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
+	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = 0
 	
 	if modulo_django.is_localhost(request):
 		response = redirect('choice_image')
@@ -104,26 +93,26 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
 	
 	model_map = util.init_modelmap(request, None)
-	model_map['video'] = 'http://' + modulo_networking.get_ip() + '/videos/' + util.VIDEOS[num_page]
+	model_map['video'] = project_util.URL_VIDEO + '/' + util.VIDEOS[num_page]#TODO: testare se vengono visualizzati i video
 	model_map['next_url_page'] = next_url_page
 	return TemplateResponse(request, template_name, model_map)
 
 
 def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__CHOICE)):
-	global last_page
-	
-	# the second parameter is needed because if "choice" is empty then '' is passed
 	num_page = int(request.GET.get('num_page', '1'))
+	last_page = request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE]
 	
 	if num_page < last_page:
 		num_page = last_page
 		response = redirect('{}?num_page={}'.format(reverse('choice_image'), num_page))
 		return response
 	last_page = num_page
+	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
-
+	
+	# TODO: rinominare cartelle immagini
 	if num_page < len(IMAGES_POWERSET)+1:
 		images = IMAGES_POWERSET[num_page - 1]
 		model_map['page_title'] = 'Scelta n ' + str(num_page)
@@ -213,8 +202,6 @@ def slider_save(request):
 
 
 def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__NUMERICAL_TEST)):
-	global last_page
-	
 	immagini = []
 	last_page = 0
 	
@@ -234,24 +221,25 @@ def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.T
 		response = redirect('{}?num_page={}'.format(reverse('numerical_test'), num_page))
 		return response
 	last_page = num_page
+	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	model_map['immagini'] = immagini
 	if num_page == 1:
-		model_map['page_title'] = 'Quale numero e` piu` vicino al 6?'
+		model_map['page_title'] = 'Quale numero è più vicino al 6?'
 	elif num_page == 2:
 		model_map['page_title'] = 'Quale numero viene prima del 3?'
 	elif num_page == 3:
 		model_map['page_title'] = 'Quale numero viene dopo il 4?'
 	elif num_page == 4:
-		model_map['page_title'] = 'Quale e` la somma dei puntini?'
+		model_map['page_title'] = 'Quale è la somma dei puntini?'
 	elif num_page == 5:
-		model_map['page_title'] = 'Quale dado contiene piu` puntini?'
+		model_map['page_title'] = 'Quale dado contiene più puntini?'
 	elif num_page == 6:
 		model_map['page_title'] = 'Trova il quadrato.'
 	elif num_page == 7:
-		model_map['page_title'] = 'Trova la matita piu` lunga.'
+		model_map['page_title'] = 'Trova la matita più lunga.'
 		
 	return TemplateResponse(request, template_name, model_map)
 
@@ -285,20 +273,19 @@ def save_numerical_test(request):
 
 
 def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__LANGUAGE_TEST)):
-	global last_page
-	
 	last_page = 0
 	
 	num_page = int(request.GET.get('num_page', '0'))
 	
-	immagini = util.LANGUAGE_IMAGES[num_page]
 	# I go and take different images for each num_page in the language test
+	immagini = util.LANGUAGE_IMAGES[num_page]
 	
 	if num_page < last_page:
 		num_page = last_page
 		response = redirect('{}?num_page={}'.format(reverse('language_test'), num_page))
 		return response
 	last_page = num_page
+	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page

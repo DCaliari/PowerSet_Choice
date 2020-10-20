@@ -7,7 +7,9 @@ def is_localhost(request):
 
 
 def is_index(request):
-	return request.path.endswith("/")
+	http_rel_path = request.path
+	num_slash = http_rel_path.count('/')
+	return num_slash == 2 and http_rel_path.endswith('/')
 	
 
 def get_full_url(request):

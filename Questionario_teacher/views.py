@@ -24,7 +24,7 @@ preFormBean = None
 
 # function to open the connection to the database
 def apri_connessione_db():
-	path_db = project_util.FULLPATH_DB_POWERSET
+	path_db = project_util.FULLPATH_DATABASE
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
 	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
 	if is_db_new:  # crea le tabelle solo se non ci sono gia'
