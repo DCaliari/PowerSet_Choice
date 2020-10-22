@@ -24,6 +24,7 @@ create table utente_bambini(
 	id				integer primary key autoincrement not null,
 	nome			text not null,
 	cognome			text not null,
+	scuola			text,
 	classe			text,
 	peso			integer,
 	altezza			integer,
@@ -150,17 +151,18 @@ INSERT INTO choices_slider(
 		})
 	
 	####################################################################################################
-	def insert_utente_bambino(self, nome, cognome, classe, peso, altezza, sesso):
+	def insert_utente_bambino(self, nome, cognome, scuola, classe, peso, altezza, sesso):
 		sql = """
 INSERT INTO utente_bambini(
-	nome, cognome, classe, peso, altezza, sesso, insert_date
+	nome, cognome, scuola, classe, peso, altezza, sesso, insert_date
 ) VALUES(
-	:nome, :cognome, :classe, :peso, :altezza, :sesso, """ + modulo_sqlite.DATE_TIME_NOW + """
+	:nome, :cognome, :scuola, :classe, :peso, :altezza, :sesso, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		self.cursor_db.execute(sql, {
 			'nome': nome,
 			'cognome': cognome,
+			'scuola': scuola,
 			'classe': classe,
 			'peso': peso,
 			'altezza': altezza,

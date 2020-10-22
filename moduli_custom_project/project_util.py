@@ -4,7 +4,6 @@ from PowerSet import settings
 from moduli import modulo_django
 from moduli.rete import modulo_networking
 
-
 FULLPATH_DATABASE = os.path.join(settings.BASE_DIR, 'databases', "RecordPowerset.db")
 
 FULLPATH_CARTELLA_STATIC = settings.STATICFILES_DIRS[0]
@@ -22,6 +21,9 @@ SESSION_KEY__ID_UTENTE = 'id_utente'
 
 SESSION_KEY__CHOICE_LAST_PAGE = 'choice_last_page'
 
+SESSION_KEY__POWERSET = 'powerset'
+SESSION_KEY__IMAGES2 = 'images2'
+SESSION_KEY__IMAGES3 = 'images3'
 
 def init_modelmap(request, app_title, app_logo, formBean):
 	model_map = {

@@ -12,8 +12,8 @@ TEMPLATE_NAME__FINAL_PAGE = 'fine.html'#TODO: rinominare in final_page
 
 
 QUESTIONNAIRE = [
-	['...is rather talkative', '...is rather quiet'],
-	['...is messy', '...is neat'],
+	['...interagisce molto', '...molto silenzioso'],
+	['...molto disordinato', '...is neat'],
 	['...is good-natured', '...is irritable'],
 	['...is disinterested', '...is curious to learn'],
 	['...is self-confident', '...is insecure'],

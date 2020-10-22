@@ -14,6 +14,8 @@ TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
 TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
 
+PAGES_NUMERICAL_TEST = 7
+
 # TODO: adeguare il codice come la riga qui sotto
 IMAGES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
 

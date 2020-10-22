@@ -17,12 +17,7 @@ from moduli_custom_project import project_util
 # This is a global variable, it is created once at the start and never modified later.
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
-IMAGES_POWERSET = modulo_functions.powerset(util.IMAGES, True)
-PAGES_NUMERICAL_TEST = 7	#TODO: spostare in util
 PAGES_LANGUAGE_TEST = len(util.LANGUAGE_IMAGES)
-IMAGES2 = util.IMAGES2
-IMAGES3 = util.IMAGES3
-
 
 ###############################################################################################
 
@@ -42,12 +37,17 @@ def apri_connessione_db():
 
 # These are the ENDPOINT, because you can call them from outside
 def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__INDEX)):
-	global IMAGES_POWERSET, IMAGES2, IMAGES3
 	
-	#mischio le immagini
-	IMAGES_POWERSET = modulo_functions.shuffle_powerset(IMAGES_POWERSET)
-	random.shuffle(IMAGES2)
-	random.shuffle(IMAGES3)
+	images_powerset = modulo_functions.powerset(util.IMAGES, True)
+	images_powerset = modulo_functions.shuffle_powerset(images_powerset)
+	images2 = util.IMAGES2
+	images3 = util.IMAGES3
+	random.shuffle(images2)
+	random.shuffle(images3)
+	
+	request.session[project_util.SESSION_KEY__POWERSET] = images_powerset
+	request.session[project_util.SESSION_KEY__IMAGES2] = images2
+	request.session[project_util.SESSION_KEY__IMAGES3] = images3
 	
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
@@ -61,13 +61,14 @@ def questionnaire_kids(request, template_name=os.path.join(CARTELLA_CORRENTE, ut
 def questionnaire_kids_save(request):
 	nome = request.POST.get('nome', None)
 	cognome = request.POST.get('cognome', None)
+	scuola = request.POST.get('scuola', None)
 	classe = request.POST.get('classe', None)
 	peso = request.POST.get('peso', None)
 	altezza = request.POST.get('altezza', None)
 	sesso = request.POST.get('sesso', None)
 	
 	connection_database = apri_connessione_db()
-	connection_database.insert_utente_bambino(nome, cognome, classe, peso, altezza, sesso)
+	connection_database.insert_utente_bambino(nome, cognome, scuola, classe, peso, altezza, sesso)
 
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
@@ -93,7 +94,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
 	
 	model_map = util.init_modelmap(request, None)
-	model_map['video'] = project_util.URL_VIDEO + '/' + util.VIDEOS[num_page]#TODO: testare se vengono visualizzati i video
+	model_map['video'] = project_util.URL_VIDEO + '/' + util.VIDEOS[num_page]
 	model_map['next_url_page'] = next_url_page
 	return TemplateResponse(request, template_name, model_map)
 
@@ -101,6 +102,9 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__CHOICE)):
 	num_page = int(request.GET.get('num_page', '1'))
 	last_page = request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE]
+	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
+	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
+	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
 	
 	if num_page < last_page:
 		num_page = last_page
@@ -113,18 +117,18 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	model_map['num_page'] = num_page
 	
 	# TODO: rinominare cartelle immagini
-	if num_page < len(IMAGES_POWERSET)+1:
-		images = IMAGES_POWERSET[num_page - 1]
+	if num_page < len(images_powerset)+1:
+		images = images_powerset[num_page - 1]
 		model_map['page_title'] = 'Scelta n ' + str(num_page)
 		model_map['images'] = images
 		model_map['tipo_test'] = 0
-	elif num_page == len(IMAGES_POWERSET)+1:
-		images = IMAGES2
+	elif num_page == len(images_powerset)+1:
+		images = images2
 		model_map['page_title'] = 'Scegli la bibita'
 		model_map['images'] = images
 		model_map['tipo_test'] = 1
-	elif num_page == len(IMAGES_POWERSET)+2:
-		images = IMAGES3
+	elif num_page == len(images_powerset)+2:
+		images = images3
 		model_map['page_title'] = 'Scegli la bibita'
 		model_map['images'] = images
 		model_map['tipo_test'] = 2
@@ -133,6 +137,10 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 
 def save_choice(request):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
+	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
+	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
+	
 	num_page = int(request.GET.get('num_page', ''))
 	tipo_test = int(request.GET.get('tipo_test', ''))
 	
@@ -141,14 +149,14 @@ def save_choice(request):
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
-		if num_page < len(IMAGES_POWERSET)+1:
-			menu = json.dumps(IMAGES_POWERSET[num_page-1])
+		if num_page < len(images_powerset)+1:
+			menu = json.dumps(images_powerset[num_page-1])
 			# json handle objects (like lists) when they are in the dataset
 			# using json.loads I can transform data from the table into list or other objects again
-		elif num_page == len(IMAGES_POWERSET)+1:
-			menu = json.dumps(IMAGES2)
-		elif num_page == len(IMAGES_POWERSET)+2:
-			menu = json.dumps(IMAGES3)
+		elif num_page == len(images_powerset)+1:
+			menu = json.dumps(images2)
+		elif num_page == len(images_powerset)+2:
+			menu = json.dumps(images3)
 		else:
 			menu = None
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
@@ -157,7 +165,7 @@ def save_choice(request):
 	connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= len(IMAGES_POWERSET)+2:
+	if num_page >= len(images_powerset)+2:
 		response = redirect('slider')
 		return response
 	
@@ -260,7 +268,7 @@ def save_numerical_test(request):
 	connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= PAGES_NUMERICAL_TEST:
+	if num_page >= util.PAGES_NUMERICAL_TEST:
 		response = redirect('language_test')
 		return response
 	
