@@ -13,15 +13,15 @@ TEMPLATE_NAME__FINAL_PAGE = 'fine.html'#TODO: rinominare in final_page
 
 QUESTIONNAIRE = [
 	['...interagisce molto', '...molto silenzioso'],
-	['...molto disordinato', '...is neat'],
-	['...is good-natured', '...is irritable'],
-	['...is disinterested', '...is curious to learn'],
-	['...is self-confident', '...is insecure'],
-	['...is withdrawn', '...is outgoing'],
-	['...is focused', '...easily distracted'],
-	['...is disobedient', '...is obedient'],
-	['...is quick at learning new things', '...needs more time'],
-	['...is timid', '...is fearless']
+	['...molto disordinato', '...molto preciso'],
+	['...molto sereno', '...molto irritabile'],
+	['...molto disinteressato', '...molto curioso di apprendere'],
+	['...molto sicuro di se`', '...molto insicuro'],
+	['...molto introverso', '...molto estroverso'],
+	['...molto focalizzato', '...molto distratto'],
+	['...molto disobbediente', '...molto obbediente'],
+	['...apprende rapidamente', '...e` lento ad apprendere'],
+	['...molto timido', '...molto incosciente']
 ]
 
 QUESTIONNAIRE_INTENSITY = 10
