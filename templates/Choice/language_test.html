@@ -12,7 +12,7 @@
 	</div>
 	{% for image in immagini %}
 		<div class="col-md-4 text-center">
-			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/language_images/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/language_images/Language_{{ num_page }}/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		</div>
 	{% endfor %}

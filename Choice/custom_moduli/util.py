@@ -26,7 +26,6 @@ DICES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_DICES)
 SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
 PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
-# TODO: adeguare il codice come la riga qui sotto
 VIDEOS = [
 	'Video1.mp4',
 	'Video2.mp4',
@@ -43,66 +42,14 @@ VIDEOS = [
 	'Video13.mp4'
 ]
 
-LANGUAGE_IMAGES = [
-	[
-		'matita.png',
-		'treno.png',
-		'forbice.png',
-		'tv.png',
-		'gelato.png',
-		'mela.png'
-	],
-	[
-		'orologio.png',
-		'bandiera.png',
-		'scopa.png',
-		'pane.png',
-		'nastro.png',
-		'scarpa.png'
-	],
-	[
-		'scala.png',
-		'stagno.png',
-		'freccia.png',
-		'cannocchiale.png',
-		'pinguino.png',
-		'scatola.png'
-	],
-	[
-		'serratura.png',
-		'lampada.png',
-		'pigna.png',
-		'spiga.png',
-		'pentola.png',
-		'steccato.png'
-	],
-	[
-		'ciabatte.png',
-		'astronauta.png',
-		'pallone.png',
-		'lucchetto.png',
-		'imbuto.png',
-		'paracadute.png'
-	],
-	[
-		'nave.png',
-		'telefono.png',
-		'gomma.png',
-		'giornale.png',
-		'ferrodastiro.png',
-		'sedia.png'
-	],
-	[
-		'topo.png',
-		'quadro.png',
-		'ombrello.png',
-		'uva.png',
-		'occhiali.png',
-		'mucca.png'
-	],
-]
+LANGUAGE_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_L1),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L2),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L3),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L4),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L5),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L6),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L7)]
 
 
 def init_modelmap(request, formBean):
 	return project_util.init_modelmap(request, APP_TITLE, APP_LOGO, formBean)
-
