@@ -16,56 +16,17 @@ TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
 
 PAGES_NUMERICAL_TEST = 7
 
-# TODO: adeguare il codice come la riga qui sotto
 IMAGES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
 
-IMAGES2 = [
-	'coca.jpg',
-	'fanta.jpg',
-	'the.jpg',
-	'acqua.jpeg'
-]
+IMAGES2 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_BIBITE)
+IMAGES3 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SNACK)
 
-IMAGES3 = [
-	'coca.jpg',
-	'fanta.jpg',
-	'the.jpg',
-	'acqua.jpeg'
-]
+NUMBERS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_NUMBERS)
+DICES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_DICES)
+SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
+PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
-NUMBERS = [
-	'Zero.png',
-	'Uno.png',
-	'Due.png',
-	'Tre.png',
-	'Quattro.png',
-	'Cinque.png',
-	'Sei.png',
-	'Sette.png',
-	'Otto.png',
-	'Nove.png'
-]
-
-DICES = [
-	'One.png',
-	'Two.png',
-	'Three.png',
-	'Four.png',
-	'Five.png',
-	'Six.png'
-]
-
-SHAPES = [
-	'Cerchio.png',
-	'Quadrato.png',
-	'Triangolo.png'
-]
-
-PENCILS = [
-	'Matita1.png',
-	'Matita2.png'
-]
-
+# TODO: adeguare il codice come la riga qui sotto
 VIDEOS = [
 	'Video1.mp4',
 	'Video2.mp4',

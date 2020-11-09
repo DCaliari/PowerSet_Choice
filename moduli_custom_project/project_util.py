@@ -10,6 +10,12 @@ FULLPATH_CARTELLA_STATIC = settings.STATICFILES_DIRS[0]
 CARTELLA_FAVICONS = 'favicons'
 FULLPATH_CARTELLA_IMG = os.path.join(FULLPATH_CARTELLA_STATIC, 'images')
 FULLPATH_CARTELLA_IMG_CHOICE = os.path.join(FULLPATH_CARTELLA_IMG, 'images_choice')
+FULLPATH_CARTELLA_IMG_BIBITE = os.path.join(FULLPATH_CARTELLA_IMG, 'images_bibite')
+FULLPATH_CARTELLA_IMG_SNACK = os.path.join(FULLPATH_CARTELLA_IMG, 'images_snack')
+FULLPATH_CARTELLA_IMG_NUMBERS = os.path.join(FULLPATH_CARTELLA_IMG, 'numbers')
+FULLPATH_CARTELLA_IMG_DICES = os.path.join(FULLPATH_CARTELLA_IMG, 'dices')
+FULLPATH_CARTELLA_IMG_SHAPES = os.path.join(FULLPATH_CARTELLA_IMG, 'shapes')
+FULLPATH_CARTELLA_IMG_PENCILS = os.path.join(FULLPATH_CARTELLA_IMG, 'pencils')
 
 CARTELLA_VIDEO = "videos"
 
@@ -24,6 +30,7 @@ SESSION_KEY__CHOICE_LAST_PAGE = 'choice_last_page'
 SESSION_KEY__POWERSET = 'powerset'
 SESSION_KEY__IMAGES2 = 'images2'
 SESSION_KEY__IMAGES3 = 'images3'
+
 
 def init_modelmap(request, app_title, app_logo, formBean):
 	model_map = {
