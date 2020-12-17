@@ -119,7 +119,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	# TODO: rinominare cartelle immagini
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
-		model_map['page_title'] = 'Scelta n ' + str(num_page)
+		model_map['page_title'] = 'Scelta N. ' + str(num_page)
 		model_map['images'] = images
 		model_map['tipo_test'] = 0
 	elif num_page == len(images_powerset)+1:
@@ -129,7 +129,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 		model_map['tipo_test'] = 1
 	elif num_page == len(images_powerset)+2:
 		images = images3
-		model_map['page_title'] = 'Scegli la bibita'
+		model_map['page_title'] = 'Scegli la merendina'
 		model_map['images'] = images
 		model_map['tipo_test'] = 2
 	return TemplateResponse(request, template_name, model_map)

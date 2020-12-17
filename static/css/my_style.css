@@ -95,24 +95,24 @@ input[type="date"].form-control {
 	cursor: pointer;
 }
 
-.slider_apple\.jpg::-webkit-slider-thumb,
-.slider_apple\.jpg::-moz-range-thumb {
-	background-image: url('../images/images_choice/apple.jpg');
+.slider_Loacker\.jpg::-webkit-slider-thumb,
+.slider_Loacker\.jpg::-moz-range-thumb {
+	background-image: url('../images/images_choice/Loacker.jpg');
 }
 
-.slider_ice-cream\.jpg::-webkit-slider-thumb,
-.slider_ice-cream\.jpg::-moz-range-thumb {
-	background-image: url('../images/images_choice/ice-cream.jpg');
+.slider_Oreo\.jpg::-webkit-slider-thumb,
+.slider_Oreo\.jpg::-moz-range-thumb {
+	background-image: url('../images/images_choice/Oreo.jpg');
 }
 
-.slider_pear\.jpg::-webkit-slider-thumb,
-.slider_pear\.jpg::-moz-range-thumb {
-	background-image: url('../images/images_choice/pear.jpg');
+.slider_Nutella\.jpg::-webkit-slider-thumb,
+.slider_Nutella\.jpg::-moz-range-thumb {
+	background-image: url('../images/images_choice/Nutella.jpg');
 }
 
-.slider_pizza\.jpeg::-webkit-slider-thumb,
-.slider_pizza\.jpeg::-moz-range-thumb {
-	background-image: url('../images/images_choice/pizza.jpeg');
+.slider_Ringo\.jpg::-webkit-slider-thumb,
+.slider_Ringo\.jpg::-moz-range-thumb {
+	background-image: url('../images/images_choice/Ringo.jpg');
 }
 
 table.tabella_questionario th,
