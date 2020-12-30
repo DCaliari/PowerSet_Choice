@@ -116,22 +116,32 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	
-	# TODO: rinominare cartelle immagini
+	tipo_test = None
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
 		model_map['page_title'] = 'Scelta N. ' + str(num_page)
 		model_map['images'] = images
-		model_map['tipo_test'] = 0
+		tipo_test = 0
 	elif num_page == len(images_powerset)+1:
 		images = images2
 		model_map['page_title'] = 'Scegli la bibita'
 		model_map['images'] = images
-		model_map['tipo_test'] = 1
+		tipo_test = 1
 	elif num_page == len(images_powerset)+2:
 		images = images3
 		model_map['page_title'] = 'Scegli la merendina'
 		model_map['images'] = images
-		model_map['tipo_test'] = 2
+		tipo_test = 2
+	model_map['tipo_test'] = tipo_test
+	
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	# inserisco una riga vuota per calcolo response time
+	connection_database = apri_connessione_db()
+	connection_database.insert_choices_menu(id_utente, tipo_test, None, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
 	return TemplateResponse(request, template_name, model_map)
 
 
