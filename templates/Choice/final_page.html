@@ -4,10 +4,12 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 text-center">
-		<span><h1>{{ page_title }}</h1></span>
+		<h1 class="display-3">{{ page_title }}</h1>
 	</div>
 </div>
-<div><h2>Merenda</h2></div>
+<div>
+	<h2>Merenda</h2>
+</div>
 <div class="row">
 	{% for image in choices %}
 		{% if forloop.counter0 < 11 %}
@@ -15,13 +17,15 @@
 				<br><br>
 				<div align="center"><h3>{{ forloop.counter0 }}</h3></div>
 				<br><br>
-				<img src="{% static "" %}images/{{ image }}" class="choice_final_page"/>
+				<img src="{% static '' %}images/{{ image }}" class="choice_final_page"/>
 			</div>
 		{% endif %}
 	{% endfor %}
 </div>
 <br><br>
-<div><h2>Bibita & Snack</h2></div>
+<div>
+	<h2>Bibita & Snack</h2>
+</div>
 <div class="row">
 	{% for image in choices %}
 		{% if forloop.counter0 > 10 %}
@@ -29,19 +33,19 @@
 				<br><br>
 				<div><h3>{{ forloop.counter0 }}</h3></div>
 				<br><br>
-				<img src="{% static "" %}images/{{ image }}" class="choice_final_page"/>
+				<img src="{% static '' %}images/{{ image }}" class="choice_final_page"/>
 			</div>
 		{% endif %}
 	{% endfor %}
 </div>
-<!--------
+<!--
 <div class="row">
 	<div class="col-md-12">
 		<div><h1>Your Result is:</h1></div>
 		<div>
-			<img src="{% static "" %}images/{{ image_payoff }}" class="choice_image align_left"/>
+			<img src="{% static '' %}images/{{ image_payoff }}" class="choice_image align_left"/>
 		</div>
 	</div>
 </div>
---------->
+-->
 {% endblock %}

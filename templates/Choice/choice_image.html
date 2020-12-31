@@ -4,40 +4,26 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 text-center">
-		<span><h2>{{ page_title }}</h2></span>
+		<h1 class="display-3">{{ page_title }}</h1>
 		<br><br>
 	</div>
 	<div class="col-md-12 text-center">
-		{% if num_page < 12 %}
-			{% for image in images %}
-				&emsp;&emsp;
-				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_choice/{{ image }}" class="choice_image"
-					onclick="return on_click_image(this.id);"/>
-				&emsp;&emsp;
-			{% endfor %}
-		{% elif num_page == 12 %}
-			{% for image in images %}
-				&emsp;&emsp;
-				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_bibite/{{ image }}" class="choice_image"
-					onclick="return on_click_image(this.id);"/>
-				&emsp;&emsp;
-			{% endfor %}
-		{% elif num_page == 13 %}
-			{% for image in images %}
-				&emsp;&emsp;
-				<img id="{{ forloop.counter0 }}" src="{% static "" %}images/images_snack/{{ image }}" class="choice_image"
-					onclick="return on_click_image(this.id);"/>
-				&emsp;&emsp;
-			{% endfor %}
-		{% endif %}
+		{% for image in images %}
+			&emsp;&emsp;
+			<img id="{{ forloop.counter0 }}" src="{% static '' %}images/{{ cartella_img }}/{{ image }}" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;
+		{% endfor %}
 	</div>
 
 	
-	<!-- javascript code: function _ connect to the element using the id of the element-->
-	<!-- function on_click_image transform the variable selected_image into the id: index-->
-	<!-- function on_click_submit disabled if images are not selected and move to the next page otherwise-->
-	<!-- &choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
-		which is the id of the image taken from the parameter "index" in the for loop -->
+	<!--
+	javascript code: function _ connect to the element using the id of the element
+	function on_click_image transform the variable selected_image into the id: index
+	function on_click_submit disabled if images are not selected and move to the next page otherwise
+	&choice= refers to the parameter http that we get in views.py and will be equal to "selected_image"
+		which is the id of the image taken from the parameter "index" in the for loop
+	-->
 </div>
 <br><br><br><br>
 <div class="row">

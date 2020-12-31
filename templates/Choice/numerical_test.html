@@ -5,74 +5,63 @@
 <div class="row">
 	{% if num_page == 4 %}
 	<div class="col-md-12 text-center">
-		<img src="{% static "" %}images/dices/Two.png" class="choice_image" />
-		<img src="{% static "" %}images/dices/Five.png" class="choice_image" />
-	<br><br>
+		<img src="{% static '' %}images/dices/Two.png" class="choice_image" />
+		<img src="{% static '' %}images/dices/Five.png" class="choice_image" />
+		<br><br>
 	</div>
 	{% endif %}
 	<div class="col-md-12 text-center">
-		<h1 class="display-4">{{ page_title }}</h1>
+		<h1 class="display-3">{{ page_title }}</h1>
 	<br><br>
 	</div>
-	{% if num_page == 1 %}
 	<div class="col-md-12 text-center">
-		<img id="quattro" src="{% static "" %}images/numbers/Quattro.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<img id="nove" src="{% static "" %}images/numbers/Nove.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
+		{% if num_page == 1 %}
+			<img id="quattro" src="{% static '' %}images/numbers/Quattro.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			<img id="nove" src="{% static '' %}images/numbers/Nove.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 2 %}
+			<img id="uno" src="{% static '' %}images/numbers/Uno.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			<img id="due" src="{% static '' %}images/numbers/Due.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 3 %}
+			<img id="cinque" src="{% static '' %}images/numbers/Cinque.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			<img id="sei" src="{% static '' %}images/numbers/Sei.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 4 %}
+			<img id="seven" src="{% static '' %}images/numbers/Sette.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			<img id="eight" src="{% static '' %}images/numbers/Otto.png" class="numerical_test"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 5 %}
+			<img id="four" src="{% static '' %}images/dices/Four.png" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+			<img id="five" src="{% static '' %}images/dices/Five.png" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 6 %}
+			<img id="triangolo" src="{% static '' %}images/shapes/Triangolo.png" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;
+			<img id="cerchio" src="{% static '' %}images/shapes/Cerchio.png" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+			&emsp;&emsp;&emsp;&emsp;
+			<img id="quadrato" src="{% static '' %}images/shapes/Quadrato.png" class="choice_image"
+				onclick="return on_click_image(this.id);"/>
+		{% elif num_page == 7 %}
+			<img id="matita1" src="{% static '' %}images/pencils/Matita1.png" class="pencils"
+				onclick="return on_click_image(this.id);"/>
+			<br><br><br>
+			<img id="matita2" src="{% static '' %}images/pencils/Matita2.png" class="pencils"
+				onclick="return on_click_image(this.id);"/>
+		{% endif %}
 	</div>
-	{% elif num_page == 2 %}
-	<div class="col-md-12 text-center">
-		<img id="uno" src="{% static "" %}images/numbers/Uno.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<img id="due" src="{% static "" %}images/numbers/Due.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% elif num_page == 3 %}
-	<div class="col-md-12 text-center">
-		<img id="cinque" src="{% static "" %}images/numbers/Cinque.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<img id="sei" src="{% static "" %}images/numbers/Sei.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% elif num_page == 4 %}
-	<div class="col-md-12 text-center">
-		<img id="seven" src="{% static "" %}images/numbers/Sette.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<img id="eight" src="{% static "" %}images/numbers/Otto.png" class="numerical_test"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% elif num_page == 5 %}
-	<div class="col-md-12 text-center">
-		<img id="four" src="{% static "" %}images/dices/Four.png" class="choice_image"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-		<img id="five" src="{% static "" %}images/dices/Five.png" class="choice_image"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% elif num_page == 6 %}
-	<div class="col-md-12 text-center">
-		<img id="triangolo" src="{% static "" %}images/shapes/Triangolo.png" class="choice_image"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;
-		<img id="cerchio" src="{% static "" %}images/shapes/Cerchio.png" class="choice_image"
-			onclick="return on_click_image(this.id);"/>
-		&emsp;&emsp;&emsp;&emsp;
-		<img id="quadrato" src="{% static "" %}images/shapes/Quadrato.png" class="choice_image"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% elif num_page == 7 %}
-	<div class="col-md-12 text-center">
-		<img id="matita1" src="{% static "" %}images/pencils/Matita1.png" class="pencils"
-			onclick="return on_click_image(this.id);"/><br><br><br>
-		<img id="matita2" src="{% static "" %}images/pencils/Matita2.png" class="pencils"
-			onclick="return on_click_image(this.id);"/>
-	</div>
-	{% endif %}
 </div>
 <br><br><br>
 <div class="row">

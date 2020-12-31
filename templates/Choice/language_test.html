@@ -4,18 +4,18 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 text-center">
-		<h1 class="display-3">{{ page_title }}</h1><!-- TODO fare cosi' dappertutto, non usare style, usare class -->
+		<h1 class="display-3">{{ page_title }}</h1>
 		<br><br><br><br>
 	</div>
 	{% for image in immagini %}
 		<div class="col-md-4 text-center">
-			<img id="{{ forloop.counter0 }}" src="{% static "" %}images/language_images/Language_{{ num_page }}/{{ image }}" class="choice_image"
+			<img id="{{ forloop.counter0 }}" src="{% static '' %}images/language_images/Language_{{ num_page }}/{{ image }}" class="choice_image"
 				onclick="return on_click_image(this.id);"/>
 		</div>
 	{% endfor %}
 </div>
 
-<div class="contenuto_bottom_right"><!-- TODO fare cosi' dappertutto, questa riga mette i bottoni in basso a destra -->
+<div class="contenuto_bottom_right">
 	<div class="row">
 		<div class="col-md-12">
 			<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit()" disabled>Avanti</button>

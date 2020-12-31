@@ -3,7 +3,8 @@ import sqlite3
 
 TIMEOUT_CONNECTION = 20
 
-DATE_TIME_NOW = "strftime('%Y-%m-%d %H:%M:%f', 'now')"	# this variable store the command to get data and time
+# this variable store the command to get date, time and millis
+DATE_TIME_NOW = "strftime('%Y-%m-%d %H:%M:%f', 'now')"
 
 
 class Sqlite(ABC):

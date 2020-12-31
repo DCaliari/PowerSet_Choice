@@ -11,5 +11,5 @@ urlpatterns = [
 	path('questionnaire_teacher', views.questionnaire_teacher, name='questionnaire_teacher'),
 	path('questionnaire_teacher_save', views.questionnaire_teacher_save, name='questionnaire_teacher_save'),
 	
-	path('fine', views.fine, name='fine'),
+	path('final_page', views.final_page, name='final_page'),
 ]

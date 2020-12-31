@@ -116,22 +116,27 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	
+	cartella_img=None
 	tipo_test = None
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
 		model_map['page_title'] = 'Scelta N. ' + str(num_page)
+		cartella_img='images_choice'
 		model_map['images'] = images
 		tipo_test = 0
 	elif num_page == len(images_powerset)+1:
 		images = images2
 		model_map['page_title'] = 'Scegli la bibita'
+		cartella_img='images_bibite'
 		model_map['images'] = images
 		tipo_test = 1
 	elif num_page == len(images_powerset)+2:
 		images = images3
 		model_map['page_title'] = 'Scegli la merendina'
+		cartella_img='images_snack'
 		model_map['images'] = images
 		tipo_test = 2
+	model_map['cartella_img'] = cartella_img
 	model_map['tipo_test'] = tipo_test
 	
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
@@ -353,10 +358,12 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPL
 		tipo_test = choice['tipo_test']
 		# choice e' la riga della tabella, per selezionare una colonna usare le parentesi quadre come un array
 		num_choice = choice['choice']
-		menu = json.loads(choice['menu'])
-		image_chosen = menu[num_choice]
-		image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
-		images_payoff.append(image_chosen)
+		menu = choice['menu']
+		if(menu is not None):
+			menu = json.loads(menu)
+			image_chosen = menu[num_choice]
+			image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
+			images_payoff.append(image_chosen)
 	# scelgo un'immagine a caso
 	image_payoff = random.choice(images_payoff)
 

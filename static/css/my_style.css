@@ -25,11 +25,6 @@ input[type="date"].form-control {
 	height:auto;
 }
 
-.slider_image {
-	width:80px;
-	height:80px;
-}
-
 .selected_image {
 	border: 1px solid black;
 }
@@ -51,7 +46,9 @@ input[type="date"].form-control {
 	text-decoration: none;
 	font-size: 16px;
 }
-.button:hover {background-color: #3e8e41}
+.button:hover {
+	background-color: #3e8e41
+}
 
 .button:active {
 	background-color: #3e8e41;
@@ -64,24 +61,26 @@ input[type="date"].form-control {
 	cursor: not-allowed;
 }
 
-.slidecontainer {
-	width: 100%;
+
+.slider_image {
+	width:75px;
+	height:auto;
 }
+
 /* the following are styles for each slider: fix it into only one style */
 .slider {
 	-webkit-appearance: none;
 	width: 100%;
 	height: 75px;
 	border-radius: 5px;
-	background-color: #d3d3d3;
+	background-color: #d0d0d0;
 	outline: none;
-	opacity: 0.9;
 	-webkit-transition: .2s;
 	transition: opacity .2s;
 }
 
 .slider:hover {
-	opacity: 1;
+	background-color: #bdbdbd;
 }
 
 .slider::-webkit-slider-thumb,
@@ -115,6 +114,10 @@ input[type="date"].form-control {
 	background-image: url('../images/images_choice/Ringo.jpg');
 }
 
+
+/*
+questionario
+*/
 table.tabella_questionario th,
 table.tabella_questionario td {
 	width: 200px;
@@ -124,4 +127,6 @@ table.tabella_questionario td {
 	vertical-align: middle;
 }
 
-table.tabella_questionario tr:nth-child(even) {background-color: #f2f2f2;}
+table.tabella_questionario tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
