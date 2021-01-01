@@ -55,7 +55,7 @@ create table numerical_test(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
 	num_test		integer not null,
-	risultato		text not null,
+	risultato		text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
@@ -65,7 +65,7 @@ create table language_test(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
 	lan_test		integer not null,
-	risultato		text not null,
+	risultato		text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION

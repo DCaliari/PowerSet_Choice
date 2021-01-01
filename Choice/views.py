@@ -116,24 +116,24 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
 	
-	cartella_img=None
+	cartella_img = None
 	tipo_test = None
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
 		model_map['page_title'] = 'Scelta N. ' + str(num_page)
-		cartella_img='images_choice'
+		cartella_img = 'images_choice'
 		model_map['images'] = images
 		tipo_test = 0
 	elif num_page == len(images_powerset)+1:
 		images = images2
 		model_map['page_title'] = 'Scegli la bibita'
-		cartella_img='images_bibite'
+		cartella_img = 'images_bibite'
 		model_map['images'] = images
 		tipo_test = 1
 	elif num_page == len(images_powerset)+2:
 		images = images3
 		model_map['page_title'] = 'Scegli la merendina'
-		cartella_img='images_snack'
+		cartella_img = 'images_snack'
 		model_map['images'] = images
 		tipo_test = 2
 	model_map['cartella_img'] = cartella_img
@@ -195,10 +195,17 @@ def save_choice(request):
 
 
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	slider_images = util.IMAGES
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['images'] = slider_images
+	
+	connection_database = apri_connessione_db()
+	connection_database.insert_choices_slider(id_utente, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
 
 	return TemplateResponse(request, template_name, model_map)
 
@@ -227,6 +234,7 @@ def slider_save(request):
 def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__NUMERICAL_TEST)):
 	immagini = []
 	last_page = 0
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	
 	num_page = int(request.GET.get('num_page', '1'))
 	
@@ -263,7 +271,13 @@ def numerical_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.T
 		model_map['page_title'] = 'Trova il quadrato.'
 	elif num_page == 7:
 		model_map['page_title'] = 'Trova la matita più lunga.'
-		
+	
+	connection_database = apri_connessione_db()
+	connection_database.insert_numerical_test(id_utente, num_page, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -297,6 +311,7 @@ def save_numerical_test(request):
 
 def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__LANGUAGE_TEST)):
 	last_page = 0
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	
 	num_page = int(request.GET.get('num_page', '0'))
 	
@@ -314,6 +329,12 @@ def language_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TE
 	model_map['num_page'] = num_page
 	model_map['immagini'] = immagini
 	model_map['page_title'] = "Scegli l'immagine corretta"
+	
+	connection_database = apri_connessione_db()
+	connection_database.insert_language_test(id_utente, num_page, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
 	
 	return TemplateResponse(request, template_name, model_map)
 
@@ -335,7 +356,7 @@ def save_language_test(request):
 
 	# when the pages are finished go to next problem
 	if num_page+1 >= PAGES_LANGUAGE_TEST:
-		response = redirect('final_page')
+		response = redirect('final_page_C')
 		return response
 	
 	next_page = num_page + 1
@@ -359,7 +380,7 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPL
 		# choice e' la riga della tabella, per selezionare una colonna usare le parentesi quadre come un array
 		num_choice = choice['choice']
 		menu = choice['menu']
-		if(menu is not None):
+		if menu is not None:
 			menu = json.loads(menu)
 			image_chosen = menu[num_choice]
 			image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)

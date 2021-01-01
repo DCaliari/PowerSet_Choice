@@ -12,7 +12,7 @@ TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
 TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
 TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
-TEMPLATE_NAME__FINAL_PAGE = 'final_page.html'
+TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
 PAGES_NUMERICAL_TEST = 7
 

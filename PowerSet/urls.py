@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import include, path  # import more than one -- use comma
 
 urlpatterns = [
-	path('Choice/', include('Choice.urls')),	#TODO: rinomina tutto in minuscolo
-	path('Questionario_teacher/', include('Questionario_teacher.urls')),#TODO: rinomina in italiano e tutto in minuscolo
+	path('Choice/', include('Choice.urls')),
+	path('Questionario_teacher/', include('Questionario_teacher.urls')),
 	
 	path('admin/', admin.site.urls)
 ]

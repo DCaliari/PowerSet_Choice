@@ -22,5 +22,5 @@ urlpatterns = [
 	path('language_test', views.language_test, name='language_test'),
 	path('save_language_test', views.save_language_test, name='save_language_test'),
 	
-	path('final_page', views.final_page, name='final_page')
+	path('final_page_C', views.final_page, name='final_page_C')
 ]
