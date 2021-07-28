@@ -1,0 +1,136 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+		{% if num_page == 1 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 2 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 3 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 4 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 5 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 6 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 7 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 8 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% endif %}
+	<div class="col-md-12 text-center">
+		<h2 class="display-3">{{ page_title }}</h2>
+	<br><br>
+	</div>
+	<div class="col-md-12 text-center">
+		{% if num_page == 1 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_1" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 2 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_2" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 3 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_3" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 4 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_4" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 5 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_5" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 6 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_6" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 7 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_7" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 8 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_8" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% endif %}
+	</div>
+</div>
+<br><br><br>
+<div class="row">
+	<div class="col-md-12">
+		<div class="text-center">
+			<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit()" disabled>Avanti</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	var selected_image = null;
+
+	function on_click_image(id){
+		// if there was already a selected image then get the image from function _ and remove border
+		if(selected_image!==null){
+			var image_prec = _(selected_image);
+			image_prec.classList.remove('selected_image');
+		}
+		//new image
+		selected_image = id;
+		var button = _('button_submit');
+		button.disabled = false;
+		var image = _(id);
+		image.classList.add('selected_image');
+	}
+	// The last three lines remove the disabled class from the button when the button is clicked.
+
+	function on_click_submit(){
+		_('button_submit').disabled = (selected_image == null);
+		location.href="save_logic_test?num_page={{ num_page }}" + "&risultato=" + selected_image;
+	}
+
+</script>
+{% endblock %}

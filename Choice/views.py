@@ -18,6 +18,7 @@ from moduli_custom_project import project_util
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 PAGES_LANGUAGE_TEST = len(util.LANGUAGE_IMAGES)
+PAGES_LOGIC_TEST = len(util.LOGIC_IMAGES)
 
 ###############################################################################################
 
@@ -86,6 +87,7 @@ def questionnaire_kids_save(request):
 		request.session[project_util.SESSION_KEY__PHASE] = util.PHASE_CQ
 		response = redirect('choice_image')
 	else:
+		request.session[project_util.SESSION_KEY__PHASE] = util.PHASE_CHOICE_IMAGE
 		response = redirect('video')
 	return response
 
@@ -382,7 +384,7 @@ def save_language_test(request):
 
 	# when the pages are finished go to next problem
 	if num_page+1 >= PAGES_LANGUAGE_TEST:
-		response = redirect('final_page_C')
+		response = redirect('logic_test')
 		return response
 	
 	next_page = num_page + 1
@@ -390,6 +392,64 @@ def save_language_test(request):
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page
 	response = redirect('{}?num_page={}'.format(reverse('language_test'), next_page))
+	return response
+
+
+def logic_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__LOGIC_TEST)):
+	last_page = 0
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	num_page = int(request.GET.get('num_page', '1'))
+	
+	# I go and take different images for each num_page in the language test
+	immagini = util.LOGIC_IMAGES[num_page-1]
+	
+	if num_page < last_page:
+		num_page = last_page
+		response = redirect('{}?num_page={}'.format(reverse('logic_test'), num_page))
+		return response
+	last_page = num_page
+	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
+	
+	model_map = util.init_modelmap(request, None)
+	model_map['num_page'] = num_page
+	model_map['immagini'] = immagini
+	model_map['page_title'] = "Scegli il pezzo mancante"
+	
+	connection_database = apri_connessione_db()
+	connection_database.insert_logic_test(id_utente, num_page, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	return TemplateResponse(request, template_name, model_map)
+
+
+def save_logic_test(request):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	num_page = int(request.GET.get('num_page', ''))
+	
+	connection_database = apri_connessione_db()
+	
+	# inserire il risultato del test
+	if 'risultato' in request.GET:
+		risultato = request.GET.get('risultato', '')
+		connection_database.insert_logic_test(id_utente, num_page, risultato)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	# when the pages are finished go to next problem
+	if num_page >= PAGES_LOGIC_TEST:
+		response = redirect('final_page_C')
+		return response
+	
+	next_page = num_page + 1
+	
+	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
+	# we concatenate the parameter num_page with the value next_page
+	response = redirect('{}?num_page={}'.format(reverse('logic_test'), next_page))
 	return response
 
 

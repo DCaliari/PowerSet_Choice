@@ -27,6 +27,17 @@ FULLPATH_CARTELLA_IMG_L5 = os.path.join(FULLPATH_CARTELLA_IMG_LANGUAGE, 'Languag
 FULLPATH_CARTELLA_IMG_L6 = os.path.join(FULLPATH_CARTELLA_IMG_LANGUAGE, 'Language_5')
 FULLPATH_CARTELLA_IMG_L7 = os.path.join(FULLPATH_CARTELLA_IMG_LANGUAGE, 'Language_6')
 
+FULLPATH_CARTELLA_IMG_LOGIC = os.path.join(FULLPATH_CARTELLA_IMG, 'logic_test')
+FULLPATH_CARTELLA_IMG_LOGIC_QUESTIONS = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC, 'Questions_Coloured')
+FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC, 'Answers_Coloured')
+FULLPATH_CARTELLA_IMG_LOGIC1 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_1')
+FULLPATH_CARTELLA_IMG_LOGIC2 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_2')
+FULLPATH_CARTELLA_IMG_LOGIC3 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_3')
+FULLPATH_CARTELLA_IMG_LOGIC4 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_4')
+FULLPATH_CARTELLA_IMG_LOGIC5 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_5')
+FULLPATH_CARTELLA_IMG_LOGIC6 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_6')
+FULLPATH_CARTELLA_IMG_LOGIC7 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_7')
+FULLPATH_CARTELLA_IMG_LOGIC8 = os.path.join(FULLPATH_CARTELLA_IMG_LOGIC_ANSWERS, 'Raven_8')
 
 CARTELLA_VIDEO = "videos"
 
@@ -59,6 +70,8 @@ def init_modelmap(request, app_title, app_logo, formBean):
 
 
 def from_tipo_test_to_cartella_immagini(tipo_test):
+	if tipo_test == 10:  # TODO: solve the problem with tipo_test == 10
+		return "images_cq"
 	if tipo_test == 0:
 		return "images_choice"
 	if tipo_test == 1:

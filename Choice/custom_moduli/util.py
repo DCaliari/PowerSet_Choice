@@ -12,6 +12,7 @@ TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
 TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
 TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
+TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
 PHASE_CQ = 0
@@ -54,6 +55,15 @@ LANGUAGE_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_L1),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L5),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L6),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L7)]
+
+LOGIC_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC1),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC2),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC3),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC4),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC5),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC6),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC7),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC8)]
 
 
 def init_modelmap(request, formBean):
