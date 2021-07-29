@@ -15,12 +15,7 @@ TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
 TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
-PHASE_CQ = 0
-PHASE_CHOICE_IMAGE = 1
-
 PAGES_NUMERICAL_TEST = 7
-
-IMAGES_CQ = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CQ)
 
 IMAGES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
 

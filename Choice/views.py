@@ -41,14 +41,14 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	
 	images_powerset = modulo_functions.powerset(util.IMAGES, True)
 	images_powerset = modulo_functions.shuffle_powerset(images_powerset)
-	images_cq = modulo_functions.powerset(util.IMAGES_CQ, True)
+	
 	images2 = util.IMAGES2
 	images3 = util.IMAGES3
 	random.shuffle(images2)
 	random.shuffle(images3)
 	
 	request.session[project_util.SESSION_KEY__POWERSET] = images_powerset
-	request.session[project_util.SESSION_KEY__IMAGESCQ] = images_cq
+	
 	request.session[project_util.SESSION_KEY__IMAGES2] = images2
 	request.session[project_util.SESSION_KEY__IMAGES3] = images3
 	
@@ -84,10 +84,8 @@ def questionnaire_kids_save(request):
 	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = 0
 	
 	if modulo_django.is_localhost(request):
-		request.session[project_util.SESSION_KEY__PHASE] = util.PHASE_CQ
 		response = redirect('choice_image')
 	else:
-		request.session[project_util.SESSION_KEY__PHASE] = util.PHASE_CHOICE_IMAGE
 		response = redirect('video')
 	return response
 
@@ -108,12 +106,10 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	num_page = int(request.GET.get('num_page', '1'))
 	last_page = request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE]
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
-	images_cq = request.session[project_util.SESSION_KEY__IMAGESCQ]
+	
 	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
 	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
-	phase = request.session[project_util.SESSION_KEY__PHASE]
 	
-	# TODO: fissare questo controllo con if phase == ...
 	'''
 	if num_page < last_page:
 		num_page = last_page
@@ -130,27 +126,21 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	tipo_test = None
 	images = None
 	
-	if phase == util.PHASE_CQ:
-		images = images_cq[num_page - 1]
+	if num_page < len(images_powerset)+1:
+		images = images_powerset[num_page - 1]
 		model_map['page_title'] = 'Scelta N. ' + str(num_page)
-		cartella_img = 'images_cq'
-		tipo_test = 10
-	elif phase == util.PHASE_CHOICE_IMAGE:
-		if num_page < len(images_powerset)+1:
-			images = images_powerset[num_page - 1]
-			model_map['page_title'] = 'Scelta N. ' + str(num_page)
-			cartella_img = 'images_choice'
-			tipo_test = 0
-		elif num_page == len(images_powerset)+1:
-			images = images2
-			model_map['page_title'] = 'Scegli la bibita'
-			cartella_img = 'images_bibite'
-			tipo_test = 1
-		elif num_page == len(images_powerset)+2:
-			images = images3
-			model_map['page_title'] = 'Scegli la merendina'
-			cartella_img = 'images_snack'
-			tipo_test = 2
+		cartella_img = 'images_choice'
+		tipo_test = 0
+	elif num_page == len(images_powerset)+1:
+		images = images2
+		model_map['page_title'] = 'Scegli la bibita'
+		cartella_img = 'images_bibite'
+		tipo_test = 1
+	elif num_page == len(images_powerset)+2:
+		images = images3
+		model_map['page_title'] = 'Scegli la merendina'
+		cartella_img = 'images_snack'
+		tipo_test = 2
 			
 	model_map['images'] = images
 	model_map['cartella_img'] = cartella_img
@@ -172,8 +162,6 @@ def save_choice(request):
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
 	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
 	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
-	images_cq = request.session[project_util.SESSION_KEY__IMAGESCQ]
-	phase = request.session[project_util.SESSION_KEY__PHASE]
 	
 	num_page = int(request.GET.get('num_page', ''))
 	tipo_test = int(request.GET.get('tipo_test', ''))
@@ -184,17 +172,14 @@ def save_choice(request):
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = None
-		if phase == util.PHASE_CQ:
-			menu = json.dumps(images_cq[num_page-1])
-		elif phase == util.PHASE_CHOICE_IMAGE:
-			if num_page < len(images_powerset)+1:
-				menu = json.dumps(images_powerset[num_page-1])
-				# json handle objects (like lists) when they are in the dataset
-				# using json.loads I can transform data from the table into list or other objects again
-			elif num_page == len(images_powerset)+1:
-				menu = json.dumps(images2)
-			elif num_page == len(images_powerset)+2:
-				menu = json.dumps(images3)
+		if num_page < len(images_powerset)+1:
+			menu = json.dumps(images_powerset[num_page-1])
+			# json handle objects (like lists) when they are in the dataset
+			# using json.loads I can transform data from the table into list or other objects again
+		elif num_page == len(images_powerset)+1:
+			menu = json.dumps(images2)
+		elif num_page == len(images_powerset)+2:
+			menu = json.dumps(images3)
 			
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
 
@@ -202,15 +187,10 @@ def save_choice(request):
 	connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if phase == util.PHASE_CQ:
-		if num_page >= len(images_cq):
-			request.session[project_util.SESSION_KEY__PHASE] = util.PHASE_CHOICE_IMAGE
-			response = redirect('choice_image')
-			return response
-	elif phase == util.PHASE_CHOICE_IMAGE:
-		if num_page >= len(images_powerset)+2:
-			response = redirect('slider')
-			return response
+
+	if num_page >= len(images_powerset)+2:
+		response = redirect('slider')
+		return response
 	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page

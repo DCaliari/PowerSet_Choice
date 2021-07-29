@@ -9,7 +9,7 @@ FULLPATH_DATABASE = os.path.join(settings.BASE_DIR, 'databases', "RecordPowerset
 FULLPATH_CARTELLA_STATIC = settings.STATICFILES_DIRS[0]
 CARTELLA_FAVICONS = 'favicons'
 FULLPATH_CARTELLA_IMG = os.path.join(FULLPATH_CARTELLA_STATIC, 'images')
-FULLPATH_CARTELLA_IMG_CQ = os.path.join(FULLPATH_CARTELLA_IMG, 'images_cq')
+
 FULLPATH_CARTELLA_IMG_CHOICE = os.path.join(FULLPATH_CARTELLA_IMG, 'images_choice')
 FULLPATH_CARTELLA_IMG_BIBITE = os.path.join(FULLPATH_CARTELLA_IMG, 'images_bibite')
 FULLPATH_CARTELLA_IMG_SNACK = os.path.join(FULLPATH_CARTELLA_IMG, 'images_snack')
@@ -52,7 +52,7 @@ SESSION_KEY__PHASE = 'phase'
 SESSION_KEY__CHOICE_LAST_PAGE = 'choice_last_page'
 
 SESSION_KEY__POWERSET = 'powerset'
-SESSION_KEY__IMAGESCQ = 'images_cq'
+
 SESSION_KEY__IMAGES2 = 'images2'
 SESSION_KEY__IMAGES3 = 'images3'
 
