@@ -166,9 +166,9 @@ def save_choice(request):
 	num_page = int(request.GET.get('num_page', ''))
 	tipo_test = int(request.GET.get('tipo_test', ''))
 	
-	connection_database = apri_connessione_db()
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
+	
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = None
@@ -180,11 +180,11 @@ def save_choice(request):
 			menu = json.dumps(images2)
 		elif num_page == len(images_powerset)+2:
 			menu = json.dumps(images3)
-			
+		
+		connection_database = apri_connessione_db()
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
-
-	connection_database.conn_db.commit()
-	connection_database.close_conn()
+		connection_database.conn_db.commit()
+		connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
 

@@ -55,7 +55,7 @@
 	
 	// da "selected_image=id" ottengo l'id dell'immagine selezionata e poi lo passo con "+ selected_image" below
 	function on_click_submit(tipo_test){
-		_('button_submit').disabled = (selected_image == null);
+		_('button_submit').disabled = true;
 		location.href="save_choice?num_page={{ num_page }}" + "&choice=" + selected_image + "&tipo_test=" + tipo_test;
 	}
 

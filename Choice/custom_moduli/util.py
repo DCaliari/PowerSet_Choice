@@ -28,19 +28,19 @@ SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
 PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
 VIDEOS = [
-	'Video1.mp4',
-	'Video2.mp4',
-	'Video3.mp4',
-	'Video4.mp4',
-	'Video5.mp4',
-	'Video6.mp4',
-	'Video7.mp4',
-	'Video8.mp4',
-	'Video9.mp4',
-	'Video10.mp4',
-	'Video11.mp4',
-	'Video12.mp4',
-	'Video13.mp4'
+	'video1.mp4',
+	'video2.mp4',
+	'video3.mp4',
+	'video4.mp4',
+	'video5.mp4',
+	'video6.mp4',
+	'video7.mp4',
+	'video8.mp4',
+	'video9.mp4',
+	'video10.mp4',
+	'video11.mp4',
+	'video12.mp4',
+	'video13.mp4'
 ]
 
 LANGUAGE_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_L1),
