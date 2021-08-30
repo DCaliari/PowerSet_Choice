@@ -11,7 +11,6 @@ TEMPLATE_NAME__VIDEO = 'video.html'
 TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
 TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
-TEMPLATE_NAME__LANGUAGE_TEST = 'language_test.html'
 TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
@@ -28,28 +27,20 @@ SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
 PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
 VIDEOS = [
-	'video1.mp4',
-	'video2.mp4',
-	'video3.mp4',
-	'video4.mp4',
-	'video5.mp4',
-	'video6.mp4',
-	'video7.mp4',
-	'video8.mp4',
-	'video9.mp4',
-	'video10.mp4',
-	'video11.mp4',
-	'video12.mp4',
-	'video13.mp4'
+	'Video1.mp4',
+	'Video2.mp4',
+	'Video3.mp4',
+	'Video4.mp4',
+	'Video5.mp4',
+	'Video6.mp4',
+	'Video7.mp4',
+	'Video8.mp4',
+	'Video9.mp4',
+	'Video10.mp4',
+	'Video11.mp4',
+	'Video12.mp4',
+	'Video13.mp4'
 ]
-
-LANGUAGE_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_L1),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L2),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L3),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L4),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L5),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L6),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_L7)]
 
 LOGIC_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC1),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC2),

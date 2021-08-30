@@ -61,16 +61,6 @@ create table numerical_test(
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
-create table language_test(
-	id 				integer primary key autoincrement not null,
-	id_utente		integer not null,
-	lan_test		integer not null,
-	risultato		text,
-	insert_date		timestamp not null,
-	foreign key(id_utente) references utente_bambini(id)
-		ON UPDATE NO ACTION
-		ON DELETE RESTRICT
-);
 create table logic_test(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
@@ -193,21 +183,6 @@ INSERT INTO numerical_test(
 			'risultato': risultato
 		})
 	
-	####################################################################################################
-	def insert_language_test(self, id_utente, lan_test, risultato):
-		sql = """
-INSERT INTO language_test(
-	id_utente, lan_test, risultato, insert_date
-) VALUES(
-	:id_utente, :lan_test, :risultato, """ + modulo_sqlite.DATE_TIME_NOW + """
-);
-"""
-		self.cursor_db.execute(sql, {
-			'id_utente': id_utente,
-			'lan_test': lan_test,
-			'risultato': risultato
-		})
-		
 		####################################################################################################
 		
 	def insert_logic_test(self, id_utente, logic_test, risultato):
