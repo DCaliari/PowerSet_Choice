@@ -51,16 +51,6 @@ create table choices_slider(
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
-create table numerical_test(
-	id 				integer primary key autoincrement not null,
-	id_utente		integer not null,
-	num_test		integer not null,
-	risultato		text,
-	insert_date		timestamp not null,
-	foreign key(id_utente) references utente_bambini(id)
-		ON UPDATE NO ACTION
-		ON DELETE RESTRICT
-);
 create table logic_test(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
@@ -166,21 +156,6 @@ INSERT INTO utente_bambini(
 			'peso': peso,
 			'altezza': altezza,
 			'sesso': sesso
-		})
-	
-	####################################################################################################
-	def insert_numerical_test(self, id_utente, num_test, risultato):
-		sql = """
-INSERT INTO numerical_test(
-	id_utente, num_test, risultato, insert_date
-) VALUES(
-	:id_utente, :num_test, :risultato, """ + modulo_sqlite.DATE_TIME_NOW + """
-);
-"""
-		self.cursor_db.execute(sql, {
-			'id_utente': id_utente,
-			'num_test': num_test,
-			'risultato': risultato
 		})
 	
 		####################################################################################################
