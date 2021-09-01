@@ -393,8 +393,8 @@ def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPL
 			image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
 			images_payoff.append(image_chosen)
 	# scelgo un'immagine a caso
-	image_payoff = random.choice(images_payoff)
-
+	image_payoff = random.choice(images_payoff[1:10])
+	
 	model_map = util.init_modelmap(request, None)
 	model_map['page_title'] = 'Fine'
 	model_map['image_payoff'] = image_payoff
