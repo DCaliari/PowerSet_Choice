@@ -26,7 +26,7 @@ SECRET_KEY = '913m_bo%rsj2tp$$zg(#06!s#=v8blqzb#^-j1pvl9x@qn-v$^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', modulo_networking.get_ip()]
+ALLOWED_HOSTS = ['localhost', modulo_networking.get_ip()]
 
 
 # Application definition

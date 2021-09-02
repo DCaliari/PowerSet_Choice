@@ -35,6 +35,30 @@
 		<div class="col-md-12 text-center">
 			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
 		</div>
+		{% elif num_page == 9 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 10 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 11 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 12 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 13 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
+		{% elif num_page == 14 %}
+		<div class="col-md-12 text-center">
+			<img src="{% static '' %}images/logic_test/Questions_Coloured/Raven_{{ num_page }}.png" class="logic_test"/>
+		</div>
 		{% endif %}
 	<div class="col-md-12 text-center">
 		<h2 class="display-3">{{ page_title }}</h2>
@@ -94,6 +118,48 @@
 				{% for image in immagini %}
 					&emsp;
 					<img id="{{ forloop.counter0 }}_8" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 9 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_9" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 10 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_10" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 11 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_11" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 12 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_12" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 13 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_13" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
+						onclick="return on_click_image(this.id);"/>
+					&emsp;
+				{% endfor %}
+		{% elif num_page == 14 %}
+				{% for image in immagini %}
+					&emsp;
+					<img id="{{ forloop.counter0 }}_14" src="{% static '' %}images/logic_test/Answers_Coloured/Raven_{{ num_page }}/{{ image }}" class="raven_image"
 						onclick="return on_click_image(this.id);"/>
 					&emsp;
 				{% endfor %}

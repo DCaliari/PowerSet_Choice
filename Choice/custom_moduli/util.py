@@ -49,7 +49,13 @@ LOGIC_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC1),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC5),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC6),
 				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC7),
-				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC8)]
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC8),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC9),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC10),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC11),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC12),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC13),
+				os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC14)]
 
 
 def init_modelmap(request, formBean):
