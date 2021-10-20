@@ -11,7 +11,6 @@ from moduli import modulo_system
 from moduli_custom_project import modulo_database
 from moduli_custom_project import project_util
 
-
 # get l'ultima parte del path della cartella corrente
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
@@ -53,12 +52,13 @@ def numero_alunni_save(request):
 	global preFormBean
 	
 	preFormBean = PreFormBean(request.POST)
-
+	
 	response = redirect('questionnaire_teacher')
 	return response
 
 
-def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
+def questionnaire_teacher(request,
+						  template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
 	global last_page
 	
 	formBean = QuestionarioTeacherFormBean()
@@ -73,7 +73,8 @@ def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE,
 	return TemplateResponse(request, template_name, model_map)
 
 
-def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
+def questionnaire_teacher_save(request,
+							   template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
 	num_page = int(request.GET.get('num_page', 1))
 	next_page = num_page + 1
 	formBean = QuestionarioTeacherFormBean(request.POST)
@@ -84,8 +85,9 @@ def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORR
 		return TemplateResponse(request, template_name, model_map)
 	
 	connection_database = apri_connessione_db()
-	connection_database.insert_utenti(formBean.cleaned_data['nome'], formBean.cleaned_data['cognome'], formBean.cleaned_data['classe_alunno'],
-			formBean.cleaned_data['data_nascita'])
+	connection_database.insert_utenti(formBean.cleaned_data['nome'], formBean.cleaned_data['cognome'],
+									  formBean.cleaned_data['classe_alunno'],
+									  formBean.cleaned_data['data_nascita'])
 	id_utente = connection_database.cursor_db.lastrowid
 	for num_trait in range(len(util.QUESTIONNAIRE)):
 		trait = request.POST.get('trait' + str(num_trait), None)
@@ -117,6 +119,5 @@ def questionnaire_teacher__init_model_map(request, formBean, num_page):
 	model_map['page_title'] = 'Questionario {} di {}'.format(num_page, preFormBean.n_alunni)
 	model_map['num_page'] = num_page
 	model_map['frasi'] = util.QUESTIONNAIRE
-	model_map['intensity'] = range(util.QUESTIONNAIRE_INTENSITY)
+	model_map['intensity'] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'ND']
 	return model_map
-
