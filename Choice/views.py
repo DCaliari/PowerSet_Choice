@@ -127,17 +127,17 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
-		model_map['page_title'] = 'Scelta N. ' + str(num_page)
+		model_map['page_title'] = 'Quale snack ti piace tra questi?'
 		cartella_img = 'images_choice'
 		tipo_test = 0
 	elif num_page == len(images_powerset)+1:
 		images = images2
-		model_map['page_title'] = 'Scegli la bibita'
+		model_map['page_title'] = 'Quale bibita ti piace tra queste?'
 		cartella_img = 'images_bibite'
 		tipo_test = 1
 	elif num_page == len(images_powerset)+2:
 		images = images3
-		model_map['page_title'] = 'Scegli la merendina'
+		model_map['page_title'] = 'Quale merendina ti piace tra queste?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
 			
