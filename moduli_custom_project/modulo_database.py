@@ -45,7 +45,7 @@ create table choices_menu(
 create table choices_slider(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
-	slider			text,
+	slider_marks    text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION
@@ -126,17 +126,17 @@ INSERT INTO choices_menu(
 		})
 	
 	####################################################################################################
-	def insert_choices_slider(self, id_utente, slider):
+	def insert_choices_slider(self, id_utente, slider_marks):
 		sql = """
 INSERT INTO choices_slider(
-	id_utente, slider, insert_date
+	id_utente, slider_marks, insert_date
 ) VALUES(
-	:id_utente, :slider, """ + modulo_sqlite.DATE_TIME_NOW + """
+	:id_utente, :slider_marks, """ + modulo_sqlite.DATE_TIME_NOW + """
 );
 """
 		self.cursor_db.execute(sql, {
 			'id_utente': id_utente,
-			'slider': slider
+			'slider_marks': slider_marks
 		})
 	
 	####################################################################################################

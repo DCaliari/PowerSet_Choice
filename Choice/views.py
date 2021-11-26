@@ -204,9 +204,11 @@ def save_choice(request):
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	slider_images = util.IMAGES
+	emoji_images = util.EMOJI
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['images'] = slider_images
+	model_map['emoji'] = emoji_images
 	
 	connection_database = apri_connessione_db()
 	connection_database.insert_choices_slider(id_utente, None)
@@ -219,21 +221,15 @@ def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_
 
 def slider_save(request):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
-	slider_images = util.IMAGES
 	
-	connection_database = apri_connessione_db()
+	if 'marks' in request.GET:
+		slider_marks = request.GET.get('marks', '')
 	
-	# in the if loop enter the name from html file
-	if 'store_slider' in request.POST:
-		for image in slider_images:
-			slider_value = request.POST.get(image, '')
-			slider_list = [image, slider_value]
-			slider_json = json.dumps(slider_list)
-			connection_database.insert_choices_slider(id_utente, slider_json)
-	
-	connection_database.conn_db.commit()
-	connection_database.close_conn()
-	
+		connection_database = apri_connessione_db()
+		connection_database.insert_choices_slider(id_utente, slider_marks)
+		connection_database.conn_db.commit()
+		connection_database.close_conn()
+
 	response = redirect('logic_test')
 	return response
 

@@ -26,6 +26,8 @@ DICES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_DICES)
 SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
 PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
+EMOJI = os.listdir(project_util.FULLPATH_CARTELLA_IMG_EMOJI)
+
 VIDEOS = [
 	'video1.mp4',
 	'video2.mp4',

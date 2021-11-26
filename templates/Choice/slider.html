@@ -9,50 +9,65 @@
 		<!-- all data sent to views.py slider and use method post to not save in url -->
 	</div>
 </div>
-<form action="slider_save" method="post">
-	<div class="container">
-		{% for image in images %}
-			<div class="row">
-				<div class="col-sm-2">
-					<img src="{% static '' %}images/images_choice/{{ image }}" class="slider_image float-left">
-				</div>
-				<div class="col-sm-1">
-					<h1><span id="{{ image }}_value"></span></h1>
-				</div>
-				<div class="col-sm-8">
-					<input type="range" name="{{ image }}" class="slider slider_{{ image }}" id="{{ image }}" min="0" max="10" value="5"/>
-					<br><br><br>
-				</div>
-				<script>
-					slider_update_value("{{ image }}", "{{ image }}_value");
-					// "{{ image }}" must be string because from the dictionary in views.py I am passing the name of images which is a string
-				</script>
-			</div>
-		{% endfor %}
-	</div>
-	<!-- add one parameter html that is hidden and pass the data store_slider = true to python -->
-	<input type="hidden" name="store_slider" value="true"/>
-	
-	<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
-	It is a security number.-->
-	{% csrf_token %}
-	<!-- this button sends the data to views.py -->
-	<div class="col-md-12 text-center">
+<div class="container">
+	{% for image in images %}
 		<div class="row">
-			<div class="col-md-8 text-center">
-				<h2>Pochissimo</h2>
+			<div class="col-sm-3">
+				<img src="{% static '' %}images/images_choice/{{ image }}" class="slider_image float-left">
 			</div>
-			<div class="col-md-4 text-center">
-				<h2>Tantissimo</h2>
+			<div class="col-sm-8">
+				{% for em in emoji %}
+					&emsp;&emsp;
+					<img id="{{ image }}_{{ forloop.counter }}" src="{% static '' %}images/emoji/{{ em }}" class="emoji_image"
+					onclick="return on_click_image(this.id, '{{ image }}', {{ forloop.counter }});"/>
+					&emsp;
+				{% endfor %}
+				<br><br><br>
 			</div>
 		</div>
-	</div>
-	<br><br><br><br>
-	<div class="col-md-12">
-		<div class="text-center">
-			<input class="btn btn-lg btn-primary" type="submit" value="invia"/>
-		</div>
-	</div>
-</form>
+	{% endfor %}
+</div>
+<!-- add one parameter html that is hidden and pass the data store_slider = true to python -->
 
+<!-- csrf is a series of pseudo-casual numbers to avoid that sharing a link may be "used to get money illegally."
+It is a security number.-->
+{% csrf_token %}
+<!-- this button sends the data to views.py -->
+<br><br><br><br>
+<div class="col-md-12">
+	<div class="text-center">
+		<button id="button_submit" class="btn btn-lg btn-primary" onclick="return on_click_submit()" disabled>Avanti</button>
+	</div>
+</div>
+
+<script>
+	var selected_images = {};
+	
+	function on_click_image(id, image, mark){
+		// if there was already a selected image then get the image from function _ and remove border
+		if(selected_images[image]!==null){
+			var image_prec = _(image+'_'+selected_images[image]);
+			if(image_prec!=null){
+				image_prec.classList.remove('selected_image');
+			}
+		}
+		//new image
+		selected_images[image] = mark;
+		var button = _('button_submit');
+		if(Object.keys(selected_images).length==4){
+			button.disabled = false;
+		}
+		var selected_image = _(id);
+		// add border to the new selected image
+		selected_image.classList.add('selected_image');
+	}
+	// The last three lines remove the disabled class from the button when the button is clicked.
+	
+	// da "selected_image=id" ottengo l'id dell'immagine selezionata e poi lo passo con "+ selected_image" below
+	function on_click_submit(){
+		_('button_submit').disabled = true;
+		location.href="slider_save?" + "&marks=" + JSON.stringify(selected_images);
+	}
+
+</script>
 {% endblock %}

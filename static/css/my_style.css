@@ -69,9 +69,13 @@ input[type="date"].form-control {
 	cursor: not-allowed;
 }
 
+.emoji_image {
+	width:65px;
+	height:auto;
+}
 
 .slider_image {
-	width:75px;
+	width:125px;
 	height:auto;
 }
 
