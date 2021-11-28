@@ -17,7 +17,7 @@
 			</div>
 			<div class="col-sm-8">
 				{% for em in emoji %}
-					&emsp;&emsp;
+					&emsp;
 					<img id="{{ image }}_{{ forloop.counter }}" src="{% static '' %}images/emoji/{{ em }}" class="emoji_image"
 					onclick="return on_click_image(this.id, '{{ image }}', {{ forloop.counter }});"/>
 					&emsp;
