@@ -10,21 +10,20 @@ TEMPLATE_NAME__QUESTIONARIO_KIDS = 'questionnaire_kids.html'
 TEMPLATE_NAME__VIDEO = 'video.html'
 TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
-TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
 TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
-PAGES_NUMERICAL_TEST = 7
-
 IMAGES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
-
 IMAGES2 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_BIBITE)
 IMAGES3 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SNACK)
 
-NUMBERS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_NUMBERS)
-DICES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_DICES)
-SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
-PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
+# This piece of code is for numerical and language tests
+# TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'
+# PAGES_NUMERICAL_TEST = 7
+# NUMBERS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_NUMBERS)
+# DICES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_DICES)
+# SHAPES = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SHAPES)
+# PENCILS = os.listdir(project_util.FULLPATH_CARTELLA_IMG_PENCILS)
 
 EMOJI = os.listdir(project_util.FULLPATH_CARTELLA_IMG_EMOJI)
 
