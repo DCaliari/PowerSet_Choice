@@ -25,8 +25,8 @@ preFormBean = None
 def apri_connessione_db():
 	path_db = project_util.FULLPATH_DATABASE
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
-	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
-	if is_db_new:  # crea le tabelle solo se non ci sono gia'
+	database = modulo_database.Database(path_db)	# crea l'oggetto e apre la connessione
+	if is_db_new:	# crea le tabelle solo se non ci sono gia'
 		database.schema()
 	return database
 
@@ -57,8 +57,7 @@ def numero_alunni_save(request):
 	return response
 
 
-def questionnaire_teacher(request,
-						  template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
+def questionnaire_teacher(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
 	global last_page
 	
 	formBean = QuestionarioTeacherFormBean()
@@ -73,8 +72,7 @@ def questionnaire_teacher(request,
 	return TemplateResponse(request, template_name, model_map)
 
 
-def questionnaire_teacher_save(request,
-							   template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
+def questionnaire_teacher_save(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__QUESTIONARIO_TEACHER)):
 	num_page = int(request.GET.get('num_page', 1))
 	next_page = num_page + 1
 	formBean = QuestionarioTeacherFormBean(request.POST)
@@ -86,14 +84,13 @@ def questionnaire_teacher_save(request,
 	
 	connection_database = apri_connessione_db()
 	connection_database.insert_utenti(formBean.cleaned_data['nome'], formBean.cleaned_data['cognome'],
-									  formBean.cleaned_data['classe_alunno'],
-									  formBean.cleaned_data['data_nascita'])
+			formBean.cleaned_data['classe_alunno'], formBean.cleaned_data['data_nascita'])
 	id_utente = connection_database.cursor_db.lastrowid
 	for num_trait in range(len(util.QUESTIONNAIRE)):
 		trait = request.POST.get('trait' + str(num_trait), None)
 		if trait is None:
 			model_map = questionnaire_teacher__init_model_map(request, formBean, num_page)
-			model_map['traits_errors'] = True
+			model_map['has_errors'] = True
 			return TemplateResponse(request, template_name, model_map)
 		connection_database.insert_personality_traits(id_utente, trait, num_trait)
 	
@@ -101,14 +98,14 @@ def questionnaire_teacher_save(request,
 	connection_database.close_conn()
 	
 	if num_page >= preFormBean.n_alunni:
-		response = redirect('final_page')
+		response = redirect('final_page_qt')
 		return response
 	
 	response = redirect('{}?num_page={}'.format(reverse('questionnaire_teacher'), next_page))
 	return response
 
 
-def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
+def final_page_qt(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
 

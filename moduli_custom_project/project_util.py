@@ -47,12 +47,10 @@ SESSION_KEY__ID_UTENTE = 'id_utente'
 
 SESSION_KEY__PHASE = 'phase'
 
-SESSION_KEY__CHOICE_LAST_PAGE = 'choice_last_page'
-
 SESSION_KEY__POWERSET = 'powerset'
 
-SESSION_KEY__IMAGES2 = 'images2'
-SESSION_KEY__IMAGES3 = 'images3'
+SESSION_KEY__IMAGES_BIBITE = 'images_bibite'
+SESSION_KEY__IMAGES_SNACK = 'images_snack'
 
 
 def init_modelmap(request, app_title, app_logo, formBean):
@@ -68,7 +66,7 @@ def init_modelmap(request, app_title, app_logo, formBean):
 
 
 def from_tipo_test_to_cartella_immagini(tipo_test):
-	if tipo_test == 10:  # TODO: solve the problem with tipo_test == 10
+	if tipo_test == 10:		# TODO: solve the problem with tipo_test == 10
 		return "images_cq"
 	if tipo_test == 0:
 		return "images_choice"

@@ -3,7 +3,8 @@ from moduli import modulo_sqlite
 
 class Database(modulo_sqlite.Sqlite):
 	'''
-	select	# operations that I can do
+	operations that I can do:
+	select
 	count
 	insert
 	update
@@ -45,7 +46,7 @@ create table choices_menu(
 create table choices_slider(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
-	slider_marks    text,
+	slider_marks	text,
 	insert_date		timestamp not null,
 	foreign key(id_utente) references utente_bambini(id)
 		ON UPDATE NO ACTION

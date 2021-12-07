@@ -8,7 +8,7 @@ APP_LOGO = os.path.join(project_util.CARTELLA_FAVICONS, 'favicon_questionario.pn
 TEMPLATE_NAME__INDEX = 'index.html'
 TEMPLATE_NAME__QUESTIONARIO_TEACHER = 'questionnaire_teacher.html'
 TEMPLATE_NAME__NUMERO_ALUNNI = 'numero_alunni.html'
-TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
+TEMPLATE_NAME__FINAL_PAGE = 'final_page_qt.html'
 
 
 QUESTIONNAIRE = [
@@ -20,7 +20,7 @@ QUESTIONNAIRE = [
 	['...molto introverso', '...molto estroverso'],
 	['...molto focalizzato', '...molto distratto'],
 	['...molto disobbediente', '...molto obbediente'],
-	['...apprende rapidamente', '...e` lento ad apprendere'],
+	['...apprende rapidamente', '...lento ad apprendere'],
 	['...molto timido', '...molto incosciente']
 ]
 

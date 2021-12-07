@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views  # importazione modulo nella cartella corrente
+from . import views		# importazione modulo nella cartella corrente
 
 urlpatterns = [
 	path('', views.index, name='index'),
@@ -11,5 +11,5 @@ urlpatterns = [
 	path('questionnaire_teacher', views.questionnaire_teacher, name='questionnaire_teacher'),
 	path('questionnaire_teacher_save', views.questionnaire_teacher_save, name='questionnaire_teacher_save'),
 	
-	path('final_page', views.final_page, name='final_page'),
+	path('final_page_qt', views.final_page_qt, name='final_page_qt'),
 ]

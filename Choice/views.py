@@ -37,19 +37,18 @@ def apri_connessione_db():
 
 # These are the ENDPOINT, because you can call them from outside
 def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__INDEX)):
-	
-	images_powerset = modulo_functions.powerset(util.IMAGES, True)
+	images_powerset = modulo_functions.powerset(util.IMAGES_CHOICE, True)
 	images_powerset = modulo_functions.shuffle_powerset(images_powerset)
 	
-	images2 = util.IMAGES2
-	images3 = util.IMAGES3
-	random.shuffle(images2)
-	random.shuffle(images3)
+	images_bibite = util.IMAGES_BIBITE
+	images_snack = util.IMAGES_SNACK
+	random.shuffle(images_bibite)
+	random.shuffle(images_snack)
 	
 	request.session[project_util.SESSION_KEY__POWERSET] = images_powerset
 	
-	request.session[project_util.SESSION_KEY__IMAGES2] = images2
-	request.session[project_util.SESSION_KEY__IMAGES3] = images3
+	request.session[project_util.SESSION_KEY__IMAGES_BIBITE] = images_bibite
+	request.session[project_util.SESSION_KEY__IMAGES_SNACK] = images_snack
 	
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
@@ -80,13 +79,13 @@ def questionnaire_kids_save(request):
 	
 	# set the value in the session.
 	request.session[project_util.SESSION_KEY__ID_UTENTE] = id_utente
-	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = 0
 	
+	url_relative_next_page = None
 	if modulo_django.is_localhost(request):
-		response = redirect('choice_image')
+		url_relative_next_page = 'choice_image'
 	else:
-		response = redirect('video')
-	return response
+		url_relative_next_page = 'video'
+	return redirect(url_relative_next_page)
 
 
 def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__VIDEO)):
@@ -103,20 +102,10 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 
 def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__CHOICE)):
 	num_page = int(request.GET.get('num_page', '1'))
-	last_page = request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE]
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
 	
-	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
-	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
-	
-	'''
-	if num_page < last_page:
-		num_page = last_page
-		response = redirect('{}?num_page={}'.format(reverse('choice_image'), num_page))
-		return response
-	'''
-	last_page = num_page
-	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
+	images_bibite = request.session[project_util.SESSION_KEY__IMAGES_BIBITE]
+	images_snack = request.session[project_util.SESSION_KEY__IMAGES_SNACK]
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
@@ -131,12 +120,12 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 		cartella_img = 'images_choice'
 		tipo_test = 0
 	elif num_page == len(images_powerset)+1:
-		images = images2
+		images = images_bibite
 		model_map['page_title'] = 'Quale bibita ti piace tra queste?'
 		cartella_img = 'images_bibite'
 		tipo_test = 1
 	elif num_page == len(images_powerset)+2:
-		images = images3
+		images = images_snack
 		model_map['page_title'] = 'Quale merendina ti piace tra queste?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
@@ -159,15 +148,14 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 def save_choice(request):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
-	images2 = request.session[project_util.SESSION_KEY__IMAGES2]
-	images3 = request.session[project_util.SESSION_KEY__IMAGES3]
+	images_bibite = request.session[project_util.SESSION_KEY__IMAGES_BIBITE]
+	images_snack = request.session[project_util.SESSION_KEY__IMAGES_SNACK]
 	
 	num_page = int(request.GET.get('num_page', ''))
 	tipo_test = int(request.GET.get('tipo_test', ''))
 	
 	# if the parameter 'choice' exists then insert in the database, otherwise nothing
 	# the parameter "choice" comes from javascript code in choice_image.html - "&choice="
-	
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = None
@@ -176,9 +164,9 @@ def save_choice(request):
 			# json handle objects (like lists) when they are in the dataset
 			# using json.loads I can transform data from the table into list or other objects again
 		elif num_page == len(images_powerset)+1:
-			menu = json.dumps(images2)
+			menu = json.dumps(images_bibite)
 		elif num_page == len(images_powerset)+2:
-			menu = json.dumps(images3)
+			menu = json.dumps(images_snack)
 		
 		connection_database = apri_connessione_db()
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
@@ -186,10 +174,8 @@ def save_choice(request):
 		connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-
 	if num_page >= len(images_powerset)+2:
-		response = redirect('slider')
-		return response
+		return redirect('slider')
 	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
 	# we concatenate the parameter num_page with the value next_page
@@ -203,7 +189,7 @@ def save_choice(request):
 
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
-	slider_images = util.IMAGES
+	slider_images = util.IMAGES_CHOICE
 	emoji_images = util.EMOJI
 	
 	model_map = util.init_modelmap(request, None)
@@ -248,7 +234,6 @@ def logic_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPL
 		response = redirect('{}?num_page={}'.format(reverse('logic_test'), num_page))
 		return response
 	last_page = num_page
-	request.session[project_util.SESSION_KEY__CHOICE_LAST_PAGE] = last_page
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
@@ -269,15 +254,13 @@ def save_logic_test(request):
 	
 	num_page = int(request.GET.get('num_page', ''))
 	
-	connection_database = apri_connessione_db()
-	
 	# inserire il risultato del test
 	if 'risultato' in request.GET:
 		risultato = request.GET.get('risultato', '')
+		connection_database = apri_connessione_db()
 		connection_database.insert_logic_test(id_utente, num_page, risultato)
-	
-	connection_database.conn_db.commit()
-	connection_database.close_conn()
+		connection_database.conn_db.commit()
+		connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
 	if num_page >= PAGES_LOGIC_TEST:
@@ -292,7 +275,7 @@ def save_logic_test(request):
 	return response
 
 
-def final_page(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
+def final_page_C(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()

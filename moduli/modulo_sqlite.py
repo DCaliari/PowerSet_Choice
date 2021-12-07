@@ -29,8 +29,8 @@ class Sqlite(ABC):
 		"""
 		Inserire le istruzioni sql contenenti la dichiarazione delle tabelle (DDL)
 		"""
+		# execute more commands in one, I can create more tables without repeating execute
 		self.cursor_db.executescript(sql_str)
-		# execute more commands in one in the file modulo_database.py. I can create more tables without repeating execute
 		self.conn_db.commit()		# it does not save when I modify things, if there is an error it is very useful.
 	
 	def close_conn(self):
@@ -41,7 +41,7 @@ class Sqlite(ABC):
 # 	sql=("LIMIT "+str(num_results) if num_results!=None else "")
 # 	sql+=(" OFFSET "+str(first_result) if first_result!=None else "")
 # 	return sql
-### ogni pagina ha un numero di pagine definito come in google.
+### scelgo quanti elementi "scaricare" dal db, ad esempio se mi servono 10 elementi non ha senso scaricarli tutti
 
 # def add_param_list(lista,prefix):
 # 	params={}
