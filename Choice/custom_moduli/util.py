@@ -14,8 +14,8 @@ TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
 IMAGES_CHOICE = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
-IMAGES_BIBITE = os.listdir(project_util.FULLPATH_CARTELLA_IMG_BIBITE)
-IMAGES_SNACK = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SNACK)
+IMAGES_CHOICE2 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_BIBITE)
+IMAGES_CHOICE3 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SNACK)
 
 # This piece of code is for numerical and language tests
 # TEMPLATE_NAME__NUMERICAL_TEST = 'numerical_test.html'

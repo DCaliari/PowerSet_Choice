@@ -48,9 +48,9 @@ SESSION_KEY__ID_UTENTE = 'id_utente'
 SESSION_KEY__PHASE = 'phase'
 
 SESSION_KEY__POWERSET = 'powerset'
+SESSION_KEY__POWERSET2 = 'powerset2'
 
-SESSION_KEY__IMAGES_BIBITE = 'images_bibite'
-SESSION_KEY__IMAGES_SNACK = 'images_snack'
+SESSION_KEY__IMAGES_CHOICE3 = 'images_choice3'
 
 
 def init_modelmap(request, app_title, app_logo, formBean):

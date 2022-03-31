@@ -40,15 +40,16 @@ def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	images_powerset = modulo_functions.powerset(util.IMAGES_CHOICE, True)
 	images_powerset = modulo_functions.shuffle_powerset(images_powerset)
 	
-	images_bibite = util.IMAGES_BIBITE
-	images_snack = util.IMAGES_SNACK
-	random.shuffle(images_bibite)
-	random.shuffle(images_snack)
+	images_powerset2 = modulo_functions.powerset(util.IMAGES_CHOICE2, True)
+	images_powerset2 = modulo_functions.shuffle_powerset(images_powerset2)
+	
+	images_choice3 = util.IMAGES_CHOICE3
+	random.shuffle(images_choice3)
 	
 	request.session[project_util.SESSION_KEY__POWERSET] = images_powerset
+	request.session[project_util.SESSION_KEY__POWERSET2] = images_powerset2
 	
-	request.session[project_util.SESSION_KEY__IMAGES_BIBITE] = images_bibite
-	request.session[project_util.SESSION_KEY__IMAGES_SNACK] = images_snack
+	request.session[project_util.SESSION_KEY__IMAGES_CHOICE3] = images_choice3
 	
 	model_map = util.init_modelmap(request, None)
 	return TemplateResponse(request, template_name, model_map)
@@ -103,9 +104,9 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__CHOICE)):
 	num_page = int(request.GET.get('num_page', '1'))
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
+	images_powerset2 = request.session[project_util.SESSION_KEY__POWERSET2]
 	
-	images_bibite = request.session[project_util.SESSION_KEY__IMAGES_BIBITE]
-	images_snack = request.session[project_util.SESSION_KEY__IMAGES_SNACK]
+	images_choice3 = request.session[project_util.SESSION_KEY__IMAGES_CHOICE3]
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['num_page'] = num_page
@@ -116,20 +117,20 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
-		model_map['page_title'] = 'Quale snack ti piace tra questi?'
+		model_map['page_title'] = 'Quale matita ti piace tra questi?'
 		cartella_img = 'images_choice'
 		tipo_test = 0
-	elif num_page == len(images_powerset)+1:
-		images = images_bibite
-		model_map['page_title'] = 'Quale bibita ti piace tra queste?'
+	elif (num_page >= len(images_powerset)+1) and (num_page < 2*len(images_powerset)+1):
+		images = images_powerset2[num_page - 1 - 11]
+		model_map['page_title'] = 'Quale penna ti piace tra queste?'
 		cartella_img = 'images_bibite'
 		tipo_test = 1
-	elif num_page == len(images_powerset)+2:
-		images = images_snack
+	elif num_page == 2*len(images_powerset)+1:
+		images = images_choice3
 		model_map['page_title'] = 'Quale merendina ti piace tra queste?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
-			
+		
 	model_map['images'] = images
 	model_map['cartella_img'] = cartella_img
 	model_map['tipo_test'] = tipo_test
@@ -148,8 +149,8 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 def save_choice(request):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	images_powerset = request.session[project_util.SESSION_KEY__POWERSET]
-	images_bibite = request.session[project_util.SESSION_KEY__IMAGES_BIBITE]
-	images_snack = request.session[project_util.SESSION_KEY__IMAGES_SNACK]
+	images_powerset2 = request.session[project_util.SESSION_KEY__POWERSET2]
+	images_choice3 = request.session[project_util.SESSION_KEY__IMAGES_CHOICE3]
 	
 	num_page = int(request.GET.get('num_page', ''))
 	tipo_test = int(request.GET.get('tipo_test', ''))
@@ -160,13 +161,13 @@ def save_choice(request):
 		choice = int(request.GET.get('choice', ''))
 		menu = None
 		if num_page < len(images_powerset)+1:
-			menu = json.dumps(images_powerset[num_page-1])
+			menu = json.dumps(images_powerset[num_page - 1])
 			# json handle objects (like lists) when they are in the dataset
 			# using json.loads I can transform data from the table into list or other objects again
-		elif num_page == len(images_powerset)+1:
-			menu = json.dumps(images_bibite)
-		elif num_page == len(images_powerset)+2:
-			menu = json.dumps(images_snack)
+		elif (num_page >= len(images_powerset)+1) and (num_page < 2*len(images_powerset)+1):
+			menu = json.dumps(images_powerset2[num_page - 1 - 11])
+		elif num_page == 2*len(images_powerset)+1:
+			menu = json.dumps(images_choice3)
 		
 		connection_database = apri_connessione_db()
 		connection_database.insert_choices_menu(id_utente, tipo_test, choice, menu)
@@ -174,7 +175,7 @@ def save_choice(request):
 		connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= len(images_powerset)+2:
+	if num_page >= 2*len(images_powerset)+1:
 		return redirect('slider')
 	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
