@@ -225,7 +225,6 @@ def slider2(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	slider_images = util.IMAGES_CHOICE2
 	emoji_images = util.EMOJI
-	print(slider_images)
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['images'] = slider_images
