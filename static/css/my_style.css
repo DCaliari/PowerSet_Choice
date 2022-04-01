@@ -70,13 +70,22 @@ input[type="date"].form-control {
 }
 
 .emoji_image {
-	width:65px;
-	height:auto;
+	width:75px;
+	height:75px;
 }
 
 .slider_image {
-	width:125px;
-	height:auto;
+	width:110px;
+	height:110px;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;
+  background-color:black;
+  height: 2px;
 }
 
 /* the following are styles for each slider: fix it into only one style */

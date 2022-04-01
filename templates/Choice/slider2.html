@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row">
 	<div class="col-md-12 text-center">
-		<h1 class="display-3">Quanto ti piace la matita?</h1>
+		<h1 class="display-3">Quanto ti piace la penna?</h1>
 		<br><br>
 		<!-- all data sent to views.py slider and use method post to not save in url -->
 	</div>
@@ -13,7 +13,7 @@
 	{% for image in images %}
 		<div class="row">
 			<div class="col-sm-3">
-				<img src="{% static '' %}images/images_choice/{{ image }}" class="slider_image float-left">
+				<img src="{% static '' %}images/images_bibite/{{ image }}" class="slider_image float-left">
 			</div>
 			<div class="col-sm-8">
 				{% for em in emoji %}

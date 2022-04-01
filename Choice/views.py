@@ -94,7 +94,7 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	next_page = num_page + 1
 	
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
-	
+	print(util.VIDEOS)
 	model_map = util.init_modelmap(request, None)
 	model_map['video'] = project_util.URL_VIDEO + '/' + util.VIDEOS[num_page]
 	model_map['next_url_page'] = next_url_page
@@ -217,6 +217,40 @@ def slider_save(request):
 		connection_database.conn_db.commit()
 		connection_database.close_conn()
 
+	response = redirect('slider2')
+	return response
+
+
+def slider2(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER2)):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	slider_images = util.IMAGES_CHOICE2
+	emoji_images = util.EMOJI
+	print(slider_images)
+	
+	model_map = util.init_modelmap(request, None)
+	model_map['images'] = slider_images
+	model_map['emoji'] = emoji_images
+	
+	connection_database = apri_connessione_db()
+	connection_database.insert_choices_slider(id_utente, None)
+	
+	connection_database.conn_db.commit()
+	connection_database.close_conn()
+	
+	return TemplateResponse(request, template_name, model_map)
+
+
+def slider_save2(request):
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	if 'marks' in request.GET:
+		slider_marks = request.GET.get('marks', '')
+		
+		connection_database = apri_connessione_db()
+		connection_database.insert_choices_slider2(id_utente, slider_marks)
+		connection_database.conn_db.commit()
+		connection_database.close_conn()
+	
 	response = redirect('logic_test')
 	return response
 

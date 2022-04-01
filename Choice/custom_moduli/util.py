@@ -10,6 +10,7 @@ TEMPLATE_NAME__QUESTIONARIO_KIDS = 'questionnaire_kids.html'
 TEMPLATE_NAME__VIDEO = 'video.html'
 TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
+TEMPLATE_NAME__SLIDER2 = 'slider2.html'
 TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
 TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
 
@@ -28,7 +29,7 @@ IMAGES_CHOICE3 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_SNACK)
 EMOJI = os.listdir(project_util.FULLPATH_CARTELLA_IMG_EMOJI)
 
 #l'estremo massimo non e' compreso
-VIDEOS = ['video'+str(x)+'.mp4' for x in list(range(1, 14))]
+VIDEOS = ['video'+str(x)+'.mp4' for x in list(range(1, 25))]
 
 LOGIC_IMAGES = [os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC1),
 		os.listdir(project_util.FULLPATH_CARTELLA_IMG_LOGIC2),

@@ -16,6 +16,9 @@ urlpatterns = [
 	path('slider', views.slider, name='slider'),
 	path('slider_save', views.slider_save, name='slider_save'),
 	
+	path('slider2', views.slider2, name='slider2'),
+	path('slider_save2', views.slider_save2, name='slider_save2'),
+	
 	path('logic_test', views.logic_test, name='logic_test'),
 	path('save_logic_test', views.save_logic_test, name='save_logic_test'),
 	

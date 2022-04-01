@@ -52,6 +52,15 @@ create table choices_slider(
 		ON UPDATE NO ACTION
 		ON DELETE RESTRICT
 );
+create table choices_slider2(
+	id 				integer primary key autoincrement not null,
+	id_utente		integer not null,
+	slider_marks	text,
+	insert_date		timestamp not null,
+	foreign key(id_utente) references utente_bambini(id)
+		ON UPDATE NO ACTION
+		ON DELETE RESTRICT
+);
 create table logic_test(
 	id 				integer primary key autoincrement not null,
 	id_utente		integer not null,
@@ -130,6 +139,20 @@ INSERT INTO choices_menu(
 	def insert_choices_slider(self, id_utente, slider_marks):
 		sql = """
 INSERT INTO choices_slider(
+	id_utente, slider_marks, insert_date
+) VALUES(
+	:id_utente, :slider_marks, """ + modulo_sqlite.DATE_TIME_NOW + """
+);
+"""
+		self.cursor_db.execute(sql, {
+			'id_utente': id_utente,
+			'slider_marks': slider_marks
+		})
+		
+		####################################################################################################
+	def insert_choices_slider2(self, id_utente, slider_marks):
+		sql = """
+INSERT INTO choices_slider2(
 	id_utente, slider_marks, insert_date
 ) VALUES(
 	:id_utente, :slider_marks, """ + modulo_sqlite.DATE_TIME_NOW + """
