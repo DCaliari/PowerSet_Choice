@@ -117,7 +117,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	
 	if num_page < len(images_powerset)+1:
 		images = images_powerset[num_page - 1]
-		model_map['page_title'] = 'Quale matita ti piace tra questi?'
+		model_map['page_title'] = 'Quale matita ti piace tra queste?'
 		cartella_img = 'images_choice'
 		tipo_test = 0
 	elif (num_page >= len(images_powerset)+1) and (num_page < 2*len(images_powerset)+1):
@@ -127,7 +127,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 		tipo_test = 1
 	elif num_page == 2*len(images_powerset)+1:
 		images = images_choice3
-		model_map['page_title'] = 'Quale merendina ti piace tra queste?'
+		model_map['page_title'] = 'Quale astuccio ti piace tra questi?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
 		
@@ -298,7 +298,7 @@ def save_logic_test(request):
 	
 	# when the pages are finished go to next problem
 	if num_page >= PAGES_LOGIC_TEST:
-		response = redirect('final_page_C')
+		response = redirect('final_page_c')
 		return response
 	
 	next_page = num_page + 1
@@ -309,7 +309,7 @@ def save_logic_test(request):
 	return response
 
 
-def final_page_C(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
+def final_page_c(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__FINAL_PAGE)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# leggo dal db
 	connection_database = apri_connessione_db()
@@ -328,10 +328,16 @@ def final_page_C(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 			image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
 			images_payoff.append(image_chosen)
 	# scelgo un'immagine a caso
-	image_payoff = random.choice(images_payoff[1:10])
+	images_payoff1 = images_payoff[0:10]
+	images_payoff2 = images_payoff[11:21]
+	image_payoff3 = images_payoff[22]
+	image_payoff1 = random.choice(images_payoff1)
+	image_payoff2 = random.choice(images_payoff2)
 	
 	model_map = util.init_modelmap(request, None)
 	model_map['page_title'] = 'Fine'
-	model_map['image_payoff'] = image_payoff
-	model_map['choices'] = images_payoff
+	model_map['image_payoff1'] = image_payoff1
+	model_map['image_payoff2'] = image_payoff2
+	model_map['image_payoff3'] = image_payoff3
+	
 	return TemplateResponse(request, template_name, model_map)

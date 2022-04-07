@@ -22,5 +22,5 @@ urlpatterns = [
 	path('logic_test', views.logic_test, name='logic_test'),
 	path('save_logic_test', views.save_logic_test, name='save_logic_test'),
 	
-	path('final_page_C', views.final_page_C, name='final_page_C')
+	path('final_page_c', views.final_page_c, name='final_page_c')
 ]

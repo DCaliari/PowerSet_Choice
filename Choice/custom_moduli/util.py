@@ -12,7 +12,7 @@ TEMPLATE_NAME__CHOICE = 'choice_image.html'
 TEMPLATE_NAME__SLIDER = 'slider.html'
 TEMPLATE_NAME__SLIDER2 = 'slider2.html'
 TEMPLATE_NAME__LOGIC_TEST = 'logic_test.html'
-TEMPLATE_NAME__FINAL_PAGE = 'final_page_C.html'
+TEMPLATE_NAME__FINAL_PAGE = 'final_page_c.html'
 
 IMAGES_CHOICE = os.listdir(project_util.FULLPATH_CARTELLA_IMG_CHOICE)
 IMAGES_CHOICE2 = os.listdir(project_util.FULLPATH_CARTELLA_IMG_BIBITE)

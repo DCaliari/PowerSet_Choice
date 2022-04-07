@@ -18,7 +18,7 @@ input[type="date"].form-control {
 
 .choice_image {
 	width:160px;
-	height:160px;
+	height:auto;
 }
 
 .choice_final_page {
