@@ -13,11 +13,11 @@ from moduli import modulo_system
 from moduli_custom_project import modulo_database
 from moduli_custom_project import project_util
 
-
 # This is a global variable, it is created once at the start and never modified later.
 CARTELLA_CORRENTE = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
 
 PAGES_LOGIC_TEST = len(util.LOGIC_IMAGES)
+
 
 ###############################################################################################
 
@@ -26,8 +26,8 @@ PAGES_LOGIC_TEST = len(util.LOGIC_IMAGES)
 def apri_connessione_db():
 	path_db = project_util.FULLPATH_DATABASE
 	is_db_new = modulo_system.dimensione_file(path_db) <= 0
-	database = modulo_database.Database(path_db)		# crea l'oggetto e apre la connessione
-	if is_db_new:										# crea le tabelle solo se non ci sono gia'
+	database = modulo_database.Database(path_db)  # crea l'oggetto e apre la connessione
+	if is_db_new:  # crea le tabelle solo se non ci sono gia'
 		database.schema()
 	return database
 
@@ -39,7 +39,6 @@ def apri_connessione_db():
 def index(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__INDEX)):
 	images_powerset = modulo_functions.powerset(util.IMAGES_CHOICE, True)
 	images_powerset = modulo_functions.shuffle_powerset(images_powerset)
-	
 	images_powerset2 = modulo_functions.powerset(util.IMAGES_CHOICE2, True)
 	images_powerset2 = modulo_functions.shuffle_powerset(images_powerset2)
 	
@@ -71,7 +70,7 @@ def questionnaire_kids_save(request):
 	
 	connection_database = apri_connessione_db()
 	connection_database.insert_utente_bambino(nome, cognome, scuola, classe, peso, altezza, sesso)
-
+	
 	# get the last id created in the database
 	id_utente = connection_database.cursor_db.lastrowid
 	
@@ -94,7 +93,6 @@ def video(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_N
 	next_page = num_page + 1
 	
 	next_url_page = '{}?num_page={}'.format(reverse('choice_image'), next_page)
-	print(util.VIDEOS)
 	model_map = util.init_modelmap(request, None)
 	model_map['video'] = project_util.URL_VIDEO + '/' + util.VIDEOS[num_page]
 	model_map['next_url_page'] = next_url_page
@@ -115,27 +113,38 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	tipo_test = None
 	images = None
 	
-	if num_page < len(images_powerset)+1:
-		images = images_powerset[num_page - 1]
-		model_map['page_title'] = 'Quale matita ti piace tra queste?'
-		cartella_img = 'images_choice'
+	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	if num_page < len(images_powerset) + 1:
 		tipo_test = 0
-	elif (num_page >= len(images_powerset)+1) and (num_page < 2*len(images_powerset)+1):
-		images = images_powerset2[num_page - 1 - 11]
-		model_map['page_title'] = 'Quale penna ti piace tra queste?'
-		cartella_img = 'images_bibite'
+		if (id_utente % 2) == 0:
+			images = images_powerset[num_page - 1]
+			cartella_img = 'images_choice'
+			model_map['page_title'] = 'Quale matita ti piace tra queste?'
+		else:
+			images = images_powerset2[num_page - 1]
+			model_map['page_title'] = 'Quale penna ti piace tra queste?'
+			cartella_img = 'images_bibite'
+	elif (num_page >= len(images_powerset) + 1) and (num_page < 2 * len(images_powerset) + 1):
 		tipo_test = 1
-	elif num_page == 2*len(images_powerset)+1:
+		if (id_utente % 2) == 0:
+			images = images_powerset2[num_page - 1 - 11]
+			cartella_img = 'images_bibite'
+			model_map['page_title'] = 'Quale penna ti piace tra queste?'
+		else:
+			images = images_powerset[num_page - 1 - 11]
+			model_map['page_title'] = 'Quale matita ti piace tra queste?'
+			cartella_img = 'images_choice'
+	elif num_page == 2 * len(images_powerset) + 1:
 		images = images_choice3
 		model_map['page_title'] = 'Quale astuccio ti piace tra questi?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
-		
+	
 	model_map['images'] = images
 	model_map['cartella_img'] = cartella_img
 	model_map['tipo_test'] = tipo_test
 	
-	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
 	# inserisco una riga vuota per calcolo response time
 	connection_database = apri_connessione_db()
 	connection_database.insert_choices_menu(id_utente, tipo_test, None, None)
@@ -160,13 +169,19 @@ def save_choice(request):
 	if 'choice' in request.GET:
 		choice = int(request.GET.get('choice', ''))
 		menu = None
-		if num_page < len(images_powerset)+1:
-			menu = json.dumps(images_powerset[num_page - 1])
-			# json handle objects (like lists) when they are in the dataset
-			# using json.loads I can transform data from the table into list or other objects again
-		elif (num_page >= len(images_powerset)+1) and (num_page < 2*len(images_powerset)+1):
-			menu = json.dumps(images_powerset2[num_page - 1 - 11])
-		elif num_page == 2*len(images_powerset)+1:
+		if num_page < len(images_powerset) + 1:
+			if (id_utente % 2) == 0:
+				menu = json.dumps(images_powerset[num_page - 1])
+			else:
+				menu = json.dumps(images_powerset2[num_page - 1])
+		# json handle objects (like lists) when they are in the dataset
+		# using json.loads I can transform data from the table into list or other objects again
+		elif (num_page >= len(images_powerset) + 1) and (num_page < 2 * len(images_powerset) + 1):
+			if (id_utente % 2) == 0:
+				menu = json.dumps(images_powerset2[num_page - 1 - 11])
+			else:
+				menu = json.dumps(images_powerset[num_page - 1 - 11])
+		elif num_page == 2 * len(images_powerset) + 1:
 			menu = json.dumps(images_choice3)
 		
 		connection_database = apri_connessione_db()
@@ -175,7 +190,7 @@ def save_choice(request):
 		connection_database.close_conn()
 	
 	# when the pages are finished go to next problem
-	if num_page >= 2*len(images_powerset)+1:
+	if num_page >= 2 * len(images_powerset) + 1:
 		return redirect('slider')
 	
 	# the function reverse give the URL of the view: choice_image, the URL is http://192.168.1.9:8000/Choice/choice_image
@@ -190,10 +205,17 @@ def save_choice(request):
 
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
-	slider_images = util.IMAGES_CHOICE
+	if (id_utente % 2) == 0:
+		slider_images = util.IMAGES_CHOICE
+		cartella_img = 'images_choice'
+	else:
+		slider_images = util.IMAGES_CHOICE2
+		cartella_img = 'images_bibite'
+		
 	emoji_images = util.EMOJI
 	
 	model_map = util.init_modelmap(request, None)
+	model_map['cartella_img'] = cartella_img
 	model_map['images'] = slider_images
 	model_map['emoji'] = emoji_images
 	
@@ -202,7 +224,7 @@ def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
-
+	
 	return TemplateResponse(request, template_name, model_map)
 
 
@@ -211,27 +233,34 @@ def slider_save(request):
 	
 	if 'marks' in request.GET:
 		slider_marks = request.GET.get('marks', '')
-	
+		
 		connection_database = apri_connessione_db()
 		connection_database.insert_choices_slider(id_utente, slider_marks)
 		connection_database.conn_db.commit()
 		connection_database.close_conn()
-
+	
 	response = redirect('slider2')
 	return response
 
 
 def slider2(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER2)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
-	slider_images = util.IMAGES_CHOICE2
+	if (id_utente % 2) == 0:
+		slider_images = util.IMAGES_CHOICE2
+		cartella_img = 'images_bibite'
+	else:
+		slider_images = util.IMAGES_CHOICE
+		cartella_img = 'images_choice'
+		
 	emoji_images = util.EMOJI
 	
 	model_map = util.init_modelmap(request, None)
+	model_map['cartella_img'] = cartella_img
 	model_map['images'] = slider_images
 	model_map['emoji'] = emoji_images
 	
 	connection_database = apri_connessione_db()
-	connection_database.insert_choices_slider(id_utente, None)
+	connection_database.insert_choices_slider2(id_utente, None)
 	
 	connection_database.conn_db.commit()
 	connection_database.close_conn()
@@ -261,7 +290,7 @@ def logic_test(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPL
 	num_page = int(request.GET.get('num_page', '1'))
 	
 	# I go and take different images for each num_page in the language test
-	immagini = util.LOGIC_IMAGES[num_page-1]
+	immagini = util.LOGIC_IMAGES[num_page - 1]
 	
 	if num_page < last_page:
 		num_page = last_page
