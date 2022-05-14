@@ -205,16 +205,18 @@ def save_choice(request):
 
 def slider(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	model_map = util.init_modelmap(request, None)
 	if (id_utente % 2) == 0:
 		slider_images = util.IMAGES_CHOICE
 		cartella_img = 'images_choice'
+		model_map['page_title'] = 'Quanto ti piace la matita?'
 	else:
 		slider_images = util.IMAGES_CHOICE2
 		cartella_img = 'images_bibite'
+		model_map['page_title'] = 'Quanto ti piace la penna?'
 		
 	emoji_images = util.EMOJI
 	
-	model_map = util.init_modelmap(request, None)
 	model_map['cartella_img'] = cartella_img
 	model_map['images'] = slider_images
 	model_map['emoji'] = emoji_images
@@ -245,16 +247,19 @@ def slider_save(request):
 
 def slider2(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEMPLATE_NAME__SLIDER2)):
 	id_utente = request.session[project_util.SESSION_KEY__ID_UTENTE]
+	
+	model_map = util.init_modelmap(request, None)
 	if (id_utente % 2) == 0:
 		slider_images = util.IMAGES_CHOICE2
 		cartella_img = 'images_bibite'
+		model_map['page_title'] = 'Quanto ti piace la penna?'
 	else:
 		slider_images = util.IMAGES_CHOICE
 		cartella_img = 'images_choice'
+		model_map['page_title'] = 'Quanto ti piace la matita?'
 		
 	emoji_images = util.EMOJI
 	
-	model_map = util.init_modelmap(request, None)
 	model_map['cartella_img'] = cartella_img
 	model_map['images'] = slider_images
 	model_map['emoji'] = emoji_images
