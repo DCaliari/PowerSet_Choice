@@ -137,7 +137,7 @@ def choice_image(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 			cartella_img = 'images_choice'
 	elif num_page == 2 * len(images_powerset) + 1:
 		images = images_choice3
-		model_map['page_title'] = 'Quale astuccio ti piace tra questi?'
+		model_map['page_title'] = 'Quale quaderno ti piace tra questi?'
 		cartella_img = 'images_snack'
 		tipo_test = 2
 	
