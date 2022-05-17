@@ -359,7 +359,7 @@ def final_page_c(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 		if menu is not None:
 			menu = json.loads(menu)
 			image_chosen = menu[num_choice]
-			image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
+			# image_chosen = os.path.join(project_util.from_tipo_test_to_cartella_immagini(tipo_test), image_chosen)
 			images_payoff.append(image_chosen)
 	# scelgo un'immagine a caso
 	images_payoff1 = images_payoff[0:10]
@@ -368,10 +368,19 @@ def final_page_c(request, template_name=os.path.join(CARTELLA_CORRENTE, util.TEM
 	image_payoff1 = random.choice(images_payoff1)
 	image_payoff2 = random.choice(images_payoff2)
 	
+	if (id_utente % 2) == 0:
+		folder1 = 'images_choice'
+		folder2 = 'images_bibite'
+	else:
+		folder1 = 'images_bibite'
+		folder2 = 'images_choice'
+	
 	model_map = util.init_modelmap(request, None)
 	model_map['page_title'] = 'Fine'
 	model_map['image_payoff1'] = image_payoff1
 	model_map['image_payoff2'] = image_payoff2
 	model_map['image_payoff3'] = image_payoff3
+	model_map['folder1'] = folder1
+	model_map['folder2'] = folder2
 	
 	return TemplateResponse(request, template_name, model_map)
